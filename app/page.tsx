@@ -24,7 +24,7 @@ import {
   ReceiptText,
   Car,
 } from "lucide-react"
-import { useState, useEffect } from "react" // Import useEffect
+import { useState, useEffect } from "react"
 import { MpesaCalculator } from "../src/components/calculators/MpesaCalculator"
 import { LoanCalculator } from "../src/components/calculators/LoanCalculator"
 import { BudgetCalculator } from "../src/components/calculators/BudgetCalculator"
