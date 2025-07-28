@@ -1,71 +1,64 @@
 "use client"
 
-import { Menu, X, Phone, Mail, MapPin, Facebook, Twitter, Instagram, Linkedin } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import { useState } from "react"
+import { Menu, X, Calculator, Github, Twitter, Mail } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   return (
-    <header className="bg-white border-b border-border sticky top-0 z-50 shadow-sm">
+    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16 lg:h-20">
+        <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-lg">KF</span>
+          <Link href="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
+            <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-sm">
+              <Calculator className="h-5 w-5 text-primary-foreground" />
             </div>
             <div>
-              <h1 className="font-poppins font-bold text-lg lg:text-xl text-foreground">Kenyan Financial</h1>
-              <p className="text-xs text-muted-foreground -mt-1">Toolkit</p>
+              <h1 className="font-poppins font-bold text-lg text-foreground">Financial Toolkit</h1>
+              <p className="text-xs text-muted-foreground -mt-1">Kenya</p>
             </div>
-          </div>
+          </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-8">
-            <a href="#calculators" className="text-foreground hover:text-primary transition-colors font-medium">
-              Calculators
-            </a>
-            <a href="#about" className="text-foreground hover:text-primary transition-colors font-medium">
-              About
-            </a>
-            <a href="#contact" className="text-foreground hover:text-primary transition-colors font-medium">
-              Contact
-            </a>
+          <nav className="hidden md:flex items-center space-x-1">
+            <Button variant="ghost" asChild>
+              <a href="#calculators">Calculators</a>
+            </Button>
+            <Button variant="ghost" asChild>
+              <a href="#about">About</a>
+            </Button>
           </nav>
 
           {/* Mobile Menu Button */}
-          <button className="lg:hidden p-2" onClick={() => setIsMenuOpen(!isMenuOpen)} aria-label="Toggle menu">
-            {isMenuOpen ? <X className="h-6 w-6 text-foreground" /> : <Menu className="h-6 w-6 text-foreground" />}
-          </button>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="md:hidden"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </Button>
         </div>
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="lg:hidden border-t border-border bg-white">
-            <nav className="py-4 space-y-2">
-              <a
-                href="#calculators"
-                className="block px-4 py-2 text-foreground hover:bg-muted rounded-md font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Calculators
-              </a>
-              <a
-                href="#about"
-                className="block px-4 py-2 text-foreground hover:bg-muted rounded-md font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                About
-              </a>
-              <a
-                href="#contact"
-                className="block px-4 py-2 text-foreground hover:bg-muted rounded-md font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Contact
-              </a>
+          <div className="md:hidden border-t bg-background">
+            <nav className="py-4 space-y-1">
+              <Button variant="ghost" className="w-full justify-start" asChild>
+                <a href="#calculators" onClick={() => setIsMenuOpen(false)}>
+                  Calculators
+                </a>
+              </Button>
+              <Button variant="ghost" className="w-full justify-start" asChild>
+                <a href="#about" onClick={() => setIsMenuOpen(false)}>
+                  About
+                </a>
+              </Button>
             </nav>
           </div>
         )}
@@ -75,166 +68,79 @@ export const Header = () => {
 }
 
 export const Footer = () => {
+  const calculatorLinks = [
+    { name: "M-Pesa Charges", href: "#calculators" },
+    { name: "Loan Calculator", href: "#calculators" },
+    { name: "Net Salary", href: "#calculators" },
+    { name: "Fuliza Calculator", href: "#calculators" },
+    { name: "Car Import Tax", href: "#calculators" },
+    { name: "Budget Planner", href: "#calculators" },
+  ]
+
   return (
-    <footer className="bg-muted/30 border-t border-border mt-20">
+    <footer className="border-t bg-muted/30">
       <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* Company Info */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Brand */}
           <div className="space-y-4">
             <div className="flex items-center space-x-3">
               <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold">KF</span>
+                <Calculator className="h-4 w-4 text-primary-foreground" />
               </div>
-              <h3 className="font-poppins font-bold text-lg">Kenyan Financial Toolkit</h3>
+              <h3 className="font-poppins font-bold text-lg">Financial Toolkit</h3>
             </div>
-            <p className="text-muted-foreground text-sm leading-relaxed">
-              Empowering Kenyan consumers with accurate financial calculators and tools for better money management and
-              decision-making.
+            <p className="text-body text-muted-foreground max-w-sm">
+              Essential financial calculators designed for Kenyan consumers. Make informed money decisions with
+              accurate, up-to-date calculations.
             </p>
-            <div className="flex space-x-4">
-              <Button variant="ghost" size="sm" className="p-2 h-8 w-8">
-                <Facebook className="h-4 w-4" />
-              </Button>
-              <Button variant="ghost" size="sm" className="p-2 h-8 w-8">
+            <div className="flex space-x-2">
+              <Button variant="ghost" size="icon" className="h-8 w-8">
                 <Twitter className="h-4 w-4" />
               </Button>
-              <Button variant="ghost" size="sm" className="p-2 h-8 w-8">
-                <Instagram className="h-4 w-4" />
+              <Button variant="ghost" size="icon" className="h-8 w-8">
+                <Github className="h-4 w-4" />
               </Button>
-              <Button variant="ghost" size="sm" className="p-2 h-8 w-8">
-                <Linkedin className="h-4 w-4" />
+              <Button variant="ghost" size="icon" className="h-8 w-8">
+                <Mail className="h-4 w-4" />
               </Button>
             </div>
           </div>
 
-          {/* Quick Links */}
+          {/* Quick Access */}
           <div>
-            <h4 className="font-semibold text-foreground mb-4">Calculators</h4>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <a href="#calculators" className="text-muted-foreground hover:text-primary transition-colors">
-                  Mpesa Charges
-                </a>
-              </li>
-              <li>
-                <a href="#calculators" className="text-muted-foreground hover:text-primary transition-colors">
-                  Loan Calculator
-                </a>
-              </li>
-              <li>
-                <a href="#calculators" className="text-muted-foreground hover:text-primary transition-colors">
-                  Net Salary Calculator
-                </a>
-              </li>
-              <li>
-                <a href="#calculators" className="text-muted-foreground hover:text-primary transition-colors">
-                  Fuliza Calculator
-                </a>
-              </li>
-              <li>
-                <a href="#calculators" className="text-muted-foreground hover:text-primary transition-colors">
-                  Budget Planner
-                </a>
-              </li>
-              <li>
-                <a href="#calculators" className="text-muted-foreground hover:text-primary transition-colors">
-                  Electricity Costs
-                </a>
-              </li>
-              <li>
-                <a href="#calculators" className="text-muted-foreground hover:text-primary transition-colors">
-                  Cost of Living
-                </a>
-              </li>
-              <li>
-                <a href="#calculators" className="text-muted-foreground hover:text-primary transition-colors">
-                  Construction Cost
-                </a>
-              </li>
-              <li>
-                <a href="#calculators" className="text-muted-foreground hover:text-primary transition-colors">
-                  Bill Splitting
-                </a>
-              </li>
-              <li>
-                <a href="#calculators" className="text-muted-foreground hover:text-primary transition-colors">
-                  School Fee Planner
-                </a>
-              </li>
-              <li>
-                <a href="#calculators" className="text-muted-foreground hover:text-primary transition-colors">
-                  ROI Estimator
-                </a>
-              </li>
-              <li>
-                <a href="#calculators" className="text-muted-foreground hover:text-primary transition-colors">
-                  VAT Calculator
-                </a>
-              </li>
-              <li>
-                <a href="#calculators" className="text-muted-foreground hover:text-primary transition-colors">
-                  Savings Goal
-                </a>
-              </li>
+            <h4 className="font-poppins font-semibold text-foreground mb-4">Popular Calculators</h4>
+            <ul className="space-y-2">
+              {calculatorLinks.map((link) => (
+                <li key={link.name}>
+                  <a href={link.href} className="text-body text-muted-foreground hover:text-primary transition-colors">
+                    {link.name}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Resources */}
+          {/* Contact */}
           <div>
-            <h4 className="font-semibold text-foreground mb-4">Resources</h4>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                  Financial Tips
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                  Budgeting Guide
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                  Investment Basics
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                  FAQ
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                  Privacy Policy
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* Contact Info */}
-          <div>
-            <h4 className="font-semibold text-foreground mb-4">Contact</h4>
-            <div className="space-y-3 text-sm">
-              <div className="flex items-center space-x-3">
-                <MapPin className="h-4 w-4 text-muted-foreground flex-shrink-0" />
-                <span className="text-muted-foreground">Nairobi, Kenya</span>
+            <h4 className="font-poppins font-semibold text-foreground mb-4">Support</h4>
+            <div className="space-y-3 text-body">
+              <div className="text-muted-foreground">
+                <p>Built for Kenyan consumers</p>
+                <p>Always free to use</p>
+                <p>Regularly updated rates</p>
               </div>
-              <div className="flex items-center space-x-3">
-                <Phone className="h-4 w-4 text-muted-foreground flex-shrink-0" />
-                <span className="text-muted-foreground">+254 700 000 000</span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <Mail className="h-4 w-4 text-muted-foreground flex-shrink-0" />
-                <span className="text-muted-foreground">info@kenyanfinancial.com</span>
-              </div>
+              <Button variant="outline" size="sm" asChild>
+                <a href="mailto:support@kenyanfinancial.com">
+                  <Mail className="mr-2 h-4 w-4" />
+                  Get Support
+                </a>
+              </Button>
             </div>
           </div>
         </div>
 
-        <div className="border-t border-border mt-8 pt-8 text-center">
-          <p className="text-muted-foreground text-sm">
-            © 2024 Kenyan Financial Toolkit. All rights reserved. Built for financial empowerment.
-          </p>
+        <div className="border-t mt-8 pt-8 text-center">
+          <p className="text-caption">© 2024 Kenyan Financial Toolkit. Built with care for financial empowerment.</p>
         </div>
       </div>
     </footer>
