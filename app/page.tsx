@@ -27,6 +27,12 @@ import {
   Car,
   ArrowRight,
   CheckCircle,
+  Baby,
+  Scale,
+  Apple,
+  Calendar,
+  Droplets,
+  Heart,
 } from "lucide-react"
 
 // Import calculators
@@ -44,6 +50,12 @@ import { RoiEstimator } from "../src/components/calculators/RoiEstimator"
 import { VatCalculator } from "../src/components/calculators/VatCalculator"
 import { SavingsGoalCalculator } from "../src/components/calculators/SavingsGoalCalculator"
 import { CarImportTaxCalculator } from "../src/components/calculators/CarImportTaxCalculator"
+import { PregnancyDueDateCalculator } from "../src/components/calculators/PregnancyDueDateCalculator"
+import { BmiCalculator } from "../src/components/calculators/BmiCalculator"
+import { CalorieCalculator } from "../src/components/calculators/CalorieCalculator"
+import { OvulationTracker } from "../src/components/calculators/OvulationTracker"
+import { WaterIntakeCalculator } from "../src/components/calculators/WaterIntakeCalculator"
+import { HeartRateZonesCalculator } from "../src/components/calculators/HeartRateZonesCalculator"
 import { Header, Footer } from "../src/components/layout/HeaderFooter"
 
 type CalculatorId = string
@@ -185,6 +197,60 @@ const calculators: CalculatorType[] = [
     category: "Savings",
     popular: false,
   },
+  {
+    id: "pregnancy-due-date",
+    title: "Pregnancy Due Date",
+    description: "Estimate due date, trimester, weeks left",
+    icon: Baby,
+    component: PregnancyDueDateCalculator,
+    category: "Health",
+    popular: false,
+  },
+  {
+    id: "bmi-calculator",
+    title: "BMI Calculator",
+    description: "Body Mass Index from height & weight",
+    icon: Scale,
+    component: BmiCalculator,
+    category: "Health",
+    popular: false,
+  },
+  {
+    id: "calorie-calculator",
+    title: "Calorie Calculator",
+    description: "Estimate daily calorie needs (BMR)",
+    icon: Apple,
+    component: CalorieCalculator,
+    category: "Health",
+    popular: false,
+  },
+  {
+    id: "ovulation-tracker",
+    title: "Ovulation Tracker",
+    description: "Show fertile window from menstrual cycle",
+    icon: Calendar,
+    component: OvulationTracker,
+    category: "Health",
+    popular: false,
+  },
+  {
+    id: "water-intake",
+    title: "Water Intake",
+    description: "Daily recommended water based on weight & activity",
+    icon: Droplets,
+    component: WaterIntakeCalculator,
+    category: "Health",
+    popular: false,
+  },
+  {
+    id: "heart-rate-zones",
+    title: "Heart Rate Zones",
+    description: "Calculate training zones based on age and fitness level",
+    icon: Heart,
+    component: HeartRateZonesCalculator,
+    category: "Health",
+    popular: false,
+  },
 ]
 
 const categoryColors = {
@@ -264,6 +330,13 @@ const categoryColors = {
     icon: "text-blue-600 dark:text-blue-400",
     iconBg: "bg-blue-100 dark:bg-blue-900/30",
     hover: "hover:bg-blue-100 dark:hover:bg-blue-900/40",
+  },
+  Health: {
+    bg: "bg-pink-50 dark:bg-pink-950/20",
+    border: "border-pink-200 dark:border-pink-800",
+    icon: "text-pink-600 dark:text-pink-400",
+    iconBg: "bg-pink-100 dark:bg-pink-900/30",
+    hover: "hover:bg-pink-100 dark:hover:bg-pink-900/40",
   },
 }
 
