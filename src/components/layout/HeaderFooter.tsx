@@ -140,7 +140,7 @@ export const Footer = () => {
         </div>
 
         <div className="border-t mt-8 pt-8 text-center">
-          <p className="text-caption">© 2024 Kenyan Financial Toolkit. Built with care for financial empowerment.</p>
+          <p className="text-caption">© 2024 Kenyan Financial Toolkit. Built with❤️ by @ItsMeGitau.  </p>
         </div>
       </div>
     </footer>
