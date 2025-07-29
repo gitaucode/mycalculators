@@ -8,122 +8,123 @@ import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Droplets, Activity, Thermometer, AlertTriangle } from "lucide-react"
+import { Droplets, Activity, AlertTriangle, Thermometer } from "lucide-react"
 
-interface WaterResult {
+interface WaterIntakeResult {
   baseIntake: number
-  adjustedIntake: number
+  activityAdjustment: number
+  climateAdjustment: number
+  totalIntake: number
   glassesPerDay: number
-  hourlyIntake: number
-  recommendations: string[]
-  factors: {
-    activity: number
-    climate: number
-    health: number
-  }
+  bottlesPerDay: number
+  tips: string[]
 }
 
 export function WaterIntakeCalculator() {
   const [weight, setWeight] = useState("")
   const [activityLevel, setActivityLevel] = useState("")
   const [climate, setClimate] = useState("")
-  const [healthConditions, setHealthConditions] = useState("")
   const [unit, setUnit] = useState<"metric" | "imperial">("metric")
-  const [result, setResult] = useState<WaterResult | null>(null)
+  const [result, setResult] = useState<WaterIntakeResult | null>(null)
 
   const activityLevels = {
-    sedentary: { label: "Sedentary (little/no exercise)", multiplier: 1.0 },
-    light: { label: "Light activity (1-3 days/week)", multiplier: 1.1 },
-    moderate: { label: "Moderate activity (3-5 days/week)", multiplier: 1.2 },
-    active: { label: "Very active (6-7 days/week)", multiplier: 1.3 },
-    intense: { label: "Intense activity (2x/day, intense workouts)", multiplier: 1.5 },
+    sedentary: { label: "Sedentary (little/no exercise)", multiplier: 0 },
+    light: { label: "Light activity (1-3 days/week)", multiplier: 350 },
+    moderate: { label: "Moderate activity (3-5 days/week)", multiplier: 500 },
+    active: { label: "Very active (6-7 days/week)", multiplier: 750 },
+    intense: { label: "Intense activity (2x/day, training)", multiplier: 1000 },
   }
 
-  const climateFactors = {
-    temperate: { label: "Temperate (15-25°C / 59-77°F)", multiplier: 1.0 },
-    warm: { label: "Warm (25-30°C / 77-86°F)", multiplier: 1.1 },
-    hot: { label: "Hot (30°C+ / 86°F+)", multiplier: 1.2 },
-    humid: { label: "Hot & Humid", multiplier: 1.3 },
-    cold: { label: "Cold (below 15°C / 59°F)", multiplier: 0.95 },
-  }
-
-  const healthFactors = {
-    normal: { label: "No specific conditions", multiplier: 1.0 },
-    fever: { label: "Fever/illness", multiplier: 1.3 },
-    pregnancy: { label: "Pregnancy", multiplier: 1.2 },
-    breastfeeding: { label: "Breastfeeding", multiplier: 1.4 },
-    kidney: { label: "Kidney stones history", multiplier: 1.2 },
-    diabetes: { label: "Diabetes", multiplier: 1.1 },
+  const climateTypes = {
+    temperate: { label: "Temperate (normal conditions)", adjustment: 0 },
+    hot: { label: "Hot/Humid climate", adjustment: 500 },
+    cold: { label: "Cold climate", adjustment: -200 },
+    dry: { label: "Dry/Arid climate", adjustment: 300 },
   }
 
   const calculateWaterIntake = () => {
-    if (!weight || !activityLevel || !climate || !healthConditions) return
+    if (!weight || !activityLevel || !climate) return
 
-    let weightInKg: number
-    if (unit === "metric") {
-      weightInKg = Number.parseFloat(weight)
-    } else {
-      weightInKg = Number.parseFloat(weight) * 0.453592 // pounds to kg
+    let weightInKg = Number.parseFloat(weight)
+    if (unit === "imperial") {
+      weightInKg = weightInKg * 0.453592 // pounds to kg
     }
 
-    // Base calculation: 35ml per kg of body weight
-    const baseIntake = weightInKg * 35 // ml per day
+    // Base water intake: 35ml per kg of body weight
+    const baseIntake = weightInKg * 35
 
-    // Apply multipliers
-    const activityMultiplier = activityLevels[activityLevel as keyof typeof activityLevels].multiplier
-    const climateMultiplier = climateFactors[climate as keyof typeof climateFactors].multiplier
-    const healthMultiplier = healthFactors[healthConditions as keyof typeof healthFactors].multiplier
+    // Activity adjustment
+    const activityAdjustment = activityLevels[activityLevel as keyof typeof activityLevels].multiplier
 
-    const adjustedIntake = baseIntake * activityMultiplier * climateMultiplier * healthMultiplier
+    // Climate adjustment
+    const climateAdjustment = climateTypes[climate as keyof typeof climateTypes].adjustment
 
-    // Convert to liters and calculate glasses (250ml per glass)
-    const intakeInLiters = adjustedIntake / 1000
-    const glassesPerDay = Math.round(adjustedIntake / 250)
-    const hourlyIntake = Math.round(adjustedIntake / 16) // Assuming 16 waking hours
+    // Total daily intake in ml
+    const totalIntake = baseIntake + activityAdjustment + climateAdjustment
 
-    // Generate recommendations
-    const recommendations = generateRecommendations(activityLevel, climate, healthConditions)
+    // Convert to glasses (250ml) and bottles (500ml)
+    const glassesPerDay = Math.round(totalIntake / 250)
+    const bottlesPerDay = Math.round(totalIntake / 500)
+
+    // Generate personalized tips
+    const tips = generateTips(activityLevel, climate, totalIntake)
 
     setResult({
       baseIntake: Math.round(baseIntake),
-      adjustedIntake: Math.round(adjustedIntake),
+      activityAdjustment,
+      climateAdjustment,
+      totalIntake: Math.round(totalIntake),
       glassesPerDay,
-      hourlyIntake,
-      recommendations,
-      factors: {
-        activity: activityMultiplier,
-        climate: climateMultiplier,
-        health: healthMultiplier,
-      },
+      bottlesPerDay,
+      tips,
     })
   }
 
-  const generateRecommendations = (activity: string, climate: string, health: string): string[] => {
-    const recommendations = [
-      "Start your day with a glass of water",
-      "Drink water before, during, and after exercise",
-      "Keep a water bottle with you throughout the day",
-    ]
+  const generateTips = (activity: string, climateType: string, intake: number): string[] => {
+    const tips = []
 
+    // Base tips
+    tips.push("Drink water consistently throughout the day, not all at once")
+    tips.push("Start your day with a glass of water to kickstart hydration")
+
+    // Activity-based tips
     if (activity === "active" || activity === "intense") {
-      recommendations.push("Increase intake during and after intense workouts")
-      recommendations.push("Consider electrolyte replacement for long sessions")
+      tips.push("Drink 150-250ml of water 15-20 minutes before exercise")
+      tips.push("During exercise, drink 200-300ml every 15-20 minutes")
+      tips.push("Rehydrate after exercise with 150% of fluid lost through sweat")
     }
 
-    if (climate === "hot" || climate === "humid") {
-      recommendations.push("Drink extra water in hot weather")
-      recommendations.push("Monitor urine color as a hydration indicator")
+    // Climate-based tips
+    if (climateType === "hot") {
+      tips.push("Increase intake during hot weather to replace sweat losses")
+      tips.push("Choose cool water over room temperature in hot climates")
+    } else if (climateType === "cold") {
+      tips.push("Don't forget to hydrate in cold weather - you still lose fluids")
+    } else if (climateType === "dry") {
+      tips.push("Dry climates increase water loss through breathing and skin")
     }
 
-    if (health === "fever") {
-      recommendations.push("Increase intake when sick or feverish")
+    // Intake-based tips
+    if (intake > 3000) {
+      tips.push("With high water needs, consider electrolyte replacement")
+      tips.push("Spread intake evenly to avoid overwhelming your kidneys")
     }
 
-    if (health === "pregnancy" || health === "breastfeeding") {
-      recommendations.push("Consult healthcare provider for specific needs")
-    }
+    return tips.slice(0, 5) // Return top 5 tips
+  }
 
-    return recommendations.slice(0, 5) // Return top 5 recommendations
+  const getIntakeColor = (intake: number) => {
+    if (intake < 2000) return "text-red-600"
+    if (intake < 2500) return "text-yellow-600"
+    if (intake < 3500) return "text-green-600"
+    return "text-blue-600"
+  }
+
+  const getIntakeStatus = (intake: number) => {
+    if (intake < 2000) return { status: "Low", color: "bg-red-100 text-red-800 border-red-200" }
+    if (intake < 2500) return { status: "Moderate", color: "bg-yellow-100 text-yellow-800 border-yellow-200" }
+    if (intake < 3500) return { status: "Good", color: "bg-green-100 text-green-800 border-green-200" }
+    return { status: "High", color: "bg-blue-100 text-blue-800 border-blue-200" }
   }
 
   return (
@@ -136,7 +137,7 @@ export function WaterIntakeCalculator() {
             <span>Water Intake Calculator</span>
           </CardTitle>
           <CardDescription>
-            Calculate your daily water needs based on weight, activity, and environmental factors
+            Calculate your daily water needs based on weight, activity level, and climate conditions
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
@@ -173,7 +174,7 @@ export function WaterIntakeCalculator() {
             </TabsContent>
           </Tabs>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
               <Label htmlFor="activity">Activity Level</Label>
               <Select value={activityLevel} onValueChange={setActivityLevel}>
@@ -191,13 +192,13 @@ export function WaterIntakeCalculator() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="climate">Climate/Temperature</Label>
+              <Label htmlFor="climate">Climate Conditions</Label>
               <Select value={climate} onValueChange={setClimate}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select climate" />
                 </SelectTrigger>
                 <SelectContent>
-                  {Object.entries(climateFactors).map(([key, value]) => (
+                  {Object.entries(climateTypes).map(([key, value]) => (
                     <SelectItem key={key} value={key}>
                       {value.label}
                     </SelectItem>
@@ -207,28 +208,8 @@ export function WaterIntakeCalculator() {
             </div>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="health">Health Conditions</Label>
-            <Select value={healthConditions} onValueChange={setHealthConditions}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select health condition" />
-              </SelectTrigger>
-              <SelectContent>
-                {Object.entries(healthFactors).map(([key, value]) => (
-                  <SelectItem key={key} value={key}>
-                    {value.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
-          <Button
-            onClick={calculateWaterIntake}
-            className="w-full"
-            disabled={!weight || !activityLevel || !climate || !healthConditions}
-          >
-            <Activity className="mr-2 h-4 w-4" />
+          <Button onClick={calculateWaterIntake} className="w-full" disabled={!weight || !activityLevel || !climate}>
+            <Droplets className="mr-2 h-4 w-4" />
             Calculate Water Intake
           </Button>
         </CardContent>
@@ -237,98 +218,86 @@ export function WaterIntakeCalculator() {
       {/* Results Section */}
       {result && (
         <div className="space-y-6">
-          {/* Main Results */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Daily Water Intake</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-center p-6 bg-blue-50 rounded-lg border border-blue-200">
-                  <div className="text-3xl font-bold text-blue-800 mb-1">
-                    {(result.adjustedIntake / 1000).toFixed(1)}L
-                  </div>
-                  <div className="text-sm text-blue-600">{result.adjustedIntake}ml per day</div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Glasses Per Day</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-center p-6 bg-green-50 rounded-lg border border-green-200">
-                  <div className="text-3xl font-bold text-green-800 mb-1">{result.glassesPerDay}</div>
-                  <div className="text-sm text-green-600">250ml glasses</div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Hourly Intake</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-center p-6 bg-purple-50 rounded-lg border border-purple-200">
-                  <div className="text-3xl font-bold text-purple-800 mb-1">{result.hourlyIntake}ml</div>
-                  <div className="text-sm text-purple-600">per waking hour</div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Adjustment Factors */}
+          {/* Main Result */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">Adjustment Factors Applied</CardTitle>
+              <CardTitle className="text-lg">Your Daily Water Intake</CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="p-4 bg-orange-50 rounded-lg border border-orange-200 text-center">
-                  <div className="flex items-center justify-center mb-2">
-                    <Activity className="h-5 w-5 text-orange-600 mr-2" />
-                    <span className="font-semibold text-orange-800">Activity</span>
-                  </div>
-                  <Badge variant="outline" className="text-orange-700 border-orange-300">
-                    {result.factors.activity}x
-                  </Badge>
+            <CardContent className="space-y-4">
+              <div className="text-center p-6 bg-blue-50 rounded-lg border border-blue-200">
+                <div className={`text-4xl font-bold mb-2 ${getIntakeColor(result.totalIntake)}`}>
+                  {result.totalIntake.toLocaleString()} ml
                 </div>
-                <div className="p-4 bg-red-50 rounded-lg border border-red-200 text-center">
-                  <div className="flex items-center justify-center mb-2">
-                    <Thermometer className="h-5 w-5 text-red-600 mr-2" />
-                    <span className="font-semibold text-red-800">Climate</span>
-                  </div>
-                  <Badge variant="outline" className="text-red-700 border-red-300">
-                    {result.factors.climate}x
-                  </Badge>
-                </div>
-                <div className="p-4 bg-blue-50 rounded-lg border border-blue-200 text-center">
-                  <div className="flex items-center justify-center mb-2">
-                    <span className="font-semibold text-blue-800">Health</span>
-                  </div>
-                  <Badge variant="outline" className="text-blue-700 border-blue-300">
-                    {result.factors.health}x
-                  </Badge>
-                </div>
+                <Badge className={`${getIntakeStatus(result.totalIntake).color} px-3 py-1`}>
+                  {getIntakeStatus(result.totalIntake).status} Intake Level
+                </Badge>
               </div>
-              <div className="mt-4 p-3 bg-gray-50 rounded-lg border text-center">
-                <span className="text-sm text-gray-600">
-                  Base intake: {(result.baseIntake / 1000).toFixed(1)}L → Adjusted:{" "}
-                  {(result.adjustedIntake / 1000).toFixed(1)}L
-                </span>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="p-4 bg-cyan-50 rounded-lg border border-cyan-200 text-center">
+                  <div className="text-2xl font-bold text-cyan-800 mb-1">{result.glassesPerDay}</div>
+                  <div className="text-sm text-cyan-600">Glasses per day (250ml each)</div>
+                </div>
+                <div className="p-4 bg-teal-50 rounded-lg border border-teal-200 text-center">
+                  <div className="text-2xl font-bold text-teal-800 mb-1">{result.bottlesPerDay}</div>
+                  <div className="text-sm text-teal-600">Bottles per day (500ml each)</div>
+                </div>
               </div>
             </CardContent>
           </Card>
 
-          {/* Recommendations */}
+          {/* Breakdown */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg">Calculation Breakdown</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-3">
+                <div className="flex justify-between items-center p-3 bg-blue-50 rounded-lg border border-blue-200">
+                  <span className="font-medium">Base intake (35ml/kg body weight)</span>
+                  <span className="font-bold text-blue-800">{result.baseIntake} ml</span>
+                </div>
+
+                {result.activityAdjustment > 0 && (
+                  <div className="flex justify-between items-center p-3 bg-green-50 rounded-lg border border-green-200">
+                    <span className="font-medium flex items-center">
+                      <Activity className="h-4 w-4 mr-2" />
+                      Activity adjustment
+                    </span>
+                    <span className="font-bold text-green-800">+{result.activityAdjustment} ml</span>
+                  </div>
+                )}
+
+                {result.climateAdjustment !== 0 && (
+                  <div
+                    className={`flex justify-between items-center p-3 rounded-lg border ${
+                      result.climateAdjustment > 0 ? "bg-orange-50 border-orange-200" : "bg-purple-50 border-purple-200"
+                    }`}
+                  >
+                    <span className="font-medium flex items-center">
+                      <Thermometer className="h-4 w-4 mr-2" />
+                      Climate adjustment
+                    </span>
+                    <span
+                      className={`font-bold ${result.climateAdjustment > 0 ? "text-orange-800" : "text-purple-800"}`}
+                    >
+                      {result.climateAdjustment > 0 ? "+" : ""}
+                      {result.climateAdjustment} ml
+                    </span>
+                  </div>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Tips */}
           <Card>
             <CardHeader>
               <CardTitle className="text-lg">Hydration Tips</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
-                {result.recommendations.map((tip, index) => (
+                {result.tips.map((tip, index) => (
                   <div
                     key={index}
                     className="flex items-start space-x-3 p-3 bg-blue-50 rounded-lg border border-blue-200"
@@ -337,37 +306,6 @@ export function WaterIntakeCalculator() {
                     <span className="text-sm text-blue-800">{tip}</span>
                   </div>
                 ))}
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Hydration Schedule */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">Suggested Daily Schedule</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div className="p-3 bg-yellow-50 rounded-lg border border-yellow-200 text-center">
-                  <div className="font-semibold text-yellow-800">Morning</div>
-                  <div className="text-sm text-yellow-600">2-3 glasses</div>
-                  <div className="text-xs text-yellow-500 mt-1">Upon waking</div>
-                </div>
-                <div className="p-3 bg-green-50 rounded-lg border border-green-200 text-center">
-                  <div className="font-semibold text-green-800">Afternoon</div>
-                  <div className="text-sm text-green-600">{Math.ceil(result.glassesPerDay * 0.4)} glasses</div>
-                  <div className="text-xs text-green-500 mt-1">With meals</div>
-                </div>
-                <div className="p-3 bg-blue-50 rounded-lg border border-blue-200 text-center">
-                  <div className="font-semibold text-blue-800">Evening</div>
-                  <div className="text-sm text-blue-600">{Math.ceil(result.glassesPerDay * 0.3)} glasses</div>
-                  <div className="text-xs text-blue-500 mt-1">Before dinner</div>
-                </div>
-                <div className="p-3 bg-purple-50 rounded-lg border border-purple-200 text-center">
-                  <div className="font-semibold text-purple-800">Exercise</div>
-                  <div className="text-sm text-purple-600">Extra 1-2 glasses</div>
-                  <div className="text-xs text-purple-500 mt-1">During activity</div>
-                </div>
               </div>
             </CardContent>
           </Card>
@@ -383,11 +321,11 @@ export function WaterIntakeCalculator() {
           </CardTitle>
         </CardHeader>
         <CardContent className="text-amber-700 space-y-2">
-          <p>• These calculations are general guidelines based on standard recommendations</p>
-          <p>• Individual needs may vary based on metabolism, medications, and health conditions</p>
+          <p>• These are general recommendations - individual needs may vary</p>
+          <p>• Increase intake during illness, fever, or when consuming caffeine/alcohol</p>
           <p>• Monitor urine color: pale yellow indicates good hydration</p>
-          <p>• Consult healthcare providers if you have kidney, heart, or other medical conditions</p>
-          <p>• Include water from food sources (fruits, vegetables, soups) in your total intake</p>
+          <p>• Consult healthcare providers for specific medical conditions</p>
+          <p>• Listen to your body - thirst is an early indicator of dehydration</p>
         </CardContent>
       </Card>
     </div>
