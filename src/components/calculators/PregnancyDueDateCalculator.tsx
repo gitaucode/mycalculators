@@ -6,77 +6,103 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Badge } from "@/components/ui/badge"
-import { Separator } from "@/components/ui/separator"
-import { Baby, Calendar, Clock } from "lucide-react"
+import { Calendar, Baby, AlertTriangle } from "lucide-react"
+import { format, addDays, differenceInDays } from "date-fns"
+
+interface PregnancyResult {
+  dueDate: Date
+  currentWeek: number
+  currentDay: number
+  trimester: number
+  weeksLeft: number
+  daysLeft: number
+  trimesterName: string
+  milestones: string[]
+}
 
 export function PregnancyDueDateCalculator() {
   const [lastPeriodDate, setLastPeriodDate] = useState("")
-  const [cycleLength, setCycleLength] = useState("28")
-  const [results, setResults] = useState<{
-    dueDate: string
-    currentWeek: number
-    currentTrimester: number
-    weeksLeft: number
-    conceptionDate: string
-  } | null>(null)
+  const [result, setResult] = useState<PregnancyResult | null>(null)
 
   const calculateDueDate = () => {
     if (!lastPeriodDate) return
 
-    const lmp = new Date(lastPeriodDate)
-    const cycle = Number.parseInt(cycleLength)
-
-    // Calculate due date (280 days from LMP)
-    const dueDate = new Date(lmp)
-    dueDate.setDate(dueDate.getDate() + 280)
-
-    // Calculate conception date (approximately 14 days after LMP for 28-day cycle)
-    const conceptionDate = new Date(lmp)
-    conceptionDate.setDate(conceptionDate.getDate() + cycle / 2)
-
-    // Calculate current week
+    const lmpDate = new Date(lastPeriodDate)
+    const dueDate = addDays(lmpDate, 280) // 40 weeks
     const today = new Date()
-    const daysSinceLMP = Math.floor((today.getTime() - lmp.getTime()) / (1000 * 60 * 60 * 24))
-    const currentWeek = Math.floor(daysSinceLMP / 7)
 
-    // Calculate trimester
-    let currentTrimester = 1
-    if (currentWeek >= 13) currentTrimester = 2
-    if (currentWeek >= 27) currentTrimester = 3
+    const totalDays = differenceInDays(today, lmpDate)
+    const currentWeek = Math.floor(totalDays / 7)
+    const currentDay = totalDays % 7
 
-    // Calculate weeks left
-    const weeksLeft = Math.max(0, 40 - currentWeek)
+    const weeksLeft = 40 - currentWeek
+    const daysLeft = differenceInDays(dueDate, today)
 
-    setResults({
-      dueDate: dueDate.toLocaleDateString(),
-      currentWeek: Math.max(0, currentWeek),
-      currentTrimester,
-      weeksLeft,
-      conceptionDate: conceptionDate.toLocaleDateString(),
+    let trimester = 1
+    let trimesterName = "First Trimester"
+
+    if (currentWeek >= 13 && currentWeek < 27) {
+      trimester = 2
+      trimesterName = "Second Trimester"
+    } else if (currentWeek >= 27) {
+      trimester = 3
+      trimesterName = "Third Trimester"
+    }
+
+    const milestones = getMilestones(currentWeek)
+
+    setResult({
+      dueDate,
+      currentWeek,
+      currentDay,
+      trimester,
+      weeksLeft: Math.max(0, weeksLeft),
+      daysLeft: Math.max(0, daysLeft),
+      trimesterName,
+      milestones,
     })
   }
 
-  const getTrimesterInfo = (trimester: number) => {
-    const info = {
-      1: { name: "First Trimester", weeks: "1-12", color: "bg-green-100 text-green-800" },
-      2: { name: "Second Trimester", weeks: "13-26", color: "bg-blue-100 text-blue-800" },
-      3: { name: "Third Trimester", weeks: "27-40", color: "bg-purple-100 text-purple-800" },
+  const getMilestones = (week: number): string[] => {
+    const milestones = []
+
+    if (week >= 4) milestones.push("Heart begins to beat")
+    if (week >= 8) milestones.push("All major organs formed")
+    if (week >= 12) milestones.push("End of first trimester")
+    if (week >= 16) milestones.push("Gender can be determined")
+    if (week >= 20) milestones.push("Halfway point reached")
+    if (week >= 24) milestones.push("Viability milestone")
+    if (week >= 28) milestones.push("Third trimester begins")
+    if (week >= 32) milestones.push("Rapid brain development")
+    if (week >= 36) milestones.push("Considered full-term soon")
+    if (week >= 37) milestones.push("Full-term pregnancy")
+
+    return milestones.slice(-3) // Show last 3 milestones
+  }
+
+  const getTrimesterColor = (trimester: number) => {
+    switch (trimester) {
+      case 1:
+        return "bg-green-100 text-green-800 border-green-200"
+      case 2:
+        return "bg-blue-100 text-blue-800 border-blue-200"
+      case 3:
+        return "bg-purple-100 text-purple-800 border-purple-200"
+      default:
+        return "bg-gray-100 text-gray-800 border-gray-200"
     }
-    return info[trimester as keyof typeof info]
   }
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
+    <div className="max-w-4xl mx-auto space-y-8">
+      {/* Input Section */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
-            <Baby className="h-5 w-5" />
+            <Baby className="h-5 w-5 text-pink-600" />
             <span>Pregnancy Due Date Calculator</span>
           </CardTitle>
-          <CardDescription>
-            Calculate your estimated due date, current trimester, and weeks remaining based on your last menstrual
-            period
-          </CardDescription>
+          <CardDescription>Calculate your due date, current trimester, and pregnancy milestones</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -87,117 +113,89 @@ export function PregnancyDueDateCalculator() {
                 type="date"
                 value={lastPeriodDate}
                 onChange={(e) => setLastPeriodDate(e.target.value)}
-                max={new Date().toISOString().split("T")[0]}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="cycleLength">Average Cycle Length (days)</Label>
-              <Input
-                id="cycleLength"
-                type="number"
-                value={cycleLength}
-                onChange={(e) => setCycleLength(e.target.value)}
-                min="21"
-                max="35"
-                placeholder="28"
+                max={format(new Date(), "yyyy-MM-dd")}
               />
             </div>
           </div>
 
           <Button onClick={calculateDueDate} className="w-full" disabled={!lastPeriodDate}>
+            <Calendar className="mr-2 h-4 w-4" />
             Calculate Due Date
           </Button>
         </CardContent>
       </Card>
 
-      {results && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* Results Section */}
+      {result && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Due Date & Progress */}
           <Card>
-            <CardHeader className="pb-3">
-              <CardTitle className="text-lg flex items-center space-x-2">
-                <Calendar className="h-5 w-5 text-pink-600" />
-                <span>Due Date</span>
-              </CardTitle>
+            <CardHeader>
+              <CardTitle className="text-lg">Due Date & Progress</CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-pink-600 mb-2">{results.dueDate}</div>
-              <p className="text-sm text-muted-foreground">Estimated delivery date</p>
-            </CardContent>
-          </Card>
+            <CardContent className="space-y-4">
+              <div className="text-center p-4 bg-pink-50 rounded-lg border border-pink-200">
+                <div className="text-2xl font-bold text-pink-800 mb-1">{format(result.dueDate, "MMMM dd, yyyy")}</div>
+                <div className="text-sm text-pink-600">Estimated Due Date</div>
+              </div>
 
-          <Card>
-            <CardHeader className="pb-3">
-              <CardTitle className="text-lg flex items-center space-x-2">
-                <Clock className="h-5 w-5 text-blue-600" />
-                <span>Current Progress</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-blue-600 mb-2">Week {results.currentWeek}</div>
-              <Badge className={getTrimesterInfo(results.currentTrimester).color}>
-                {getTrimesterInfo(results.currentTrimester).name}
+              <div className="grid grid-cols-2 gap-4">
+                <div className="text-center p-3 bg-blue-50 rounded-lg border border-blue-200">
+                  <div className="text-xl font-bold text-blue-800">
+                    {result.currentWeek}w {result.currentDay}d
+                  </div>
+                  <div className="text-xs text-blue-600">Current Progress</div>
+                </div>
+                <div className="text-center p-3 bg-green-50 rounded-lg border border-green-200">
+                  <div className="text-xl font-bold text-green-800">{result.weeksLeft}w</div>
+                  <div className="text-xs text-green-600">Weeks Remaining</div>
+                </div>
+              </div>
+
+              <Badge className={`w-full justify-center py-2 ${getTrimesterColor(result.trimester)}`}>
+                {result.trimesterName}
               </Badge>
-              <p className="text-sm text-muted-foreground mt-2">
-                Weeks {getTrimesterInfo(results.currentTrimester).weeks}
-              </p>
             </CardContent>
           </Card>
 
+          {/* Milestones */}
           <Card>
-            <CardHeader className="pb-3">
-              <CardTitle className="text-lg flex items-center space-x-2">
-                <Baby className="h-5 w-5 text-purple-600" />
-                <span>Time Remaining</span>
-              </CardTitle>
+            <CardHeader>
+              <CardTitle className="text-lg">Recent Milestones</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-purple-600 mb-2">{results.weeksLeft} weeks</div>
-              <p className="text-sm text-muted-foreground">
-                Approximately {Math.ceil(results.weeksLeft / 4)} months left
-              </p>
+              <div className="space-y-3">
+                {result.milestones.map((milestone, index) => (
+                  <div
+                    key={index}
+                    className="flex items-start space-x-3 p-3 bg-purple-50 rounded-lg border border-purple-200"
+                  >
+                    <div className="w-2 h-2 bg-purple-500 rounded-full mt-2 flex-shrink-0" />
+                    <span className="text-sm text-purple-800">{milestone}</span>
+                  </div>
+                ))}
+              </div>
             </CardContent>
           </Card>
         </div>
       )}
 
-      {results && (
-        <Card>
-          <CardHeader>
-            <CardTitle>Additional Information</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <h4 className="font-semibold mb-2">Estimated Conception Date</h4>
-                <p className="text-lg">{results.conceptionDate}</p>
-              </div>
-              <div>
-                <h4 className="font-semibold mb-2">Pregnancy Progress</h4>
-                <div className="w-full bg-gray-200 rounded-full h-2">
-                  <div
-                    className="bg-pink-600 h-2 rounded-full transition-all duration-300"
-                    style={{ width: `${(results.currentWeek / 40) * 100}%` }}
-                  ></div>
-                </div>
-                <p className="text-sm text-muted-foreground mt-1">
-                  {Math.round((results.currentWeek / 40) * 100)}% complete
-                </p>
-              </div>
-            </div>
-
-            <Separator />
-
-            <div className="text-sm text-muted-foreground">
-              <p className="mb-2">
-                <strong>Note:</strong> This calculator provides estimates based on average pregnancy duration.
-              </p>
-              <p>• Only about 5% of babies are born on their exact due date</p>
-              <p>• Most babies are born within 2 weeks of the due date</p>
-              <p>• Always consult with your healthcare provider for personalized care</p>
-            </div>
-          </CardContent>
-        </Card>
-      )}
+      {/* Important Information */}
+      <Card className="border-amber-200 bg-amber-50">
+        <CardHeader>
+          <CardTitle className="flex items-center space-x-2 text-amber-800">
+            <AlertTriangle className="h-5 w-5" />
+            <span>Important Information</span>
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="text-amber-700 space-y-2">
+          <p>• This calculator provides estimates based on a 280-day pregnancy (40 weeks)</p>
+          <p>• Only about 5% of babies are born on their exact due date</p>
+          <p>• Normal delivery can occur 2 weeks before or after the due date</p>
+          <p>• Always consult with your healthcare provider for accurate medical advice</p>
+          <p>• Regular prenatal checkups are essential for monitoring pregnancy health</p>
+        </CardContent>
+      </Card>
     </div>
   )
 }

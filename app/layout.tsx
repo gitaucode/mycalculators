@@ -17,11 +17,12 @@ const poppins = Poppins({
 })
 
 export const metadata: Metadata = {
-  title: "Kenyan Financial Toolkit - Smart Money Decisions",
+  title: "K Toolkit - Smart Money Decisions for Kenya",
   description:
-    "Essential financial calculators for Kenyan consumers. Calculate M-Pesa charges, loans, salaries, and more with accurate, up-to-date rates.",
-  keywords: "Kenya, financial calculator, M-Pesa charges, loan calculator, salary calculator, budget planner",
-  authors: [{ name: "Kenyan Financial Toolkit" }],
+    "Essential financial and health calculators for Kenyan consumers. Calculate M-Pesa charges, loans, salaries, BMI, calories and more with accurate, up-to-date rates.",
+  keywords:
+    "Kenya, financial calculator, M-Pesa charges, loan calculator, salary calculator, budget planner, health calculator",
+  authors: [{ name: "K Toolkit" }],
   viewport: "width=device-width, initial-scale=1",
   robots: "index, follow",
     generator: 'v0.dev'

@@ -7,127 +7,131 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Scale, TrendingUp, AlertCircle } from "lucide-react"
+import { Scale, TrendingUp, AlertTriangle } from "lucide-react"
+
+interface BMIResult {
+  bmi: number
+  category: string
+  healthyRange: string
+  recommendation: string
+  color: string
+  risks: string[]
+}
 
 export function BmiCalculator() {
   const [height, setHeight] = useState("")
   const [weight, setWeight] = useState("")
-  const [unit, setUnit] = useState("metric")
-  const [results, setResults] = useState<{
-    bmi: number
-    category: string
-    healthyWeightRange: string
-    weightToLose: number
-    weightToGain: number
-  } | null>(null)
+  const [unit, setUnit] = useState<"metric" | "imperial">("metric")
+  const [result, setResult] = useState<BMIResult | null>(null)
 
   const calculateBMI = () => {
     if (!height || !weight) return
 
-    let heightInM = Number.parseFloat(height)
-    let weightInKg = Number.parseFloat(weight)
+    let heightInMeters: number
+    let weightInKg: number
 
-    // Convert to metric if needed
-    if (unit === "imperial") {
-      heightInM = heightInM * 0.0254 // inches to meters
-      weightInKg = weightInKg * 0.453592 // pounds to kg
+    if (unit === "metric") {
+      heightInMeters = Number.parseFloat(height) / 100 // cm to meters
+      weightInKg = Number.parseFloat(weight)
     } else {
-      heightInM = heightInM / 100 // cm to meters
+      heightInMeters = Number.parseFloat(height) * 0.0254 // inches to meters
+      weightInKg = Number.parseFloat(weight) * 0.453592 // pounds to kg
     }
 
-    const bmi = weightInKg / (heightInM * heightInM)
+    const bmi = weightInKg / (heightInMeters * heightInMeters)
+    const bmiResult = getBMICategory(bmi)
 
-    let category = ""
-    let categoryColor = ""
-
-    if (bmi < 18.5) {
-      category = "Underweight"
-      categoryColor = "bg-blue-100 text-blue-800"
-    } else if (bmi < 25) {
-      category = "Normal weight"
-      categoryColor = "bg-green-100 text-green-800"
-    } else if (bmi < 30) {
-      category = "Overweight"
-      categoryColor = "bg-yellow-100 text-yellow-800"
-    } else {
-      category = "Obese"
-      categoryColor = "bg-red-100 text-red-800"
-    }
-
-    // Calculate healthy weight range (BMI 18.5-24.9)
-    const minHealthyWeight = 18.5 * (heightInM * heightInM)
-    const maxHealthyWeight = 24.9 * (heightInM * heightInM)
-
-    let healthyWeightRange = ""
-    if (unit === "imperial") {
-      healthyWeightRange = `${Math.round(minHealthyWeight * 2.20462)} - ${Math.round(maxHealthyWeight * 2.20462)} lbs`
-    } else {
-      healthyWeightRange = `${Math.round(minHealthyWeight)} - ${Math.round(maxHealthyWeight)} kg`
-    }
-
-    // Calculate weight to lose/gain to reach healthy range
-    const weightToLose = Math.max(0, weightInKg - maxHealthyWeight)
-    const weightToGain = Math.max(0, minHealthyWeight - weightInKg)
-
-    setResults({
-      bmi: Math.round(bmi * 10) / 10,
-      category: `${category}|${categoryColor}`,
-      healthyWeightRange,
-      weightToLose: unit === "imperial" ? Math.round(weightToLose * 2.20462) : Math.round(weightToLose),
-      weightToGain: unit === "imperial" ? Math.round(weightToGain * 2.20462) : Math.round(weightToGain),
-    })
+    setResult(bmiResult)
   }
 
-  const getBMIColor = (bmi: number) => {
-    if (bmi < 18.5) return "text-blue-600"
-    if (bmi < 25) return "text-green-600"
-    if (bmi < 30) return "text-yellow-600"
-    return "text-red-600"
+  const getBMICategory = (bmi: number): BMIResult => {
+    if (bmi < 18.5) {
+      return {
+        bmi,
+        category: "Underweight",
+        healthyRange: "18.5 - 24.9",
+        recommendation: "Consider gaining weight through healthy diet and exercise",
+        color: "text-blue-600 bg-blue-50 border-blue-200",
+        risks: ["Malnutrition", "Osteoporosis", "Decreased immunity", "Fertility issues"],
+      }
+    } else if (bmi >= 18.5 && bmi < 25) {
+      return {
+        bmi,
+        category: "Normal Weight",
+        healthyRange: "18.5 - 24.9",
+        recommendation: "Maintain your current weight through balanced diet and regular exercise",
+        color: "text-green-600 bg-green-50 border-green-200",
+        risks: ["Lowest health risk category", "Continue healthy lifestyle habits"],
+      }
+    } else if (bmi >= 25 && bmi < 30) {
+      return {
+        bmi,
+        category: "Overweight",
+        healthyRange: "18.5 - 24.9",
+        recommendation: "Consider losing weight through diet and increased physical activity",
+        color: "text-yellow-600 bg-yellow-50 border-yellow-200",
+        risks: ["High blood pressure", "Type 2 diabetes", "Heart disease", "Sleep apnea"],
+      }
+    } else {
+      return {
+        bmi,
+        category: "Obese",
+        healthyRange: "18.5 - 24.9",
+        recommendation: "Consult healthcare provider for weight management plan",
+        color: "text-red-600 bg-red-50 border-red-200",
+        risks: ["Heart disease", "Stroke", "Type 2 diabetes", "Certain cancers", "Sleep apnea"],
+      }
+    }
   }
 
-  const getBMIAdvice = (bmi: number) => {
-    if (bmi < 18.5) {
-      return "Consider consulting a healthcare provider about healthy weight gain strategies."
-    } else if (bmi < 25) {
-      return "Great! You're in the healthy weight range. Maintain your current lifestyle."
-    } else if (bmi < 30) {
-      return "Consider adopting healthier eating habits and increasing physical activity."
+  const getHealthyWeightRange = () => {
+    if (!height) return null
+
+    let heightInMeters: number
+    if (unit === "metric") {
+      heightInMeters = Number.parseFloat(height) / 100
     } else {
-      return "Consult with a healthcare provider about a safe weight management plan."
+      heightInMeters = Number.parseFloat(height) * 0.0254
+    }
+
+    const minWeight = 18.5 * (heightInMeters * heightInMeters)
+    const maxWeight = 24.9 * (heightInMeters * heightInMeters)
+
+    if (unit === "metric") {
+      return `${minWeight.toFixed(1)} - ${maxWeight.toFixed(1)} kg`
+    } else {
+      return `${(minWeight * 2.20462).toFixed(1)} - ${(maxWeight * 2.20462).toFixed(1)} lbs`
     }
   }
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
+    <div className="max-w-4xl mx-auto space-y-8">
+      {/* Input Section */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
-            <Scale className="h-5 w-5" />
+            <Scale className="h-5 w-5 text-blue-600" />
             <span>BMI Calculator</span>
           </CardTitle>
-          <CardDescription>
-            Calculate your Body Mass Index (BMI) to assess if you're in a healthy weight range
-          </CardDescription>
+          <CardDescription>Calculate your Body Mass Index and get health recommendations</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-          <Tabs value={unit} onValueChange={setUnit}>
+          <Tabs value={unit} onValueChange={(value) => setUnit(value as "metric" | "imperial")}>
             <TabsList className="grid w-full grid-cols-2">
               <TabsTrigger value="metric">Metric (cm/kg)</TabsTrigger>
               <TabsTrigger value="imperial">Imperial (in/lbs)</TabsTrigger>
             </TabsList>
 
             <TabsContent value="metric" className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="height-metric">Height (cm)</Label>
                   <Input
                     id="height-metric"
                     type="number"
+                    placeholder="170"
                     value={height}
                     onChange={(e) => setHeight(e.target.value)}
-                    placeholder="170"
-                    min="100"
-                    max="250"
                   />
                 </div>
                 <div className="space-y-2">
@@ -135,28 +139,24 @@ export function BmiCalculator() {
                   <Input
                     id="weight-metric"
                     type="number"
+                    placeholder="70"
                     value={weight}
                     onChange={(e) => setWeight(e.target.value)}
-                    placeholder="70"
-                    min="30"
-                    max="300"
                   />
                 </div>
               </div>
             </TabsContent>
 
             <TabsContent value="imperial" className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="height-imperial">Height (inches)</Label>
                   <Input
                     id="height-imperial"
                     type="number"
+                    placeholder="67"
                     value={height}
                     onChange={(e) => setHeight(e.target.value)}
-                    placeholder="67"
-                    min="36"
-                    max="96"
                   />
                 </div>
                 <div className="space-y-2">
@@ -164,11 +164,9 @@ export function BmiCalculator() {
                   <Input
                     id="weight-imperial"
                     type="number"
+                    placeholder="154"
                     value={weight}
                     onChange={(e) => setWeight(e.target.value)}
-                    placeholder="154"
-                    min="66"
-                    max="660"
                   />
                 </div>
               </div>
@@ -176,118 +174,112 @@ export function BmiCalculator() {
           </Tabs>
 
           <Button onClick={calculateBMI} className="w-full" disabled={!height || !weight}>
+            <TrendingUp className="mr-2 h-4 w-4" />
             Calculate BMI
           </Button>
         </CardContent>
       </Card>
 
-      {results && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* Results Section */}
+      {result && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* BMI Result */}
           <Card>
-            <CardHeader className="pb-3">
-              <CardTitle className="text-lg flex items-center space-x-2">
-                <Scale className="h-5 w-5 text-blue-600" />
-                <span>Your BMI</span>
-              </CardTitle>
+            <CardHeader>
+              <CardTitle className="text-lg">Your BMI Result</CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className={`text-3xl font-bold mb-2 ${getBMIColor(results.bmi)}`}>{results.bmi}</div>
-              <Badge className={results.category.split("|")[1]}>{results.category.split("|")[0]}</Badge>
+            <CardContent className="space-y-4">
+              <div className="text-center p-6 bg-blue-50 rounded-lg border border-blue-200">
+                <div className="text-4xl font-bold text-blue-800 mb-2">{result.bmi.toFixed(1)}</div>
+                <Badge className={`${result.color} px-3 py-1`}>{result.category}</Badge>
+              </div>
+
+              <div className="space-y-3">
+                <div className="p-3 bg-gray-50 rounded-lg border">
+                  <div className="text-sm font-medium text-gray-700">Healthy BMI Range</div>
+                  <div className="text-lg font-semibold text-gray-900">{result.healthyRange}</div>
+                </div>
+
+                {height && (
+                  <div className="p-3 bg-gray-50 rounded-lg border">
+                    <div className="text-sm font-medium text-gray-700">Healthy Weight Range</div>
+                    <div className="text-lg font-semibold text-gray-900">{getHealthyWeightRange()}</div>
+                  </div>
+                )}
+              </div>
             </CardContent>
           </Card>
 
+          {/* Recommendations & Risks */}
           <Card>
-            <CardHeader className="pb-3">
-              <CardTitle className="text-lg flex items-center space-x-2">
-                <TrendingUp className="h-5 w-5 text-green-600" />
-                <span>Healthy Range</span>
-              </CardTitle>
+            <CardHeader>
+              <CardTitle className="text-lg">Health Information</CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="text-lg font-semibold mb-2">{results.healthyWeightRange}</div>
-              <p className="text-sm text-muted-foreground">BMI 18.5 - 24.9</p>
-            </CardContent>
-          </Card>
+            <CardContent className="space-y-4">
+              <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
+                <h4 className="font-semibold text-blue-800 mb-2">Recommendation</h4>
+                <p className="text-sm text-blue-700">{result.recommendation}</p>
+              </div>
 
-          <Card>
-            <CardHeader className="pb-3">
-              <CardTitle className="text-lg flex items-center space-x-2">
-                <AlertCircle className="h-5 w-5 text-orange-600" />
-                <span>To Healthy Range</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              {results.weightToLose > 0 && (
-                <div>
-                  <div className="text-lg font-semibold text-red-600 mb-1">
-                    -{results.weightToLose} {unit === "imperial" ? "lbs" : "kg"}
-                  </div>
-                  <p className="text-sm text-muted-foreground">to reach healthy range</p>
-                </div>
-              )}
-              {results.weightToGain > 0 && (
-                <div>
-                  <div className="text-lg font-semibold text-blue-600 mb-1">
-                    +{results.weightToGain} {unit === "imperial" ? "lbs" : "kg"}
-                  </div>
-                  <p className="text-sm text-muted-foreground">to reach healthy range</p>
-                </div>
-              )}
-              {results.weightToLose === 0 && results.weightToGain === 0 && (
-                <div>
-                  <div className="text-lg font-semibold text-green-600 mb-1">✓ Healthy</div>
-                  <p className="text-sm text-muted-foreground">You're in the healthy range</p>
-                </div>
-              )}
+              <div className="space-y-2">
+                <h4 className="font-semibold text-gray-800">Associated Health Considerations</h4>
+                <ul className="space-y-1">
+                  {result.risks.map((risk, index) => (
+                    <li key={index} className="flex items-start space-x-2 text-sm text-gray-600">
+                      <div className="w-1.5 h-1.5 bg-gray-400 rounded-full mt-2 flex-shrink-0" />
+                      <span>{risk}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </CardContent>
           </Card>
         </div>
       )}
 
-      {results && (
-        <Card>
-          <CardHeader>
-            <CardTitle>BMI Categories & Recommendations</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="bg-muted/50 p-4 rounded-lg">
-              <h4 className="font-semibold mb-2">Your Recommendation:</h4>
-              <p className="text-sm">{getBMIAdvice(results.bmi)}</p>
+      {/* BMI Categories Reference */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-lg">BMI Categories</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="p-3 bg-blue-50 rounded-lg border border-blue-200 text-center">
+              <div className="font-semibold text-blue-800">Underweight</div>
+              <div className="text-sm text-blue-600">Below 18.5</div>
             </div>
+            <div className="p-3 bg-green-50 rounded-lg border border-green-200 text-center">
+              <div className="font-semibold text-green-800">Normal</div>
+              <div className="text-sm text-green-600">18.5 - 24.9</div>
+            </div>
+            <div className="p-3 bg-yellow-50 rounded-lg border border-yellow-200 text-center">
+              <div className="font-semibold text-yellow-800">Overweight</div>
+              <div className="text-sm text-yellow-600">25.0 - 29.9</div>
+            </div>
+            <div className="p-3 bg-red-50 rounded-lg border border-red-200 text-center">
+              <div className="font-semibold text-red-800">Obese</div>
+              <div className="text-sm text-red-600">30.0 and above</div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-              <div className="space-y-2">
-                <div className="flex justify-between">
-                  <span>Underweight:</span>
-                  <span className="text-blue-600">Below 18.5</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Normal weight:</span>
-                  <span className="text-green-600">18.5 - 24.9</span>
-                </div>
-              </div>
-              <div className="space-y-2">
-                <div className="flex justify-between">
-                  <span>Overweight:</span>
-                  <span className="text-yellow-600">25.0 - 29.9</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Obese:</span>
-                  <span className="text-red-600">30.0 and above</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="text-xs text-muted-foreground mt-4">
-              <p>
-                <strong>Note:</strong> BMI is a screening tool and doesn't directly measure body fat or health. It may
-                not be accurate for athletes, pregnant women, or elderly individuals. Always consult healthcare
-                professionals for personalized advice.
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-      )}
+      {/* Disclaimer */}
+      <Card className="border-amber-200 bg-amber-50">
+        <CardHeader>
+          <CardTitle className="flex items-center space-x-2 text-amber-800">
+            <AlertTriangle className="h-5 w-5" />
+            <span>Important Disclaimer</span>
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="text-amber-700 space-y-2">
+          <p>• BMI is a screening tool and not a diagnostic measure</p>
+          <p>• It may not accurately reflect health for athletes, elderly, or pregnant women</p>
+          <p>• BMI doesn't distinguish between muscle and fat mass</p>
+          <p>• Consult healthcare professionals for comprehensive health assessment</p>
+          <p>• Consider other factors like waist circumference and overall fitness</p>
+        </CardContent>
+      </Card>
     </div>
   )
 }

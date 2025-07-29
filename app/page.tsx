@@ -414,13 +414,13 @@ export default function Main() {
             </div>
 
             <h1 className="text-display text-foreground mb-6 leading-tight">
-              Financial Toolkit
-              <span className="block text-primary">for Kenya</span>
+              Smart Calculators
+              <span className="block text-primary">for Everyday Life</span>
             </h1>
 
             <p className="text-body-large text-muted-foreground max-w-2xl mx-auto mb-8">
-              Make smarter money decisions with calculators built specifically for Kenyan consumers. Accurate rates,
-              always updated.
+              Calculate smarter, live better. Pregnancy tracking, financial planning, utility costs, construction
+              estimates - all the numbers you need for informed decisions.
             </p>
 
             <div className="flex flex-wrap items-center justify-center gap-6 text-caption">

@@ -6,8 +6,28 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Apple, Activity, Target, TrendingUp } from "lucide-react"
+import { Apple, Activity, Target, AlertTriangle } from "lucide-react"
+
+interface CalorieResult {
+  bmr: number
+  tdee: number
+  weightLoss: {
+    mild: number
+    moderate: number
+    aggressive: number
+  }
+  weightGain: {
+    mild: number
+    moderate: number
+  }
+  macros: {
+    protein: { grams: number; calories: number }
+    carbs: { grams: number; calories: number }
+    fats: { grams: number; calories: number }
+  }
+}
 
 export function CalorieCalculator() {
   const [age, setAge] = useState("")
@@ -15,18 +35,8 @@ export function CalorieCalculator() {
   const [height, setHeight] = useState("")
   const [weight, setWeight] = useState("")
   const [activityLevel, setActivityLevel] = useState("")
-  const [goal, setGoal] = useState("")
-  const [unit, setUnit] = useState("metric")
-  const [results, setResults] = useState<{
-    bmr: number
-    tdee: number
-    goalCalories: number
-    macros: {
-      protein: number
-      carbs: number
-      fat: number
-    }
-  } | null>(null)
+  const [unit, setUnit] = useState<"metric" | "imperial">("metric")
+  const [result, setResult] = useState<CalorieResult | null>(null)
 
   const activityLevels = {
     sedentary: { label: "Sedentary (little/no exercise)", multiplier: 1.2 },
@@ -36,87 +46,92 @@ export function CalorieCalculator() {
     extra: { label: "Extra active (very hard exercise, physical job)", multiplier: 1.9 },
   }
 
-  const goals = {
-    maintain: { label: "Maintain weight", adjustment: 0 },
-    lose: { label: "Lose weight (0.5 kg/week)", adjustment: -500 },
-    gain: { label: "Gain weight (0.5 kg/week)", adjustment: 500 },
-  }
-
   const calculateCalories = () => {
-    if (!age || !gender || !height || !weight || !activityLevel || !goal) return
+    if (!age || !gender || !height || !weight || !activityLevel) return
 
-    let heightInCm = Number.parseFloat(height)
-    let weightInKg = Number.parseFloat(weight)
+    let heightInCm: number
+    let weightInKg: number
 
-    // Convert to metric if needed
-    if (unit === "imperial") {
+    if (unit === "metric") {
+      heightInCm = Number.parseFloat(height)
+      weightInKg = Number.parseFloat(weight)
+    } else {
       heightInCm = Number.parseFloat(height) * 2.54 // inches to cm
       weightInKg = Number.parseFloat(weight) * 0.453592 // pounds to kg
     }
 
     // Calculate BMR using Mifflin-St Jeor Equation
-    let bmr = 0
+    let bmr: number
     if (gender === "male") {
-      bmr = 10 * weightInKg + 6.25 * heightInCm - 5 * Number.parseInt(age) + 5
+      bmr = 10 * weightInKg + 6.25 * heightInCm - 5 * Number.parseFloat(age) + 5
     } else {
-      bmr = 10 * weightInKg + 6.25 * heightInCm - 5 * Number.parseInt(age) - 161
+      bmr = 10 * weightInKg + 6.25 * heightInCm - 5 * Number.parseFloat(age) - 161
     }
 
-    // Calculate TDEE (Total Daily Energy Expenditure)
+    // Calculate TDEE
     const multiplier = activityLevels[activityLevel as keyof typeof activityLevels].multiplier
     const tdee = bmr * multiplier
 
-    // Calculate goal calories
-    const adjustment = goals[goal as keyof typeof goals].adjustment
-    const goalCalories = tdee + adjustment
-
-    // Calculate macros (example ratios: 30% protein, 40% carbs, 30% fat)
-    const macros = {
-      protein: Math.round((goalCalories * 0.3) / 4), // 4 calories per gram
-      carbs: Math.round((goalCalories * 0.4) / 4), // 4 calories per gram
-      fat: Math.round((goalCalories * 0.3) / 9), // 9 calories per gram
+    // Calculate weight goals
+    const weightLoss = {
+      mild: tdee - 250, // 0.5 lbs per week
+      moderate: tdee - 500, // 1 lb per week
+      aggressive: tdee - 750, // 1.5 lbs per week
     }
 
-    setResults({
+    const weightGain = {
+      mild: tdee + 250, // 0.5 lbs per week
+      moderate: tdee + 500, // 1 lb per week
+    }
+
+    // Calculate macros (40% carbs, 30% protein, 30% fat)
+    const macros = {
+      protein: {
+        calories: Math.round(tdee * 0.3),
+        grams: Math.round((tdee * 0.3) / 4),
+      },
+      carbs: {
+        calories: Math.round(tdee * 0.4),
+        grams: Math.round((tdee * 0.4) / 4),
+      },
+      fats: {
+        calories: Math.round(tdee * 0.3),
+        grams: Math.round((tdee * 0.3) / 9),
+      },
+    }
+
+    setResult({
       bmr: Math.round(bmr),
       tdee: Math.round(tdee),
-      goalCalories: Math.round(goalCalories),
+      weightLoss,
+      weightGain,
       macros,
     })
   }
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
+    <div className="max-w-4xl mx-auto space-y-8">
+      {/* Input Section */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
-            <Apple className="h-5 w-5" />
+            <Apple className="h-5 w-5 text-green-600" />
             <span>Calorie Calculator</span>
           </CardTitle>
-          <CardDescription>
-            Calculate your daily calorie needs based on your Basal Metabolic Rate (BMR) and activity level
-          </CardDescription>
+          <CardDescription>Calculate your daily calorie needs based on BMR and activity level</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-          <Tabs value={unit} onValueChange={setUnit}>
+          <Tabs value={unit} onValueChange={(value) => setUnit(value as "metric" | "imperial")}>
             <TabsList className="grid w-full grid-cols-2">
               <TabsTrigger value="metric">Metric (cm/kg)</TabsTrigger>
               <TabsTrigger value="imperial">Imperial (in/lbs)</TabsTrigger>
             </TabsList>
 
             <TabsContent value="metric" className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="age">Age (years)</Label>
-                  <Input
-                    id="age"
-                    type="number"
-                    value={age}
-                    onChange={(e) => setAge(e.target.value)}
-                    placeholder="30"
-                    min="15"
-                    max="100"
-                  />
+                  <Input id="age" type="number" placeholder="25" value={age} onChange={(e) => setAge(e.target.value)} />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="gender">Gender</Label>
@@ -135,11 +150,9 @@ export function CalorieCalculator() {
                   <Input
                     id="height-metric"
                     type="number"
+                    placeholder="170"
                     value={height}
                     onChange={(e) => setHeight(e.target.value)}
-                    placeholder="170"
-                    min="100"
-                    max="250"
                   />
                 </div>
                 <div className="space-y-2">
@@ -147,29 +160,19 @@ export function CalorieCalculator() {
                   <Input
                     id="weight-metric"
                     type="number"
+                    placeholder="70"
                     value={weight}
                     onChange={(e) => setWeight(e.target.value)}
-                    placeholder="70"
-                    min="30"
-                    max="300"
                   />
                 </div>
               </div>
             </TabsContent>
 
             <TabsContent value="imperial" className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="age">Age (years)</Label>
-                  <Input
-                    id="age"
-                    type="number"
-                    value={age}
-                    onChange={(e) => setAge(e.target.value)}
-                    placeholder="30"
-                    min="15"
-                    max="100"
-                  />
+                  <Input id="age" type="number" placeholder="25" value={age} onChange={(e) => setAge(e.target.value)} />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="gender">Gender</Label>
@@ -188,11 +191,9 @@ export function CalorieCalculator() {
                   <Input
                     id="height-imperial"
                     type="number"
+                    placeholder="67"
                     value={height}
                     onChange={(e) => setHeight(e.target.value)}
-                    placeholder="67"
-                    min="36"
-                    max="96"
                   />
                 </div>
                 <div className="space-y-2">
@@ -200,165 +201,176 @@ export function CalorieCalculator() {
                   <Input
                     id="weight-imperial"
                     type="number"
+                    placeholder="154"
                     value={weight}
                     onChange={(e) => setWeight(e.target.value)}
-                    placeholder="154"
-                    min="66"
-                    max="660"
                   />
                 </div>
               </div>
             </TabsContent>
           </Tabs>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-2">
-              <Label htmlFor="activity">Activity Level</Label>
-              <Select value={activityLevel} onValueChange={setActivityLevel}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select activity level" />
-                </SelectTrigger>
-                <SelectContent>
-                  {Object.entries(activityLevels).map(([key, value]) => (
-                    <SelectItem key={key} value={key}>
-                      {value.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="goal">Goal</Label>
-              <Select value={goal} onValueChange={setGoal}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select your goal" />
-                </SelectTrigger>
-                <SelectContent>
-                  {Object.entries(goals).map(([key, value]) => (
-                    <SelectItem key={key} value={key}>
-                      {value.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+          <div className="space-y-2">
+            <Label htmlFor="activity">Activity Level</Label>
+            <Select value={activityLevel} onValueChange={setActivityLevel}>
+              <SelectTrigger>
+                <SelectValue placeholder="Select activity level" />
+              </SelectTrigger>
+              <SelectContent>
+                {Object.entries(activityLevels).map(([key, value]) => (
+                  <SelectItem key={key} value={key}>
+                    {value.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
 
           <Button
             onClick={calculateCalories}
             className="w-full"
-            disabled={!age || !gender || !height || !weight || !activityLevel || !goal}
+            disabled={!age || !gender || !height || !weight || !activityLevel}
           >
-            Calculate Daily Calories
+            <Activity className="mr-2 h-4 w-4" />
+            Calculate Calories
           </Button>
         </CardContent>
       </Card>
 
-      {results && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {/* Results Section */}
+      {result && (
+        <div className="space-y-6">
+          {/* BMR and TDEE */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-lg">Basal Metabolic Rate (BMR)</CardTitle>
+                <CardDescription>Calories burned at rest</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="text-center p-6 bg-blue-50 rounded-lg border border-blue-200">
+                  <div className="text-3xl font-bold text-blue-800 mb-1">{result.bmr.toLocaleString()}</div>
+                  <div className="text-sm text-blue-600">calories/day</div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-lg">Total Daily Energy Expenditure</CardTitle>
+                <CardDescription>Calories needed to maintain weight</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="text-center p-6 bg-green-50 rounded-lg border border-green-200">
+                  <div className="text-3xl font-bold text-green-800 mb-1">{result.tdee.toLocaleString()}</div>
+                  <div className="text-sm text-green-600">calories/day</div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Weight Goals */}
           <Card>
-            <CardHeader className="pb-3">
-              <CardTitle className="text-lg flex items-center space-x-2">
-                <Activity className="h-5 w-5 text-blue-600" />
-                <span>BMR</span>
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2">
+                <Target className="h-5 w-5" />
+                <span>Calorie Goals by Objective</span>
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-blue-600 mb-2">{results.bmr}</div>
-              <p className="text-sm text-muted-foreground">Calories at rest</p>
-            </CardContent>
-          </Card>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Weight Loss */}
+                <div className="space-y-3">
+                  <h4 className="font-semibold text-red-700">Weight Loss</h4>
+                  <div className="space-y-2">
+                    <div className="flex justify-between items-center p-3 bg-red-50 rounded-lg border border-red-200">
+                      <span className="text-sm font-medium">Mild (0.5 lbs/week)</span>
+                      <Badge variant="outline" className="text-red-700 border-red-300">
+                        {Math.round(result.weightLoss.mild)} cal
+                      </Badge>
+                    </div>
+                    <div className="flex justify-between items-center p-3 bg-red-50 rounded-lg border border-red-200">
+                      <span className="text-sm font-medium">Moderate (1 lb/week)</span>
+                      <Badge variant="outline" className="text-red-700 border-red-300">
+                        {Math.round(result.weightLoss.moderate)} cal
+                      </Badge>
+                    </div>
+                    <div className="flex justify-between items-center p-3 bg-red-50 rounded-lg border border-red-200">
+                      <span className="text-sm font-medium">Aggressive (1.5 lbs/week)</span>
+                      <Badge variant="outline" className="text-red-700 border-red-300">
+                        {Math.round(result.weightLoss.aggressive)} cal
+                      </Badge>
+                    </div>
+                  </div>
+                </div>
 
-          <Card>
-            <CardHeader className="pb-3">
-              <CardTitle className="text-lg flex items-center space-x-2">
-                <TrendingUp className="h-5 w-5 text-green-600" />
-                <span>TDEE</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-green-600 mb-2">{results.tdee}</div>
-              <p className="text-sm text-muted-foreground">Total daily expenditure</p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="pb-3">
-              <CardTitle className="text-lg flex items-center space-x-2">
-                <Target className="h-5 w-5 text-purple-600" />
-                <span>Goal Calories</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-purple-600 mb-2">{results.goalCalories}</div>
-              <p className="text-sm text-muted-foreground">Daily target intake</p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="pb-3">
-              <CardTitle className="text-lg flex items-center space-x-2">
-                <Apple className="h-5 w-5 text-orange-600" />
-                <span>Macros</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-1">
-              <div className="flex justify-between text-sm">
-                <span>Protein:</span>
-                <span className="font-semibold">{results.macros.protein}g</span>
+                {/* Weight Gain */}
+                <div className="space-y-3">
+                  <h4 className="font-semibold text-blue-700">Weight Gain</h4>
+                  <div className="space-y-2">
+                    <div className="flex justify-between items-center p-3 bg-blue-50 rounded-lg border border-blue-200">
+                      <span className="text-sm font-medium">Mild (0.5 lbs/week)</span>
+                      <Badge variant="outline" className="text-blue-700 border-blue-300">
+                        {Math.round(result.weightGain.mild)} cal
+                      </Badge>
+                    </div>
+                    <div className="flex justify-between items-center p-3 bg-blue-50 rounded-lg border border-blue-200">
+                      <span className="text-sm font-medium">Moderate (1 lb/week)</span>
+                      <Badge variant="outline" className="text-blue-700 border-blue-300">
+                        {Math.round(result.weightGain.moderate)} cal
+                      </Badge>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className="flex justify-between text-sm">
-                <span>Carbs:</span>
-                <span className="font-semibold">{results.macros.carbs}g</span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span>Fat:</span>
-                <span className="font-semibold">{results.macros.fat}g</span>
+            </CardContent>
+          </Card>
+
+          {/* Macronutrient Breakdown */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Recommended Macronutrient Breakdown</CardTitle>
+              <CardDescription>Based on maintenance calories ({result.tdee} cal/day)</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="p-4 bg-orange-50 rounded-lg border border-orange-200 text-center">
+                  <div className="text-2xl font-bold text-orange-800 mb-1">{result.macros.protein.grams}g</div>
+                  <div className="text-sm text-orange-600 mb-2">Protein (30%)</div>
+                  <div className="text-xs text-orange-500">{result.macros.protein.calories} calories</div>
+                </div>
+                <div className="p-4 bg-green-50 rounded-lg border border-green-200 text-center">
+                  <div className="text-2xl font-bold text-green-800 mb-1">{result.macros.carbs.grams}g</div>
+                  <div className="text-sm text-green-600 mb-2">Carbs (40%)</div>
+                  <div className="text-xs text-green-500">{result.macros.carbs.calories} calories</div>
+                </div>
+                <div className="p-4 bg-purple-50 rounded-lg border border-purple-200 text-center">
+                  <div className="text-2xl font-bold text-purple-800 mb-1">{result.macros.fats.grams}g</div>
+                  <div className="text-sm text-purple-600 mb-2">Fats (30%)</div>
+                  <div className="text-xs text-purple-500">{result.macros.fats.calories} calories</div>
+                </div>
               </div>
             </CardContent>
           </Card>
         </div>
       )}
 
-      {results && (
-        <Card>
-          <CardHeader>
-            <CardTitle>Understanding Your Results</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
-              <div>
-                <h4 className="font-semibold mb-2">BMR (Basal Metabolic Rate)</h4>
-                <p className="text-muted-foreground">
-                  The number of calories your body needs to maintain basic physiological functions at rest.
-                </p>
-              </div>
-              <div>
-                <h4 className="font-semibold mb-2">TDEE (Total Daily Energy Expenditure)</h4>
-                <p className="text-muted-foreground">
-                  Your BMR multiplied by your activity level - the total calories you burn in a day.
-                </p>
-              </div>
-            </div>
-
-            <div className="bg-muted/50 p-4 rounded-lg">
-              <h4 className="font-semibold mb-2">Macro Distribution (30/40/30)</h4>
-              <p className="text-sm text-muted-foreground">
-                This is a balanced approach. Adjust based on your specific needs, training goals, or dietary
-                preferences. Consider consulting a nutritionist for personalized recommendations.
-              </p>
-            </div>
-
-            <div className="text-xs text-muted-foreground">
-              <p>
-                <strong>Note:</strong> These calculations are estimates based on established formulas. Individual
-                metabolic rates can vary. Monitor your progress and adjust as needed. Consult healthcare professionals
-                for personalized nutrition advice.
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-      )}
+      {/* Important Information */}
+      <Card className="border-amber-200 bg-amber-50">
+        <CardHeader>
+          <CardTitle className="flex items-center space-x-2 text-amber-800">
+            <AlertTriangle className="h-5 w-5" />
+            <span>Important Information</span>
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="text-amber-700 space-y-2">
+          <p>• These calculations are estimates based on the Mifflin-St Jeor equation</p>
+          <p>• Individual metabolic rates can vary by ±10-15%</p>
+          <p>• Consult a healthcare provider or registered dietitian for personalized advice</p>
+          <p>• Extreme calorie restriction (below 1200 cal/day) should be medically supervised</p>
+          <p>• Focus on nutrient-dense foods and regular physical activity</p>
+        </CardContent>
+      </Card>
     </div>
   )
 }

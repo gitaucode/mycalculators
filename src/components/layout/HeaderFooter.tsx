@@ -17,9 +17,14 @@ export const Header = () => {
             <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-sm">
               <Calculator className="h-5 w-5 text-primary-foreground" />
             </div>
-            <div>
-              <h1 className="font-poppins font-bold text-lg text-foreground">Financial Toolkit</h1>
-              <p className="text-xs text-muted-foreground -mt-1">Kenya</p>
+            <div className="flex items-center space-x-2">
+              <div>
+                <h1 className="font-poppins font-bold text-lg text-foreground">K Toolkit</h1>
+                <p className="text-xs text-muted-foreground -mt-1">Kenya</p>
+              </div>
+              <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-muted/50 text-muted-foreground border border-border/50">
+                BETA
+              </span>
             </div>
           </Link>
 
@@ -87,11 +92,11 @@ export const Footer = () => {
               <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
                 <Calculator className="h-4 w-4 text-primary-foreground" />
               </div>
-              <h3 className="font-poppins font-bold text-lg">Financial Toolkit</h3>
+              <h3 className="font-poppins font-bold text-lg">K Toolkit</h3>
             </div>
             <p className="text-body text-muted-foreground max-w-sm">
-              Essential financial calculators designed for Kenyan consumers. Make informed money decisions with
-              accurate, up-to-date calculations.
+              Essential financial and health calculators designed for Kenyan consumers. Make informed money decisions
+              with accurate, up-to-date calculations.
             </p>
             <div className="flex space-x-2">
               <Button variant="ghost" size="icon" className="h-8 w-8">
@@ -130,7 +135,7 @@ export const Footer = () => {
                 <p>Regularly updated rates</p>
               </div>
               <Button variant="outline" size="sm" asChild>
-                <a href="mailto:support@kenyanfinancial.com">
+                <a href="mailto:hellogitau@gmail.com">
                   <Mail className="mr-2 h-4 w-4" />
                   Get Support
                 </a>
@@ -140,7 +145,18 @@ export const Footer = () => {
         </div>
 
         <div className="border-t mt-8 pt-8 text-center">
-          <p className="text-caption">© 2024 Kenyan Financial Toolkit. Built with❤️ by @ItsMeGitau.  </p>
+          <p className="text-caption">
+            © 2024 K Toolkit. Built with ❤️ by{" "}
+            <a
+              href="https://x.com/ItsMeGitau"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary hover:underline transition-colors"
+            >
+              @ItsMeGitau
+            </a>
+            .
+          </p>
         </div>
       </div>
     </footer>
