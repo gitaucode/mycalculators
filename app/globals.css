@@ -155,4 +155,37 @@
   .btn-secondary {
     @apply bg-secondary text-secondary-foreground hover:bg-secondary/80 font-medium;
   }
+
+  .calculator-content > div:not(.calculator-split-native) {
+    max-width: none;
+    margin-left: 0;
+    margin-right: 0;
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .calculator-content > div:not(.calculator-split-native).space-y-6 > :not([hidden]) ~ :not([hidden]),
+  .calculator-content > div:not(.calculator-split-native).space-y-8 > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 0;
+  }
+
+  @media (min-width: 1024px) {
+    .calculator-content > div:not(.calculator-split-native) {
+      grid-template-columns: minmax(0, 1.25fr) minmax(340px, 0.85fr);
+      align-items: start;
+    }
+
+    .calculator-content > div:not(.calculator-split-native) > :first-child {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .calculator-content > div:not(.calculator-split-native) > :not(:first-child) {
+      grid-column: 2;
+    }
+
+    .calculator-content > div:not(.calculator-split-native) > :not(:first-child).grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
 }

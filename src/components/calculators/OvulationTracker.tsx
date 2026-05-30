@@ -5,8 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Badge } from "@/components/ui/badge"
-import { Calendar, Heart, AlertTriangle } from "lucide-react"
+import { Calendar, Heart, BarChart3, AlertTriangle } from "lucide-react"
 import { format, addDays, subDays, differenceInDays } from "date-fns"
 
 interface OvulationResult {
@@ -21,6 +20,19 @@ interface OvulationResult {
   tips: string[]
 }
 
+const phaseStyle: Record<string, { bg: string; text: string }> = {
+  "Menstrual Phase": { bg: "#FEF2F2", text: "#DC2626" },
+  "Follicular Phase": { bg: "#EFF6FF", text: "#2563EB" },
+  "Fertile Window": { bg: "#FDF2F8", text: "#DB2777" },
+  "Luteal Phase": { bg: "#FDF4FF", text: "#7C3AED" },
+}
+
+const fertilityStyle: Record<string, { bg: string; text: string; label: string }> = {
+  high: { bg: "#FEF2F2", text: "#DC2626", label: "High Fertility" },
+  medium: { bg: "#FEF9C3", text: "#CA8A04", label: "Medium Fertility" },
+  low: { bg: "#ECFDF3", text: "#0B5A2A", label: "Low Fertility" },
+}
+
 export function OvulationTracker() {
   const [lastPeriodDate, setLastPeriodDate] = useState("")
   const [cycleLength, setCycleLength] = useState("28")
@@ -33,285 +45,172 @@ export function OvulationTracker() {
     const cycleDays = Number.parseInt(cycleLength)
     const today = new Date()
 
-    // Calculate ovulation (typically 14 days before next period)
     const ovulationDate = addDays(lmpDate, cycleDays - 14)
-
-    // Fertile window (5 days before ovulation + ovulation day)
     const fertileWindowStart = subDays(ovulationDate, 5)
     const fertileWindowEnd = ovulationDate
-
-    // Next period date
     const nextPeriodDate = addDays(lmpDate, cycleDays)
-
-    // Days until ovulation
     const daysUntilOvulation = differenceInDays(ovulationDate, today)
-
-    // Determine current phase and fertility status
     const daysSinceLastPeriod = differenceInDays(today, lmpDate)
-    const { phase, description, fertility, tips } = getCurrentPhase(daysSinceLastPeriod, cycleDays, daysUntilOvulation)
-
-    setResult({
-      ovulationDate,
-      fertileWindowStart,
-      fertileWindowEnd,
-      nextPeriodDate,
-      daysUntilOvulation,
-      currentPhase: phase,
-      phaseDescription: description,
-      fertilityStatus: fertility,
-      tips,
-    })
-  }
-
-  const getCurrentPhase = (daysSinceLastPeriod: number, cycleDays: number, daysUntilOvulation: number) => {
     const ovulationDay = cycleDays - 14
 
+    let phase: string, description: string, fertility: "high" | "medium" | "low", tips: string[]
+
     if (daysSinceLastPeriod <= 5) {
-      return {
-        phase: "Menstrual Phase",
-        description: "Menstruation period - lowest fertility",
-        fertility: "low" as const,
-        tips: [
-          "Focus on rest and self-care",
-          "Stay hydrated and eat iron-rich foods",
-          "Light exercise like walking or yoga",
-        ],
-      }
+      phase = "Menstrual Phase"; description = "Menstruation period — lowest fertility"; fertility = "low"
+      tips = ["Focus on rest and self-care", "Stay hydrated and eat iron-rich foods", "Light exercise like walking or yoga"]
     } else if (daysSinceLastPeriod <= ovulationDay - 6) {
-      return {
-        phase: "Follicular Phase",
-        description: "Pre-ovulation - fertility increasing",
-        fertility: "medium" as const,
-        tips: ["Energy levels typically increase", "Good time for new projects", "Monitor cervical mucus changes"],
-      }
+      phase = "Follicular Phase"; description = "Pre-ovulation — fertility increasing"; fertility = "medium"
+      tips = ["Energy levels typically increase", "Good time for new projects", "Monitor cervical mucus changes"]
     } else if (daysSinceLastPeriod >= ovulationDay - 5 && daysSinceLastPeriod <= ovulationDay) {
-      return {
-        phase: "Fertile Window",
-        description: "Peak fertility period",
-        fertility: "high" as const,
-        tips: [
-          "Highest chance of conception",
-          "Cervical mucus becomes clear and stretchy",
-          "Basal body temperature may rise slightly",
-        ],
-      }
+      phase = "Fertile Window"; description = "Peak fertility period"; fertility = "high"
+      tips = ["Highest chance of conception", "Cervical mucus becomes clear and stretchy", "Basal body temperature may rise slightly"]
     } else {
-      return {
-        phase: "Luteal Phase",
-        description: "Post-ovulation - fertility decreasing",
-        fertility: "low" as const,
-        tips: ["PMS symptoms may begin", "Focus on stress management", "Prepare for next cycle"],
-      }
+      phase = "Luteal Phase"; description = "Post-ovulation — fertility decreasing"; fertility = "low"
+      tips = ["PMS symptoms may begin", "Focus on stress management", "Prepare for next cycle"]
     }
+
+    setResult({ ovulationDate, fertileWindowStart, fertileWindowEnd, nextPeriodDate, daysUntilOvulation, currentPhase: phase, phaseDescription: description, fertilityStatus: fertility, tips })
   }
 
-  const getFertilityColor = (status: string) => {
-    switch (status) {
-      case "high":
-        return "bg-red-100 text-red-800 border-red-200"
-      case "medium":
-        return "bg-yellow-100 text-yellow-800 border-yellow-200"
-      case "low":
-        return "bg-green-100 text-green-800 border-green-200"
-      default:
-        return "bg-gray-100 text-gray-800 border-gray-200"
-    }
-  }
-
-  const getPhaseColor = (phase: string) => {
-    switch (phase) {
-      case "Menstrual Phase":
-        return "bg-red-50 border-red-200"
-      case "Follicular Phase":
-        return "bg-blue-50 border-blue-200"
-      case "Fertile Window":
-        return "bg-pink-50 border-pink-200"
-      case "Luteal Phase":
-        return "bg-purple-50 border-purple-200"
-      default:
-        return "bg-gray-50 border-gray-200"
-    }
-  }
+  const ps = result ? phaseStyle[result.currentPhase] ?? { bg: "#F7FAF8", text: "#667085" } : null
+  const fs = result ? fertilityStyle[result.fertilityStatus] : null
 
   return (
-    <div className="max-w-4xl mx-auto space-y-8">
-      {/* Input Section */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center space-x-2">
-            <Calendar className="h-5 w-5 text-pink-600" />
-            <span>Ovulation Tracker</span>
-          </CardTitle>
-          <CardDescription>Track your fertile window and ovulation date based on your menstrual cycle</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-2">
-              <Label htmlFor="lastPeriod">Last Period Start Date</Label>
-              <Input
-                id="lastPeriod"
-                type="date"
-                value={lastPeriodDate}
-                onChange={(e) => setLastPeriodDate(e.target.value)}
-                max={format(new Date(), "yyyy-MM-dd")}
-              />
+    <div className="grid gap-6 lg:grid-cols-[minmax(0,1.25fr)_minmax(340px,0.85fr)] lg:items-start">
+      {/* Left – Inputs + cycle phases reference + disclaimer */}
+      <div className="space-y-4">
+        <Card className="rounded-[20px] border-[#E4E7EC] bg-white shadow-[0_14px_36px_rgba(16,24,40,0.05)]">
+          <CardHeader>
+            <CardTitle className="font-poppins text-2xl font-bold tracking-tight text-[#0B1020] flex items-center gap-2">
+              <Calendar className="h-6 w-6 text-[#DB2777]" />
+              Ovulation Tracker
+            </CardTitle>
+            <CardDescription className="text-base leading-6 text-[#667085]">
+              Track your fertile window and ovulation date based on your menstrual cycle.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="lastPeriod" className="font-semibold text-[#0B1020]">Last Period Start Date</Label>
+                <Input id="lastPeriod" type="date" value={lastPeriodDate} onChange={(e) => setLastPeriodDate(e.target.value)} max={format(new Date(), "yyyy-MM-dd")} className="h-12 rounded-xl border-[#E4E7EC] text-base" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="cycleLength" className="font-semibold text-[#0B1020]">Average Cycle Length (days)</Label>
+                <Input id="cycleLength" type="number" placeholder="28" value={cycleLength} onChange={(e) => setCycleLength(e.target.value)} min="21" max="35" className="h-12 rounded-xl border-[#E4E7EC] text-base" />
+                <p className="text-xs text-[#667085]">Normal range: 21–35 days</p>
+              </div>
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="cycleLength">Average Cycle Length (days)</Label>
-              <Input
-                id="cycleLength"
-                type="number"
-                placeholder="28"
-                value={cycleLength}
-                onChange={(e) => setCycleLength(e.target.value)}
-                min="21"
-                max="35"
-              />
-              <p className="text-xs text-muted-foreground">Normal range: 21-35 days</p>
+            <Button onClick={calculateOvulation} disabled={!lastPeriodDate || !cycleLength} className="h-12 w-full rounded-xl bg-[#0B5A2A] font-bold text-white hover:bg-[#063F20]">
+              <Heart className="mr-2 h-4 w-4" /> Calculate Fertile Window
+            </Button>
+            <div className="rounded-2xl bg-[#FDF2F8] p-4 text-sm leading-6 text-[#DB2777]">
+              <p className="font-semibold">Standard cycle calculation</p>
+              <p>Ovulation is estimated 14 days before your next period, with a 6-day fertile window.</p>
             </div>
-          </div>
+          </CardContent>
+        </Card>
 
-          <Button onClick={calculateOvulation} className="w-full" disabled={!lastPeriodDate || !cycleLength}>
-            <Heart className="mr-2 h-4 w-4" />
-            Calculate Fertile Window
-          </Button>
-        </CardContent>
-      </Card>
+        {/* Cycle phases reference */}
+        <Card className="rounded-[20px] border-[#E4E7EC] bg-white shadow-[0_14px_36px_rgba(16,24,40,0.05)]">
+          <CardHeader>
+            <CardTitle className="font-poppins text-lg font-bold text-[#0B1020]">Menstrual Cycle Phases</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+              {[
+                { phase: "Menstrual", days: "Days 1–5", note: "Low fertility", ...phaseStyle["Menstrual Phase"] },
+                { phase: "Follicular", days: "Days 6–13", note: "Increasing", ...phaseStyle["Follicular Phase"] },
+                { phase: "Ovulation", days: "Days 14–15", note: "Peak fertility", ...phaseStyle["Fertile Window"] },
+                { phase: "Luteal", days: "Days 16–28", note: "Decreasing", ...phaseStyle["Luteal Phase"] },
+              ].map((p) => (
+                <div key={p.phase} className="rounded-xl p-3 text-center" style={{ backgroundColor: p.bg }}>
+                  <p className="font-semibold text-sm" style={{ color: p.text }}>{p.phase}</p>
+                  <p className="text-xs mt-0.5" style={{ color: p.text }}>{p.days}</p>
+                  <p className="text-xs mt-0.5 opacity-80" style={{ color: p.text }}>{p.note}</p>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
 
-      {/* Results Section */}
-      {result && (
-        <div className="space-y-6">
-          {/* Current Status */}
-          <Card className={getPhaseColor(result.currentPhase)}>
-            <CardHeader>
-              <CardTitle className="text-lg">Current Cycle Status</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h3 className="text-xl font-semibold">{result.currentPhase}</h3>
-                  <p className="text-muted-foreground">{result.phaseDescription}</p>
-                </div>
-                <Badge className={`${getFertilityColor(result.fertilityStatus)} px-3 py-1`}>
-                  {result.fertilityStatus.charAt(0).toUpperCase() + result.fertilityStatus.slice(1)} Fertility
-                </Badge>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Key Dates */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Important Dates</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="p-3 bg-pink-50 rounded-lg border border-pink-200">
-                  <div className="text-sm font-medium text-pink-700">Ovulation Date</div>
-                  <div className="text-lg font-semibold text-pink-800">
-                    {format(result.ovulationDate, "MMMM dd, yyyy")}
-                  </div>
-                  <div className="text-xs text-pink-600">
-                    {result.daysUntilOvulation > 0
-                      ? `In ${result.daysUntilOvulation} days`
-                      : result.daysUntilOvulation === 0
-                        ? "Today!"
-                        : `${Math.abs(result.daysUntilOvulation)} days ago`}
-                  </div>
-                </div>
-
-                <div className="p-3 bg-blue-50 rounded-lg border border-blue-200">
-                  <div className="text-sm font-medium text-blue-700">Next Period</div>
-                  <div className="text-lg font-semibold text-blue-800">
-                    {format(result.nextPeriodDate, "MMMM dd, yyyy")}
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Fertile Window</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="p-4 bg-red-50 rounded-lg border border-red-200 text-center">
-                  <div className="text-sm font-medium text-red-700 mb-2">Peak Fertility Period</div>
-                  <div className="text-lg font-semibold text-red-800">
-                    {format(result.fertileWindowStart, "MMM dd")} - {format(result.fertileWindowEnd, "MMM dd")}
-                  </div>
-                  <div className="text-xs text-red-600 mt-1">6-day window including ovulation</div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Tips and Advice */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">Tips for Current Phase</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                {result.tips.map((tip, index) => (
-                  <div
-                    key={index}
-                    className="flex items-start space-x-3 p-3 bg-blue-50 rounded-lg border border-blue-200"
-                  >
-                    <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0" />
-                    <span className="text-sm text-blue-800">{tip}</span>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Cycle Overview */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">Menstrual Cycle Phases</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div className="p-3 bg-red-50 rounded-lg border border-red-200 text-center">
-                  <div className="font-semibold text-red-800">Menstrual</div>
-                  <div className="text-sm text-red-600">Days 1-5</div>
-                  <div className="text-xs text-red-500 mt-1">Low fertility</div>
-                </div>
-                <div className="p-3 bg-blue-50 rounded-lg border border-blue-200 text-center">
-                  <div className="font-semibold text-blue-800">Follicular</div>
-                  <div className="text-sm text-blue-600">Days 6-13</div>
-                  <div className="text-xs text-blue-500 mt-1">Increasing fertility</div>
-                </div>
-                <div className="p-3 bg-pink-50 rounded-lg border border-pink-200 text-center">
-                  <div className="font-semibold text-pink-800">Ovulation</div>
-                  <div className="text-sm text-pink-600">Days 14-15</div>
-                  <div className="text-xs text-pink-500 mt-1">Peak fertility</div>
-                </div>
-                <div className="p-3 bg-purple-50 rounded-lg border border-purple-200 text-center">
-                  <div className="font-semibold text-purple-800">Luteal</div>
-                  <div className="text-sm text-purple-600">Days 16-28</div>
-                  <div className="text-xs text-purple-500 mt-1">Decreasing fertility</div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+        {/* Disclaimer */}
+        <div className="rounded-2xl border border-[#FEF9C3] bg-[#FEFCE8] p-5 text-sm leading-6 text-[#854D0E] space-y-1">
+          <div className="flex items-center gap-2 font-semibold mb-1"><AlertTriangle className="h-4 w-4" /> Important Information</div>
+          <p>• Estimates are based on average cycle patterns — individual cycles vary.</p>
+          <p>• This tool is not suitable as a contraceptive method.</p>
+          <p>• Consult healthcare providers for fertility planning or concerns.</p>
         </div>
-      )}
+      </div>
 
-      {/* Important Information */}
-      <Card className="border-amber-200 bg-amber-50">
-        <CardHeader>
-          <CardTitle className="flex items-center space-x-2 text-amber-800">
-            <AlertTriangle className="h-5 w-5" />
-            <span>Important Information</span>
-          </CardTitle>
+      {/* Right – Results */}
+      <Card className="rounded-[20px] border-[#CFEBDD] bg-[radial-gradient(circle_at_50%_18%,rgba(11,90,42,0.06),transparent_42%),#F7FAF8] shadow-[0_14px_36px_rgba(11,90,42,0.06)]">
+        <CardHeader className="flex-row items-center justify-between space-y-0">
+          <CardTitle className="font-poppins text-2xl font-bold tracking-tight text-[#0B1020]">Your Estimate</CardTitle>
+          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#ECFDF3] text-[#0B5A2A]">
+            <BarChart3 className="h-5 w-5" />
+          </span>
         </CardHeader>
-        <CardContent className="text-amber-700 space-y-2">
-          <p>• This calculator provides estimates based on average cycle patterns</p>
-          <p>• Individual cycles can vary significantly from month to month</p>
-          <p>• Track additional signs like basal body temperature and cervical mucus for accuracy</p>
-          <p>• Consult healthcare providers for fertility planning or concerns</p>
-          <p>• This tool is not suitable as a contraceptive method</p>
+        <CardContent>
+          {result && ps && fs ? (
+            <div className="space-y-4">
+              {/* Current phase badge */}
+              <div className="rounded-2xl p-4 text-center" style={{ backgroundColor: ps.bg }}>
+                <p className="font-poppins text-lg font-bold" style={{ color: ps.text }}>{result.currentPhase}</p>
+                <p className="text-sm mt-0.5" style={{ color: ps.text }}>{result.phaseDescription}</p>
+                <span className="mt-2 inline-flex rounded-full px-3 py-1 text-xs font-bold" style={{ backgroundColor: fs.bg, color: fs.text }}>{fs.label}</span>
+              </div>
+
+              <div className="space-y-3 text-sm">
+                <div className="flex justify-between border-b border-[#E4E7EC] pb-3">
+                  <span className="text-[#667085]">Ovulation Date</span>
+                  <div className="text-right">
+                    <span className="font-semibold text-[#DB2777]">{format(result.ovulationDate, "MMM dd, yyyy")}</span>
+                    <p className="text-xs text-[#667085]">
+                      {result.daysUntilOvulation > 0 ? `In ${result.daysUntilOvulation} days` : result.daysUntilOvulation === 0 ? "Today!" : `${Math.abs(result.daysUntilOvulation)} days ago`}
+                    </p>
+                  </div>
+                </div>
+                <div className="flex justify-between border-b border-[#E4E7EC] pb-3">
+                  <span className="text-[#667085]">Fertile Window</span>
+                  <span className="font-semibold text-[#0B1020] text-right">{format(result.fertileWindowStart, "MMM dd")} – {format(result.fertileWindowEnd, "MMM dd")}</span>
+                </div>
+                <div className="flex justify-between border-b border-[#E4E7EC] pb-3">
+                  <span className="text-[#667085]">Next Period</span>
+                  <span className="font-semibold text-[#0B1020]">{format(result.nextPeriodDate, "MMM dd, yyyy")}</span>
+                </div>
+              </div>
+
+              <div>
+                <p className="text-sm font-semibold text-[#0B1020] mb-2">Tips for Current Phase</p>
+                <div className="space-y-2">
+                  {result.tips.map((tip, i) => (
+                    <div key={i} className="flex items-start gap-2 rounded-xl p-2.5" style={{ backgroundColor: ps.bg }}>
+                      <div className="h-1.5 w-1.5 rounded-full mt-1.5 shrink-0" style={{ backgroundColor: ps.text }} />
+                      <span className="text-sm" style={{ color: ps.text }}>{tip}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="space-y-5">
+              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#FDF2F8] text-[#DB2777]">
+                <Heart className="h-8 w-8" />
+              </div>
+              <p className="mx-auto max-w-xs text-center text-sm font-semibold leading-6 text-[#344054]">
+                Enter your last period date and cycle length to calculate your fertile window.
+              </p>
+              <div className="space-y-3 text-sm">
+                <div className="flex justify-between border-b border-[#E4E7EC] pb-3"><span className="text-[#667085]">Ovulation date</span><span className="font-bold text-[#0B1020]">-</span></div>
+                <div className="flex justify-between border-b border-[#E4E7EC] pb-3"><span className="text-[#667085]">Fertile window</span><span className="font-bold text-[#0B1020]">-</span></div>
+                <div className="flex justify-between"><span className="font-bold text-[#0B1020]">Next period</span><span className="font-bold text-[#0B1020]">-</span></div>
+              </div>
+            </div>
+          )}
+          <div className="mt-6 rounded-2xl bg-[#F0FAF4] p-4 text-sm leading-6 text-[#0B5A2A]">
+            These estimates are for planning purposes. Always consult a healthcare provider for fertility advice.
+          </div>
         </CardContent>
       </Card>
     </div>

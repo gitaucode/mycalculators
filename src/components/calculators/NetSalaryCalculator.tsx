@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
+import { BarChart3, Wallet } from "lucide-react"
 
 export const NetSalaryCalculator = () => {
   const [grossSalary, setGrossSalary] = useState<string>("")
@@ -14,10 +15,44 @@ export const NetSalaryCalculator = () => {
   const [insuranceRelief, setInsuranceRelief] = useState<string>("")
   const [result, setResult] = useState<{
     paye: number
-    nhif: number
+    shif: number
     nssf: number
+    ahl: number
+    taxableIncome: number
+    grossPay: number
     netSalary: number
   } | null>(null)
+
+  const calculateNssf = (gross: number) => {
+    const lowerEarningLimit = 9000
+    const upperEarningLimit = 108000
+    const tierOne = Math.min(gross, lowerEarningLimit) * 0.06
+    const tierTwo = Math.max(0, Math.min(gross, upperEarningLimit) - lowerEarningLimit) * 0.06
+
+    return tierOne + tierTwo
+  }
+
+  const calculatePayeBeforeRelief = (taxableIncome: number) => {
+    const bands = [
+      { limit: 24000, rate: 0.1 },
+      { limit: 8333, rate: 0.25 },
+      { limit: 467667, rate: 0.3 },
+      { limit: 300000, rate: 0.325 },
+      { limit: Number.POSITIVE_INFINITY, rate: 0.35 },
+    ]
+
+    let remaining = Math.max(0, taxableIncome)
+    let tax = 0
+
+    for (const band of bands) {
+      if (remaining <= 0) break
+      const taxableAtBand = Math.min(remaining, band.limit)
+      tax += taxableAtBand * band.rate
+      remaining -= taxableAtBand
+    }
+
+    return tax
+  }
 
   const calculateNetSalary = () => {
     const gross = Number.parseFloat(grossSalary) || 0
@@ -31,162 +66,184 @@ export const NetSalaryCalculator = () => {
       return
     }
 
-    // NSSF (Tier I & II - assuming new rates for simplicity, max KES 2160)
-    const nssfContribution = Math.min(gross * 0.06, 2160) // Example: 6% of gross, capped
+    const grossPay = gross + benefit
+    const nssfContribution = calculateNssf(gross)
+    const shifContribution = Math.max(300, gross * 0.0275)
+    const affordableHousingLevy = gross * 0.015
+    const taxableIncome = Math.max(0, grossPay - nssfContribution - shifContribution - affordableHousingLevy - pension)
 
-    // Taxable Income
-    const taxableIncome = gross + benefit - nssfContribution - pension
-
-    // PAYE (Simplified tiers for example)
-    let paye = 0
-    if (taxableIncome <= 24000) {
-      paye = taxableIncome * 0.1
-    } else if (taxableIncome <= 32333) {
-      paye = 2400 + (taxableIncome - 24000) * 0.25
-    } else {
-      paye = 2400 + 2083.25 + (taxableIncome - 32333) * 0.3
-    }
-
-    // Personal Relief (Example: KES 2400)
     const personalRelief = 2400
-    paye = Math.max(0, paye - personalRelief - housing - insurance)
+    const payeBeforeRelief = calculatePayeBeforeRelief(taxableIncome)
+    const paye = Math.max(0, payeBeforeRelief - personalRelief - housing - insurance)
 
-    // NHIF (Simplified tiers for example)
-    let nhif = 0
-    if (gross <= 5999) nhif = 150
-    else if (gross <= 7999) nhif = 300
-    else if (gross <= 11999) nhif = 400
-    else if (gross <= 14999) nhif = 500
-    else if (gross <= 19999) nhif = 600
-    else if (gross <= 24999) nhif = 750
-    else if (gross <= 29999) nhif = 850
-    else if (gross <= 34999) nhif = 900
-    else if (gross <= 39999) nhif = 950
-    else if (gross <= 44999) nhif = 1000
-    else if (gross <= 49999) nhif = 1100
-    else if (gross <= 59999) nhif = 1200
-    else if (gross <= 69999) nhif = 1300
-    else if (gross <= 79999) nhif = 1400
-    else if (gross <= 89999) nhif = 1500
-    else if (gross <= 99999) nhif = 1600
-    else nhif = 1700 // For gross > 100,000
-
-    const totalDeductions = paye + nhif + nssfContribution + pension
-    const netSalary = gross - totalDeductions
+    const totalDeductions = paye + shifContribution + nssfContribution + affordableHousingLevy + pension
+    const netSalary = grossPay - totalDeductions
 
     setResult({
       paye: Number.parseFloat(paye.toFixed(2)),
-      nhif: Number.parseFloat(nhif.toFixed(2)),
+      shif: Number.parseFloat(shifContribution.toFixed(2)),
       nssf: Number.parseFloat(nssfContribution.toFixed(2)),
+      ahl: Number.parseFloat(affordableHousingLevy.toFixed(2)),
+      taxableIncome: Number.parseFloat(taxableIncome.toFixed(2)),
+      grossPay: Number.parseFloat(grossPay.toFixed(2)),
       netSalary: Number.parseFloat(netSalary.toFixed(2)),
     })
   }
 
   return (
-    <div className="max-w-2xl mx-auto space-y-6">
-      <Card>
+    <div className="grid gap-6 lg:grid-cols-[minmax(0,1.25fr)_minmax(340px,0.85fr)] lg:items-start">
+      {/* Left – Inputs */}
+      <Card className="rounded-[20px] border-[#E4E7EC] bg-white shadow-[0_14px_36px_rgba(16,24,40,0.05)]">
         <CardHeader>
-          <CardTitle>Net Salary Calculator</CardTitle>
-          <CardDescription>Estimate your take-home pay after all deductions.</CardDescription>
+          <CardTitle className="font-poppins text-2xl font-bold tracking-tight text-[#0B1020]">
+            Net Salary Calculator
+          </CardTitle>
+          <CardDescription className="text-base leading-6 text-[#667085]">
+            Estimate your take-home pay after all statutory deductions (PAYE, SHIF, NSSF, AHL).
+          </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-5">
           <div className="space-y-2">
-            <Label htmlFor="gross-salary">Gross Salary (KSH)</Label>
+            <Label htmlFor="gross-salary" className="font-semibold text-[#0B1020]">Gross Salary (KSH)</Label>
             <Input
               id="gross-salary"
               type="number"
-              placeholder="e.g., 50000"
+              placeholder="e.g., 50,000"
               value={grossSalary}
               onChange={(e) => setGrossSalary(e.target.value)}
+              className="h-12 rounded-xl border-[#E4E7EC] text-base"
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="benefits">Taxable Benefits (KSH, e.g., allowances)</Label>
+            <Label htmlFor="benefits" className="font-semibold text-[#0B1020]">Taxable Benefits (KSH)</Label>
             <Input
               id="benefits"
               type="number"
-              placeholder="e.g., 5000"
+              placeholder="e.g., 5,000 (allowances)"
               value={benefits}
               onChange={(e) => setBenefits(e.target.value)}
+              className="h-12 rounded-xl border-[#E4E7EC] text-base"
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="pension-contribution">Approved Pension Contribution (KSH)</Label>
+            <Label htmlFor="pension-contribution" className="font-semibold text-[#0B1020]">Approved Pension Contribution (KSH)</Label>
             <Input
               id="pension-contribution"
               type="number"
-              placeholder="e.g., 1000"
+              placeholder="e.g., 1,000"
               value={pensionContribution}
               onChange={(e) => setPensionContribution(e.target.value)}
+              className="h-12 rounded-xl border-[#E4E7EC] text-base"
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="housing-relief">Housing Relief (KSH)</Label>
+            <Label htmlFor="housing-relief" className="font-semibold text-[#0B1020]">Additional Tax Relief (KSH)</Label>
             <Input
               id="housing-relief"
               type="number"
-              placeholder="e.g., 1700"
+              placeholder="e.g., 0"
               value={housingRelief}
               onChange={(e) => setHousingRelief(e.target.value)}
+              className="h-12 rounded-xl border-[#E4E7EC] text-base"
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="insurance-relief">Insurance Relief (KSH)</Label>
+            <Label htmlFor="insurance-relief" className="font-semibold text-[#0B1020]">Insurance Relief (KSH)</Label>
             <Input
               id="insurance-relief"
               type="number"
               placeholder="e.g., 210"
               value={insuranceRelief}
               onChange={(e) => setInsuranceRelief(e.target.value)}
+              className="h-12 rounded-xl border-[#E4E7EC] text-base"
             />
           </div>
-          <Button onClick={calculateNetSalary} className="w-full">
+          <Button onClick={calculateNetSalary} className="h-12 w-full rounded-xl bg-[#0B5A2A] font-bold text-white hover:bg-[#063F20]">
             Calculate Net Salary
           </Button>
+          <div className="rounded-2xl bg-[#F0FAF4] p-4 text-sm leading-6 text-[#0B5A2A]">
+            <p className="font-semibold">Kenya statutory deductions applied</p>
+            <p>Includes PAYE tax bands, SHIF (2.75%), NSSF tiers, and Affordable Housing Levy (1.5%).</p>
+          </div>
         </CardContent>
       </Card>
 
-      {result && (
-        <Card>
-          <CardHeader>
-            <CardTitle>Net Salary Breakdown</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              <div className="flex justify-between">
-                <span>Gross Salary:</span>
-                <span className="font-medium">KSH {Number.parseFloat(grossSalary).toLocaleString()}</span>
+      {/* Right – Results */}
+      <Card className="rounded-[20px] border-[#CFEBDD] bg-[radial-gradient(circle_at_50%_18%,rgba(11,90,42,0.06),transparent_42%),#F7FAF8] shadow-[0_14px_36px_rgba(11,90,42,0.06)]">
+        <CardHeader className="flex-row items-center justify-between space-y-0">
+          <CardTitle className="font-poppins text-2xl font-bold tracking-tight text-[#0B1020]">Your Estimate</CardTitle>
+          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#ECFDF3] text-[#0B5A2A]">
+            <BarChart3 className="h-5 w-5" />
+          </span>
+        </CardHeader>
+        <CardContent>
+          {result ? (
+            <div className="space-y-4">
+              <div className="rounded-2xl bg-white p-5 text-center shadow-sm">
+                <p className="text-sm font-semibold text-[#667085]">Take-Home Pay</p>
+                <p className="mt-2 font-poppins text-3xl font-bold text-[#0B5A2A]">
+                  KSH {result.netSalary.toLocaleString()}
+                </p>
               </div>
-              <div className="flex justify-between">
-                <span>PAYE:</span>
-                <span className="font-medium text-destructive">KSH {result.paye.toLocaleString()}</span>
-              </div>
-              <div className="flex justify-between">
-                <span>NHIF:</span>
-                <span className="font-medium text-destructive">KSH {result.nhif.toLocaleString()}</span>
-              </div>
-              <div className="flex justify-between">
-                <span>NSSF:</span>
-                <span className="font-medium text-destructive">KSH {result.nssf.toLocaleString()}</span>
-              </div>
-              {Number.parseFloat(pensionContribution) > 0 && (
-                <div className="flex justify-between">
-                  <span>Pension Contribution:</span>
-                  <span className="font-medium text-destructive">
-                    KSH {Number.parseFloat(pensionContribution).toLocaleString()}
-                  </span>
+              <div className="space-y-3 text-sm">
+                <div className="flex justify-between border-b border-[#E4E7EC] pb-3">
+                  <span className="text-[#667085]">Gross Pay</span>
+                  <span className="font-semibold text-[#0B1020]">KSH {result.grossPay.toLocaleString()}</span>
                 </div>
-              )}
-              <div className="border-t pt-3">
-                <div className="flex justify-between text-lg font-bold">
-                  <span>Net Salary:</span>
-                  <span className="text-success">KSH {result.netSalary.toLocaleString()}</span>
+                <div className="flex justify-between border-b border-[#E4E7EC] pb-3">
+                  <span className="text-[#667085]">Taxable Income</span>
+                  <span className="font-semibold text-[#0B1020]">KSH {result.taxableIncome.toLocaleString()}</span>
+                </div>
+                <div className="flex justify-between border-b border-[#E4E7EC] pb-3">
+                  <span className="text-[#667085]">PAYE</span>
+                  <span className="font-semibold text-[#DC2626]">KSH {result.paye.toLocaleString()}</span>
+                </div>
+                <div className="flex justify-between border-b border-[#E4E7EC] pb-3">
+                  <span className="text-[#667085]">SHIF</span>
+                  <span className="font-semibold text-[#DC2626]">KSH {result.shif.toLocaleString()}</span>
+                </div>
+                <div className="flex justify-between border-b border-[#E4E7EC] pb-3">
+                  <span className="text-[#667085]">NSSF</span>
+                  <span className="font-semibold text-[#DC2626]">KSH {result.nssf.toLocaleString()}</span>
+                </div>
+                <div className="flex justify-between border-b border-[#E4E7EC] pb-3">
+                  <span className="text-[#667085]">Affordable Housing Levy</span>
+                  <span className="font-semibold text-[#DC2626]">KSH {result.ahl.toLocaleString()}</span>
+                </div>
+                {Number.parseFloat(pensionContribution) > 0 && (
+                  <div className="flex justify-between border-b border-[#E4E7EC] pb-3">
+                    <span className="text-[#667085]">Pension Contribution</span>
+                    <span className="font-semibold text-[#DC2626]">
+                      KSH {Number.parseFloat(pensionContribution).toLocaleString()}
+                    </span>
+                  </div>
+                )}
+                <div className="flex justify-between pt-1 text-base font-bold">
+                  <span>Net Salary</span>
+                  <span className="text-[#0B5A2A]">KSH {result.netSalary.toLocaleString()}</span>
                 </div>
               </div>
             </div>
-          </CardContent>
-        </Card>
-      )}
+          ) : (
+            <div className="space-y-5">
+              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#ECFDF3] text-[#0B5A2A]">
+                <Wallet className="h-8 w-8" />
+              </div>
+              <p className="mx-auto max-w-xs text-center text-sm font-semibold leading-6 text-[#344054]">
+                Enter your details in the calculator to see your net salary breakdown.
+              </p>
+              <div className="space-y-3 text-sm">
+                <div className="flex justify-between border-b border-[#E4E7EC] pb-3"><span className="text-[#667085]">Gross pay</span><span className="font-bold text-[#0B1020]">-</span></div>
+                <div className="flex justify-between border-b border-[#E4E7EC] pb-3"><span className="text-[#667085]">Total deductions</span><span className="font-bold text-[#0B1020]">-</span></div>
+                <div className="flex justify-between"><span className="font-bold text-[#0B1020]">Net salary</span><span className="font-bold text-[#0B1020]">-</span></div>
+              </div>
+            </div>
+          )}
+          <div className="mt-6 rounded-2xl bg-[#F0FAF4] p-4 text-sm leading-6 text-[#0B5A2A]">
+            These estimates are for planning purposes. Actual values may vary depending on employer arrangements and KRA updates.
+          </div>
+        </CardContent>
+      </Card>
     </div>
   )
 }

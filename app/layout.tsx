@@ -1,5 +1,5 @@
 import type React from "react"
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 import { Inter, Poppins } from "next/font/google"
 import "./globals.css"
 
@@ -17,15 +17,19 @@ const poppins = Poppins({
 })
 
 export const metadata: Metadata = {
-  title: "K Toolkit - Smart Money Decisions for Kenya",
+  title: "MyCalculators - Smart Money Decisions for Kenya",
   description:
     "Essential financial and health calculators for Kenyan consumers. Calculate M-Pesa charges, loans, salaries, BMI, calories and more with accurate, up-to-date rates.",
   keywords:
     "Kenya, financial calculator, M-Pesa charges, loan calculator, salary calculator, budget planner, health calculator",
-  authors: [{ name: "K Toolkit" }],
-  viewport: "width=device-width, initial-scale=1",
+  authors: [{ name: "MyCalculators" }],
   robots: "index, follow",
-    generator: 'v0.dev'
+  generator: "v0.dev",
+}
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
 }
 
 export default function RootLayout({
@@ -35,7 +39,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
-      <body className="font-inter antialiased">{children}</body>
+      <body className="min-h-screen bg-[#F7FAF8] font-inter antialiased">{children}</body>
     </html>
   )
 }

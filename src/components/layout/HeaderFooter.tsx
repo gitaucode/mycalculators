@@ -19,7 +19,7 @@ export const Header = () => {
             </div>
             <div className="flex items-center space-x-2">
               <div>
-                <h1 className="font-poppins font-bold text-lg text-foreground">K Toolkit</h1>
+                <h1 className="font-poppins font-bold text-lg text-foreground">MyCalculators</h1>
                 <p className="text-xs text-muted-foreground -mt-1">Kenya</p>
               </div>
               <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-muted/50 text-muted-foreground border border-border/50">
@@ -31,7 +31,7 @@ export const Header = () => {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-1">
             <Button variant="ghost" asChild>
-              <a href="#calculators">Calculators</a>
+              <a href="/calculators">Calculators</a>
             </Button>
             <Button variant="ghost" asChild>
               <a href="#about">About</a>
@@ -55,7 +55,7 @@ export const Header = () => {
           <div className="md:hidden border-t bg-background">
             <nav className="py-4 space-y-1">
               <Button variant="ghost" className="w-full justify-start" asChild>
-                <a href="#calculators" onClick={() => setIsMenuOpen(false)}>
+                <a href="/calculators" onClick={() => setIsMenuOpen(false)}>
                   Calculators
                 </a>
               </Button>
@@ -74,12 +74,12 @@ export const Header = () => {
 
 export const Footer = () => {
   const calculatorLinks = [
-    { name: "M-Pesa Charges", href: "#calculators" },
-    { name: "Loan Calculator", href: "#calculators" },
-    { name: "Net Salary", href: "#calculators" },
-    { name: "Fuliza Calculator", href: "#calculators" },
-    { name: "Car Import Tax", href: "#calculators" },
-    { name: "Budget Planner", href: "#calculators" },
+    { name: "M-Pesa Charges", href: "/mpesa-charges" },
+    { name: "Loan Calculator", href: "/loan-calculator" },
+    { name: "Net Salary", href: "/net-salary" },
+    { name: "Fuliza Calculator", href: "/fuliza-calculator" },
+    { name: "Car Import Tax", href: "/car-import-tax" },
+    { name: "Budget Planner", href: "/budget-planner" },
   ]
 
   return (
@@ -92,7 +92,7 @@ export const Footer = () => {
               <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
                 <Calculator className="h-4 w-4 text-primary-foreground" />
               </div>
-              <h3 className="font-poppins font-bold text-lg">K Toolkit</h3>
+              <h3 className="font-poppins font-bold text-lg">MyCalculators</h3>
             </div>
             <p className="text-body text-muted-foreground max-w-sm">
               Essential financial and health calculators designed for Kenyan consumers. Make informed money decisions
@@ -146,16 +146,7 @@ export const Footer = () => {
 
         <div className="border-t mt-8 pt-8 text-center">
           <p className="text-caption">
-            © 2024 K Toolkit. Built with ❤️ by{" "}
-            <a
-              href="https://x.com/ItsMeGitau"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-primary hover:underline transition-colors"
-            >
-              @ItsMeGitau
-            </a>
-            .
+            © 2026 MyCalculators.
           </p>
         </div>
       </div>
