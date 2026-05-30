@@ -21,3 +21,5 @@ pnpm build
 ## Deployment
 
 The app is a Next.js project and can be deployed to Vercel, Cloudflare Pages, or any platform that supports Next.js builds.
+
+Production domain: `https://mycalculators.co.ke`

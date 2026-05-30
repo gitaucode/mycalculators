@@ -137,7 +137,7 @@ const taxSections = [
 const bankingSections = [
   {
     title: "Central Bank Rate (CBR)",
-    updated: "Feb 2026",
+    updated: "Checked May 2026",
     source: "Central Bank of Kenya",
     headers: ["Metric", "Value"],
     rows: [
@@ -252,12 +252,13 @@ const changes = [
 ]
 
 const sources = [
+  { name: "Safaricom M-PESA Tariffs", url: "https://www.safaricom.co.ke/personal/m-pesa/getting-started/m-pesa-rates" },
+  { name: "KRA Income Tax Rates", url: "https://www.kra.go.ke/individual/filing-paying/types-of-taxes/individual-income-tax" },
+  { name: "KRA PAYE Guidance", url: "https://www.kra.go.ke/individual/filing-paying/types-of-taxes/paye" },
   { name: "Central Bank of Kenya", url: "https://www.centralbank.go.ke" },
-  { name: "Kenya Revenue Authority (KRA)", url: "https://www.kra.go.ke" },
-  { name: "Safaricom PLC", url: "https://www.safaricom.co.ke" },
-  { name: "NSSF Kenya", url: "https://www.nssf.or.ke" },
   { name: "Social Health Authority (SHA)", url: "https://www.sha.go.ke" },
-  { name: "Energy and Petroleum Regulatory Authority (EPRA)", url: "https://www.epra.go.ke" },
+  { name: "NSSF Kenya", url: "https://www.nssf.or.ke" },
+  { name: "Energy and Petroleum Regulatory Authority (EPRA)", url: "https://www.epra.go.ke/retail-electricity-tariff-calculator" },
   { name: "KPLC / Kenya Power", url: "https://www.kplc.co.ke" },
 ]
 
@@ -397,7 +398,7 @@ export default function RatesPage() {
               </span>
               <div className="text-sm leading-6">
                 <p className="font-semibold text-[#0B1020]">
-                  Last updated: <span className="font-medium text-[#667085]">May 2026</span>
+                  Last updated: <span className="font-medium text-[#667085]">May 30, 2026</span>
                 </p>
                 <p className="font-medium text-[#344054]">Sources: Safaricom, KRA, CBK, SHA, KPLC</p>
               </div>
@@ -538,7 +539,7 @@ export default function RatesPage() {
                 <h2 className="text-2xl font-extrabold text-[#0B1020]">Important Notice</h2>
               </div>
               <p className="max-w-xl text-[15px] leading-7 text-[#667085]">
-                Rates are provided for planning and estimation only. Always verify current rates with the relevant institution before making financial decisions. Some charges vary by bank or product tier.
+                Rates are provided for planning and estimation only. They were manually reviewed on May 30, 2026, but you should still verify current rates with the relevant institution before making financial decisions. Some charges vary by bank, product tier or monthly pass-through costs.
               </p>
               <Button asChild variant="outline" className="mt-5 h-11 w-fit rounded-lg border-[#0B5A2A] px-5 font-extrabold text-[#0B5A2A] hover:bg-[#F0FAF4]">
                 <a href="mailto:hellogitau@gmail.com">Report Incorrect Rate</a>

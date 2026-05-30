@@ -13,7 +13,7 @@ export default function GuidesPage() {
       href: "/net-salary",
     },
     {
-      title: "Understanding M-Pesa Charges in 2025",
+      title: "Understanding M-Pesa Charges in 2026",
       desc: "How to save money on transaction fees by optimizing your sends and withdrawals.",
       category: "Money & Banking",
       href: "/mpesa-charges",

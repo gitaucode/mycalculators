@@ -8,5 +8,6 @@ export default function robots(): MetadataRoute.Robots {
       disallow: '/api/',
     },
     sitemap: 'https://mycalculators.co.ke/sitemap.xml',
+    host: 'https://mycalculators.co.ke',
   }
 }
