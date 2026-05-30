@@ -1,8 +1,8 @@
-# PesaKit Design System
+# MyCalculators Design System
 
 ## Brand Direction
 
-PesaKit is a clean, practical calculator platform for Kenyan consumers.
+MyCalculators is a clean, practical calculator platform for Kenyan consumers.
 
 The UI should feel:
 - modern
@@ -67,7 +67,7 @@ Do not make body text smaller than `14px` unless it is a badge, label, or metada
 
 ## Layout Widths
 
-- Homepage max width: `1200px` to `1280px`
+- Homepage max width: `1180px` to `1280px`
 - Calculator page max width: `1120px` to `1180px`
 
 Container rule:
@@ -79,7 +79,7 @@ Do not stretch calculator pages too wide.
 
 ## Page Width Rules
 
-PesaKit should use a normal full-width website layout. Do not wrap the entire website in a rounded outer canvas. Do not add page-wide shadows or desktop margins around the whole app.
+MyCalculators should use a normal full-width website layout. Do not wrap the entire website in a rounded outer canvas. Do not add page-wide shadows or desktop margins around the whole app.
 
 Header:
 

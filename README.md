@@ -1,30 +1,23 @@
-# PesaKit
+# MyCalculators
 
-*Automatically synced with your [v0.dev](https://v0.dev) deployments*
+MyCalculators is a practical calculator platform for Kenyan consumers. It includes tools for M-Pesa charges, salary deductions, loans, VAT, utilities, planning, health estimates, and current financial rates.
 
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/gitaus-projects-465e9772/v0-git-kenyafinancialcompassmain)
-[![Built with v0](https://img.shields.io/badge/Built%20with-v0.dev-black?style=for-the-badge)](https://v0.dev/chat/projects/2TiwtkjNBqJ)
+## Local Development
 
-## Overview
+```bash
+pnpm install
+pnpm dev
+```
 
-PesaKit is a comprehensive financial and health calculator application designed specifically for Kenyan consumers. This repository will stay in sync with your deployed chats on [v0.dev](https://v0.dev).
-Any changes you make to your deployed app will be automatically pushed to this repository from [v0.dev](https://v0.dev).
+Open `http://localhost:3000`.
+
+## Production Checks
+
+```bash
+pnpm exec tsc --noEmit
+pnpm build
+```
 
 ## Deployment
 
-Your project is live at:
-
-**[https://vercel.com/gitaus-projects-465e9772/v0-git-kenyafinancialcompassmain](https://vercel.com/gitaus-projects-465e9772/v0-git-kenyafinancialcompassmain)**
-
-## Build your app
-
-Continue building your app on:
-
-**[https://v0.dev/chat/projects/2TiwtkjNBqJ](https://v0.dev/chat/projects/2TiwtkjNBqJ)**
-
-## How It Works
-
-1. Create and modify your project using [v0.dev](https://v0.dev)
-2. Deploy your chats from the v0 interface
-3. Changes are automatically pushed to this repository
-4. Vercel deploys the latest version from this repository
+The app is a Next.js project and can be deployed to Vercel, Cloudflare Pages, or any platform that supports Next.js builds.

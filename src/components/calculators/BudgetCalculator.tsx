@@ -67,7 +67,7 @@ export const BudgetCalculator = () => {
   const savingsRate = totalIncome > 0 ? ((Math.max(0, netIncome) / totalIncome) * 100).toFixed(1) : "0.0"
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[minmax(0,1.25fr)_minmax(340px,0.85fr)] lg:items-start">
+    <div className="calculator-split-native grid gap-6 lg:grid-cols-[minmax(0,1.25fr)_minmax(340px,0.85fr)] lg:items-start">
       {/* Left – Income + Expense inputs */}
       <div className="space-y-4">
         {/* Income */}
