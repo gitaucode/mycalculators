@@ -1,25 +1,42 @@
-import type { Metadata } from "next"
-import { CreditCard } from "lucide-react"
+import { CreditCard } from "lucide-react";
 
-import { MpesaCalculator } from "../../src/components/calculators/MpesaCalculator"
-import { CalculatorPageLayout } from "../../src/components/layout/CalculatorPageLayout"
+import { MpesaCalculator } from "../../src/components/calculators/MpesaCalculator";
+import { CalculatorPageLayout } from "../../src/components/layout/CalculatorPageLayout";
+import {
+  CalculatorStructuredData,
+  createCalculatorMetadata,
+} from "@/lib/calculator-seo";
 
-export const metadata: Metadata = {
-  title: "M-Pesa Charges Calculator - MyCalculators",
+const seo = {
+  name: "M-Pesa Charges Calculator",
+  title: "M-Pesa Charges Calculator Kenya - MyCalculators",
   description:
-    "Calculate M-Pesa transaction fees for send money, withdrawals, and payments. Get accurate charges for all M-Pesa services in Kenya.",
-  keywords: "mpesa charges, mpesa fees, send money charges, mpesa calculator, kenya mobile money",
-}
+    "Calculate M-Pesa send money, withdrawal and payment charges in Kenya using updated Safaricom tariff estimates.",
+  path: "/mpesa-charges",
+  category: "Mobile Money",
+  keywords: [
+    "M-Pesa charges calculator",
+    "M-Pesa fees Kenya",
+    "Safaricom M-Pesa charges",
+    "send money charges",
+    "M-Pesa withdrawal fees",
+  ],
+} as const;
+
+export const metadata = createCalculatorMetadata(seo);
 
 export default function MpesaChargesPage() {
   return (
-    <CalculatorPageLayout
-      title="M-Pesa Charges"
-      category="Mobile Money"
-      description="Calculate transaction fees for send money, withdrawals, and payments"
-      icon={CreditCard}
-    >
-      <MpesaCalculator />
-    </CalculatorPageLayout>
-  )
+    <>
+      <CalculatorStructuredData seo={seo} />
+      <CalculatorPageLayout
+        title="M-Pesa Charges"
+        category="Mobile Money"
+        description="Calculate transaction fees for send money, withdrawals, and payments"
+        icon={CreditCard}
+      >
+        <MpesaCalculator />
+      </CalculatorPageLayout>
+    </>
+  );
 }

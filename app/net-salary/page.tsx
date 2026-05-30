@@ -1,25 +1,42 @@
-import type { Metadata } from "next"
-import { Wallet } from "lucide-react"
+import { Wallet } from "lucide-react";
 
-import { NetSalaryCalculator } from "../../src/components/calculators/NetSalaryCalculator"
-import { CalculatorPageLayout } from "../../src/components/layout/CalculatorPageLayout"
+import { NetSalaryCalculator } from "../../src/components/calculators/NetSalaryCalculator";
+import { CalculatorPageLayout } from "../../src/components/layout/CalculatorPageLayout";
+import {
+  CalculatorStructuredData,
+  createCalculatorMetadata,
+} from "@/lib/calculator-seo";
 
-export const metadata: Metadata = {
-  title: "Net Salary Calculator - MyCalculators",
+const seo = {
+  name: "Net Salary Calculator",
+  title: "Net Salary Calculator Kenya - MyCalculators",
   description:
-    "Calculate your take-home pay after PAYE, SHIF, NSSF and Affordable Housing Levy deductions. Get accurate net salary calculations for Kenya.",
-  keywords: "net salary calculator, paye calculator, nhif deductions, nssf contributions, kenya salary",
-}
+    "Calculate Kenya take-home pay after PAYE, SHIF, NSSF and Affordable Housing Levy deductions.",
+  path: "/net-salary",
+  category: "Salary & Tax",
+  keywords: [
+    "net salary calculator Kenya",
+    "PAYE calculator Kenya",
+    "SHIF calculator",
+    "NSSF calculator Kenya",
+    "take home pay Kenya",
+  ],
+} as const;
+
+export const metadata = createCalculatorMetadata(seo);
 
 export default function NetSalaryPage() {
   return (
-    <CalculatorPageLayout
-      title="Net Salary"
-      category="Salary"
-      description="Calculate take-home pay after PAYE, SHIF, NSSF and Affordable Housing Levy deductions"
-      icon={Wallet}
-    >
-      <NetSalaryCalculator />
-    </CalculatorPageLayout>
-  )
+    <>
+      <CalculatorStructuredData seo={seo} />
+      <CalculatorPageLayout
+        title="Net Salary"
+        category="Salary"
+        description="Calculate take-home pay after PAYE, SHIF, NSSF and Affordable Housing Levy deductions"
+        icon={Wallet}
+      >
+        <NetSalaryCalculator />
+      </CalculatorPageLayout>
+    </>
+  );
 }

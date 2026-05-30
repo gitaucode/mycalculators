@@ -1,25 +1,42 @@
-import type { Metadata } from "next"
-import { Apple } from "lucide-react"
+import { Apple } from "lucide-react";
 
-import { CalorieCalculator } from "../../src/components/calculators/CalorieCalculator"
-import { CalculatorPageLayout } from "../../src/components/layout/CalculatorPageLayout"
+import { CalorieCalculator } from "../../src/components/calculators/CalorieCalculator";
+import { CalculatorPageLayout } from "../../src/components/layout/CalculatorPageLayout";
+import {
+  CalculatorStructuredData,
+  createCalculatorMetadata,
+} from "@/lib/calculator-seo";
 
-export const metadata: Metadata = {
+const seo = {
+  name: "Calorie Calculator",
   title: "Calorie Calculator - MyCalculators",
   description:
-    "Estimate daily calorie needs based on BMR and activity level. Calculate calories for weight loss, maintenance, or gain.",
-  keywords: "calorie calculator, bmr calculator, daily calories, weight loss calories, tdee calculator",
-}
+    "Estimate daily calorie needs from your body profile, activity level and goal for weight loss, maintenance or gain.",
+  path: "/calorie-calculator",
+  category: "Health",
+  keywords: [
+    "calorie calculator",
+    "BMR calculator",
+    "TDEE calculator",
+    "daily calorie needs",
+    "weight loss calories",
+  ],
+} as const;
+
+export const metadata = createCalculatorMetadata(seo);
 
 export default function CalorieCalculatorPage() {
   return (
-    <CalculatorPageLayout
-      title="Calorie Calculator"
-      category="Health"
-      description="Estimate daily calorie needs (BMR)"
-      icon={Apple}
-    >
-      <CalorieCalculator />
-    </CalculatorPageLayout>
-  )
+    <>
+      <CalculatorStructuredData seo={seo} />
+      <CalculatorPageLayout
+        title="Calorie Calculator"
+        category="Health"
+        description="Estimate daily calorie needs (BMR)"
+        icon={Apple}
+      >
+        <CalorieCalculator />
+      </CalculatorPageLayout>
+    </>
+  );
 }

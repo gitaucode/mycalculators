@@ -1,25 +1,42 @@
-import type { Metadata } from "next"
-import { Landmark } from "lucide-react"
+import { Landmark } from "lucide-react";
 
-import { FulizaCalculator } from "../../src/components/calculators/FulizaCalculator"
-import { CalculatorPageLayout } from "../../src/components/layout/CalculatorPageLayout"
+import { FulizaCalculator } from "../../src/components/calculators/FulizaCalculator";
+import { CalculatorPageLayout } from "../../src/components/layout/CalculatorPageLayout";
+import {
+  CalculatorStructuredData,
+  createCalculatorMetadata,
+} from "@/lib/calculator-seo";
 
-export const metadata: Metadata = {
-  title: "Fuliza Calculator - MyCalculators",
+const seo = {
+  name: "Fuliza Calculator",
+  title: "Fuliza Calculator Kenya - MyCalculators",
   description:
-    "Calculate Fuliza overdraft fees and total repayment amounts. Get accurate Fuliza charges for M-Pesa overdrafts in Kenya.",
-  keywords: "fuliza calculator, fuliza charges, mpesa overdraft, fuliza fees, kenya mobile money",
-}
+    "Estimate Fuliza M-Pesa overdraft access, maintenance fees and total repayment amount for Kenyan mobile money users.",
+  path: "/fuliza-calculator",
+  category: "Money & Banking",
+  keywords: [
+    "Fuliza calculator",
+    "Fuliza charges Kenya",
+    "M-Pesa overdraft fees",
+    "Fuliza fees calculator",
+    "Safaricom Fuliza",
+  ],
+} as const;
+
+export const metadata = createCalculatorMetadata(seo);
 
 export default function FulizaCalculatorPage() {
   return (
-    <CalculatorPageLayout
-      title="Fuliza Calculator"
-      category="Mobile Money"
-      description="Calculate overdraft fees and total repayment amounts"
-      icon={Landmark}
-    >
-      <FulizaCalculator />
-    </CalculatorPageLayout>
-  )
+    <>
+      <CalculatorStructuredData seo={seo} />
+      <CalculatorPageLayout
+        title="Fuliza Calculator"
+        category="Mobile Money"
+        description="Calculate overdraft fees and total repayment amounts"
+        icon={Landmark}
+      >
+        <FulizaCalculator />
+      </CalculatorPageLayout>
+    </>
+  );
 }

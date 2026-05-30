@@ -1,25 +1,42 @@
-import type { Metadata } from "next"
-import { Zap } from "lucide-react"
+import { Zap } from "lucide-react";
 
-import { ElectricityCalculator } from "../../src/components/calculators/ElectricityCalculator"
-import { CalculatorPageLayout } from "../../src/components/layout/CalculatorPageLayout"
+import { ElectricityCalculator } from "../../src/components/calculators/ElectricityCalculator";
+import { CalculatorPageLayout } from "../../src/components/layout/CalculatorPageLayout";
+import {
+  CalculatorStructuredData,
+  createCalculatorMetadata,
+} from "@/lib/calculator-seo";
 
-export const metadata: Metadata = {
-  title: "Electricity Calculator - MyCalculators",
+const seo = {
+  name: "Electricity Calculator",
+  title: "KPLC Token Calculator Kenya - MyCalculators",
   description:
-    "Calculate KPLC token units and costs. Convert between amount paid and electricity units for Kenya Power prepaid meters.",
-  keywords: "electricity calculator, kplc tokens, electricity units, kenya power, prepaid electricity",
-}
+    "Estimate Kenya Power prepaid token units and electricity costs using practical KPLC tariff assumptions.",
+  path: "/electricity-calculator",
+  category: "Utilities",
+  keywords: [
+    "KPLC token calculator",
+    "electricity calculator Kenya",
+    "Kenya Power prepaid tokens",
+    "electricity units calculator",
+    "KPLC units",
+  ],
+} as const;
+
+export const metadata = createCalculatorMetadata(seo);
 
 export default function ElectricityCalculatorPage() {
   return (
-    <CalculatorPageLayout
-      title="Electricity Calculator"
-      category="Utilities"
-      description="Calculate KPLC token units and costs"
-      icon={Zap}
-    >
-      <ElectricityCalculator />
-    </CalculatorPageLayout>
-  )
+    <>
+      <CalculatorStructuredData seo={seo} />
+      <CalculatorPageLayout
+        title="Electricity Calculator"
+        category="Utilities"
+        description="Calculate KPLC token units and costs"
+        icon={Zap}
+      >
+        <ElectricityCalculator />
+      </CalculatorPageLayout>
+    </>
+  );
 }

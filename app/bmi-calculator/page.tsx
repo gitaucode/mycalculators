@@ -1,25 +1,42 @@
-import type { Metadata } from "next"
-import { Scale } from "lucide-react"
+import { Scale } from "lucide-react";
 
-import { BmiCalculator } from "../../src/components/calculators/BmiCalculator"
-import { CalculatorPageLayout } from "../../src/components/layout/CalculatorPageLayout"
+import { BmiCalculator } from "../../src/components/calculators/BmiCalculator";
+import { CalculatorPageLayout } from "../../src/components/layout/CalculatorPageLayout";
+import {
+  CalculatorStructuredData,
+  createCalculatorMetadata,
+} from "@/lib/calculator-seo";
 
-export const metadata: Metadata = {
+const seo = {
+  name: "BMI Calculator",
   title: "BMI Calculator - MyCalculators",
   description:
-    "Calculate your Body Mass Index from height and weight. Get health recommendations based on your BMI category.",
-  keywords: "bmi calculator, body mass index, health calculator, weight calculator, bmi chart",
-}
+    "Calculate your body mass index from height and weight and understand your BMI category with a simple health estimate.",
+  path: "/bmi-calculator",
+  category: "Health",
+  keywords: [
+    "BMI calculator",
+    "body mass index calculator",
+    "BMI chart",
+    "health calculator",
+    "weight calculator",
+  ],
+} as const;
+
+export const metadata = createCalculatorMetadata(seo);
 
 export default function BmiCalculatorPage() {
   return (
-    <CalculatorPageLayout
-      title="BMI Calculator"
-      category="Health"
-      description="Body Mass Index from height & weight"
-      icon={Scale}
-    >
-      <BmiCalculator />
-    </CalculatorPageLayout>
-  )
+    <>
+      <CalculatorStructuredData seo={seo} />
+      <CalculatorPageLayout
+        title="BMI Calculator"
+        category="Health"
+        description="Body Mass Index from height & weight"
+        icon={Scale}
+      >
+        <BmiCalculator />
+      </CalculatorPageLayout>
+    </>
+  );
 }
