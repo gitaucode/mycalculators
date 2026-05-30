@@ -1,5 +1,7 @@
 import type { MetadataRoute } from 'next'
 
+export const dynamic = 'force-static'
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://mycalculators.co.ke'
   const lastModified = new Date('2026-05-30T00:00:00+03:00')

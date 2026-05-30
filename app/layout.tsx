@@ -58,7 +58,7 @@ export const metadata: Metadata = {
       "Fast, practical calculators for Kenyan money, taxes, utilities, planning and health estimates.",
     images: [
       {
-        url: "/opengraph-image",
+        url: "/opengraph-image.png",
         width: 1200,
         height: 630,
         alt: "MyCalculators Kenyan calculator toolkit",
@@ -70,7 +70,7 @@ export const metadata: Metadata = {
     title: "MyCalculators - Smart Money Decisions for Kenya",
     description:
       "Fast, practical calculators for Kenyan money, taxes, utilities, planning and health estimates.",
-    images: ["/opengraph-image"],
+    images: ["/opengraph-image.png"],
   },
 }
 
