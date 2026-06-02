@@ -202,6 +202,49 @@ const filterAliases: Record<string, string[]> = {
   Lifestyle: ["Lifestyle"],
 }
 
+function normalizeSearchValue(value: string) {
+  return value
+    .toLowerCase()
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/&/g, " and ")
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim()
+}
+
+function compactSearchValue(value: string) {
+  return normalizeSearchValue(value).replace(/\s+/g, "")
+}
+
+function toolSearchText(tool: ToolCard) {
+  return [
+    tool.title,
+    tool.description,
+    tool.category,
+    tool.href.replace(/-/g, " "),
+  ].join(" ")
+}
+
+function matchesSearchQuery(tool: ToolCard, query: string) {
+  const normalizedQuery = normalizeSearchValue(query)
+  const compactQuery = compactSearchValue(query)
+
+  if (!compactQuery) {
+    return true
+  }
+
+  const searchText = toolSearchText(tool)
+  const normalizedText = normalizeSearchValue(searchText)
+  const compactText = compactSearchValue(searchText)
+  const queryTokens = normalizedQuery.split(/\s+/).filter(Boolean)
+
+  return (
+    normalizedText.includes(normalizedQuery) ||
+    compactText.includes(compactQuery) ||
+    queryTokens.every((token) => normalizedText.includes(token))
+  )
+}
+
 function CalculatorsHeader() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-[#E4E7EC] bg-white/95 backdrop-blur-xl">
@@ -334,17 +377,12 @@ export default function CalculatorsPage() {
   }, [])
 
   const filteredTools = useMemo(() => {
-    const query = searchQuery.trim().toLowerCase()
     const acceptedCategories = filterAliases[activeFilter] ?? []
 
     return tools.filter((tool) => {
       const matchesCategory =
         activeFilter === "All" || acceptedCategories.includes(tool.category)
-      const matchesSearch =
-        !query ||
-        tool.title.toLowerCase().includes(query) ||
-        tool.description.toLowerCase().includes(query) ||
-        tool.category.toLowerCase().includes(query)
+      const matchesSearch = matchesSearchQuery(tool, searchQuery)
 
       return matchesCategory && matchesSearch
     })
