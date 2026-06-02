@@ -12,7 +12,6 @@ import {
   Heart,
   Home,
   Landmark,
-  Menu,
   Percent,
   Receipt,
   Search,
@@ -21,6 +20,7 @@ import {
   Zap,
 } from "lucide-react"
 
+import { SiteMobileMenu } from "@/components/site-mobile-menu"
 import { Button } from "@/components/ui/button"
 
 type ToolCard = {
@@ -230,10 +230,7 @@ function CalculatorsHeader() {
           </Link>
         </Button>
 
-        <Button variant="outline" size="icon" className="h-10 w-10 rounded-lg border-[#E4E7EC] md:hidden">
-          <Menu className="h-5 w-5" />
-          <span className="sr-only">Open menu</span>
-        </Button>
+        <SiteMobileMenu />
       </div>
     </header>
   )

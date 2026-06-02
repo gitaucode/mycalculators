@@ -18,6 +18,7 @@ import {
   TrendingUp,
 } from "lucide-react"
 
+import { SiteMobileMenu } from "@/components/site-mobile-menu"
 import { Button } from "@/components/ui/button"
 
 // ─── Data ────────────────────────────────────────────────────────────────────
@@ -285,12 +286,15 @@ function RatesHeader() {
           <a href="mailto:hellogitau@gmail.com" className="hover:text-[#0B5A2A] transition-colors">Contact</a>
         </nav>
 
-        <Button asChild className="hidden h-10 rounded-lg bg-[#0B5A2A] px-5 text-sm font-bold text-white shadow-sm hover:bg-[#063F20] sm:inline-flex">
-          <Link href="/mpesa-charges" className="inline-flex items-center gap-2">
-            <Smartphone className="h-4 w-4" />
-            Try M-Pesa Calculator
-          </Link>
-        </Button>
+        <div className="flex items-center gap-3">
+          <Button asChild className="hidden h-10 rounded-lg bg-[#0B5A2A] px-5 text-sm font-bold text-white shadow-sm hover:bg-[#063F20] sm:inline-flex">
+            <Link href="/mpesa-charges" className="inline-flex items-center gap-2">
+              <Smartphone className="h-4 w-4" />
+              Try M-Pesa Calculator
+            </Link>
+          </Button>
+          <SiteMobileMenu />
+        </div>
       </div>
     </header>
   )

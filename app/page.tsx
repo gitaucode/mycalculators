@@ -16,7 +16,6 @@ import {
   Home,
   Instagram,
   Landmark,
-  Menu,
   RefreshCw,
   Search,
   ShieldCheck,
@@ -28,16 +27,8 @@ import {
   Zap,
 } from "lucide-react";
 
+import { SiteMobileMenu } from "@/components/site-mobile-menu";
 import { Button } from "@/components/ui/button";
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
 
 type Accent = "green" | "orange" | "blue" | "yellow" | "red" | "pink" | "teal";
 
@@ -215,58 +206,7 @@ function HomeHeader() {
               Try M-Pesa Calculator
             </Link>
           </Button>
-          <Sheet>
-            <SheetTrigger asChild>
-              <Button
-                variant="outline"
-                size="icon"
-                className="h-10 w-10 rounded-xl border-[#E4E7EC] lg:hidden"
-                aria-label="Open menu"
-              >
-                <Menu className="h-5 w-5" />
-              </Button>
-            </SheetTrigger>
-            <SheetContent
-              side="right"
-              className="w-[86vw] max-w-[360px] border-l border-[#E4E7EC] bg-white px-5 py-6"
-            >
-              <SheetHeader className="pr-8 text-left">
-                <SheetTitle className="font-inter text-xl font-extrabold text-[#0B1020]">
-                  MyCalculators Kenya
-                </SheetTitle>
-                <SheetDescription className="sr-only">
-                  Mobile navigation menu for MyCalculators Kenya.
-                </SheetDescription>
-              </SheetHeader>
-
-              <nav className="mt-8 grid gap-2">
-                {headerLinks.map(([label, href]) => (
-                  <SheetClose asChild key={label}>
-                    <Link
-                      href={href}
-                      className="flex min-h-12 items-center rounded-xl px-3 text-base font-bold text-[#0B1020] transition hover:bg-[#F0FAF4] hover:text-[#0B5A2A]"
-                    >
-                      {label}
-                    </Link>
-                  </SheetClose>
-                ))}
-              </nav>
-
-              <div className="mt-8 border-t border-[#E4E7EC] pt-6">
-                <SheetClose asChild>
-                  <Button
-                    asChild
-                    className="h-12 w-full rounded-xl bg-[#0B5A2A] font-extrabold text-white hover:bg-[#063F20]"
-                  >
-                    <Link href="/mpesa-charges">
-                      <Zap className="h-4 w-4" />
-                      Try M-Pesa Calculator
-                    </Link>
-                  </Button>
-                </SheetClose>
-              </div>
-            </SheetContent>
-          </Sheet>
+          <SiteMobileMenu categoriesHref="#categories" className="lg:hidden" />
         </div>
       </div>
     </header>

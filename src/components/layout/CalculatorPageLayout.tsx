@@ -5,11 +5,11 @@ import {
   ArrowRight,
   Check,
   Grid3X3,
-  Menu,
   ShieldCheck,
   Sparkles,
 } from "lucide-react"
 
+import { SiteMobileMenu } from "@/components/site-mobile-menu"
 import { Button } from "@/components/ui/button"
 
 type CalculatorPageLayoutProps = {
@@ -95,10 +95,7 @@ function CalculatorHeader() {
               Try M-Pesa Calculator
             </Link>
           </Button>
-          <Button variant="outline" size="icon" className="h-10 w-10 rounded-lg border-[#E4E7EC] md:hidden">
-            <Menu className="h-5 w-5" />
-            <span className="sr-only">Open menu</span>
-          </Button>
+          <SiteMobileMenu />
         </div>
       </div>
     </header>
