@@ -206,7 +206,11 @@ function HomeHeader() {
               Try M-Pesa Calculator
             </Link>
           </Button>
-          <SiteMobileMenu categoriesHref="#categories" className="lg:hidden" />
+          <SiteMobileMenu
+            categoriesHref="#categories"
+            className="lg:hidden"
+            panelTopClass="top-24"
+          />
         </div>
       </div>
     </header>

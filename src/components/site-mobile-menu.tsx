@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 type SiteMobileMenuProps = {
   categoriesHref?: string;
   className?: string;
+  panelTopClass?: string;
 };
 
 const baseLinks = [
@@ -22,6 +23,7 @@ const baseLinks = [
 export function SiteMobileMenu({
   categoriesHref,
   className = "md:hidden",
+  panelTopClass = "top-20",
 }: SiteMobileMenuProps) {
   const [open, setOpen] = useState(false);
   const links = categoriesHref
@@ -49,29 +51,29 @@ export function SiteMobileMenu({
         type="button"
         variant="outline"
         size="icon"
-        className={`h-10 w-10 rounded-xl border-[#E4E7EC] ${className}`}
+        className={`relative z-[90] h-10 w-10 rounded-xl border-[#E4E7EC] bg-white ${className}`}
         aria-expanded={open}
         aria-controls="site-mobile-menu"
-        aria-label="Open menu"
-        onClick={() => setOpen(true)}
+        aria-label={open ? "Close menu" : "Open menu"}
+        onClick={() => setOpen((value) => !value)}
       >
-        <Menu className="h-5 w-5" />
+        {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
       </Button>
 
       {open ? (
         <div className="fixed inset-0 z-[80]">
           <button
             type="button"
-            className="absolute inset-0 bg-[#0B1020]/55"
+            className="absolute inset-0 bg-[#0B1020]/20 backdrop-blur-[2px]"
             aria-label="Close menu"
             onClick={() => setOpen(false)}
           />
-          <aside
+          <div
             id="site-mobile-menu"
-            className="absolute right-0 top-0 h-full w-[86vw] max-w-[360px] overflow-y-auto border-l border-[#E4E7EC] bg-white px-5 py-6 shadow-2xl"
+            className={`absolute right-4 ${panelTopClass} w-[calc(100vw-2rem)] max-w-[360px] overflow-hidden rounded-2xl border border-[#E4E7EC] bg-white shadow-[0_24px_60px_rgba(16,24,40,0.22)]`}
             aria-label="Mobile navigation"
           >
-            <div className="flex items-start justify-between gap-5">
+            <div className="flex items-start justify-between gap-5 border-b border-[#E4E7EC] px-5 py-4">
               <div>
                 <p className="font-inter text-xl font-extrabold text-[#0B1020]">
                   MyCalculators
@@ -80,19 +82,17 @@ export function SiteMobileMenu({
                   Kenya
                 </p>
               </div>
-              <Button
+              <button
                 type="button"
-                variant="outline"
-                size="icon"
-                className="h-10 w-10 rounded-xl border-[#E4E7EC]"
+                className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#E4E7EC] text-[#0B1020] transition hover:bg-[#F7FAF8]"
                 aria-label="Close menu"
                 onClick={() => setOpen(false)}
               >
                 <X className="h-5 w-5" />
-              </Button>
+              </button>
             </div>
 
-            <nav className="mt-8 grid gap-2">
+            <nav className="grid gap-1 px-3 py-3">
               {links.map(([label, href]) => (
                 <Link
                   key={label}
@@ -105,7 +105,7 @@ export function SiteMobileMenu({
               ))}
             </nav>
 
-            <div className="mt-8 border-t border-[#E4E7EC] pt-6">
+            <div className="border-t border-[#E4E7EC] px-5 py-4">
               <Link
                 href="/mpesa-charges"
                 onClick={() => setOpen(false)}
@@ -115,7 +115,7 @@ export function SiteMobileMenu({
                 Try M-Pesa Calculator
               </Link>
             </div>
-          </aside>
+          </div>
         </div>
       ) : null}
     </>
