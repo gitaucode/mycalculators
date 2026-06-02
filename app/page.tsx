@@ -475,7 +475,7 @@ function FeatureSection() {
           }}
         />
         <img
-          src="/iphone-mockup.png"
+          src="/iphone-mockup-sharp.png"
           alt="M-Pesa Charges Calculator phone preview"
           className="pointer-events-none absolute -bottom-12 right-[150px] hidden h-[470px] w-auto max-w-none rotate-[-2deg] object-contain drop-shadow-[0_26px_45px_rgba(0,0,0,0.28)] md:block lg:right-[166px]"
         />
