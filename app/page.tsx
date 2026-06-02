@@ -229,9 +229,9 @@ function HeroSearch({
   return (
     <form
       onSubmit={onSubmit}
-      className="mt-10 max-w-[580px] rounded-[21px] bg-[#063F20] p-5 shadow-[0_24px_55px_rgba(6,63,32,0.22)]"
+      className="mx-auto mt-10 w-full max-w-[580px] rounded-[21px] bg-[#063F20] p-4 shadow-[0_24px_55px_rgba(6,63,32,0.22)] sm:mx-0 sm:p-5"
     >
-      <div className="flex min-h-[62px] items-center gap-3 rounded-2xl bg-white px-5">
+      <div className="flex min-h-[62px] items-center gap-3 rounded-2xl bg-white px-4 sm:px-5">
         <Search className="h-6 w-6 shrink-0 text-[#667085]" />
         <input
           value={searchQuery}
