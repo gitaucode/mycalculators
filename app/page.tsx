@@ -209,7 +209,7 @@ function HomeHeader() {
           <SiteMobileMenu
             categoriesHref="#categories"
             className="lg:hidden"
-            panelTopClass="top-24"
+            panelTopClass="top-[84px]"
           />
         </div>
       </div>
