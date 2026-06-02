@@ -27,6 +27,11 @@ const relatedCalculators = [
     href: "/fuliza-calculator",
   },
   {
+    title: "M-KOPA Phone Loan",
+    description: "Score phone repayment deals against cash price.",
+    href: "/mkopa-phone-loan",
+  },
+  {
     title: "Net Salary Calculator",
     description: "Calculate your take-home pay after deductions.",
     href: "/net-salary",
@@ -58,6 +63,7 @@ function getAccent(title: string, category: string) {
 
   if (value.match(/car|import|transport/)) return accentClasses.red
   if (value.match(/salary|tax|vat|paye|nssf|shif/)) return accentClasses.orange
+  if (value.match(/phone|m-kopa|mkopa/)) return accentClasses.teal
   if (value.match(/loan|education|school|roi|investment/)) return accentClasses.blue
   if (value.match(/electricity|kplc|utility|utilities/)) return accentClasses.yellow
   if (value.match(/health|lifestyle|bmi|calorie|pregnancy|ovulation|heart|water/)) return accentClasses.pink
@@ -123,7 +129,7 @@ function CalculatorFooter() {
         <div>
           <h4 className="mb-4 text-sm font-bold font-inter">Popular Calculators</h4>
           <ul className="space-y-2.5 text-sm text-emerald-50/80">
-            {[["M-Pesa Charges", "/mpesa-charges"], ["Loan Calculator", "/loan-calculator"], ["Net Salary", "/net-salary"], ["Car Import Tax", "/car-import-tax"]].map(([label, href]) => (
+            {[["M-Pesa Charges", "/mpesa-charges"], ["M-KOPA Phone Loan", "/mkopa-phone-loan"], ["Loan Calculator", "/loan-calculator"], ["Net Salary", "/net-salary"]].map(([label, href]) => (
               <li key={label}><Link href={href} className="hover:text-white transition-colors">{label}</Link></li>
             ))}
           </ul>

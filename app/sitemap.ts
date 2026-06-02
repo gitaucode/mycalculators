@@ -19,6 +19,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/fuliza-calculator',
     '/heart-rate-zones',
     '/loan-calculator',
+    '/mkopa-phone-loan',
     '/mpesa-charges',
     '/net-salary',
     '/ovulation-tracker',

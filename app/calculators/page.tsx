@@ -52,6 +52,14 @@ const tools: ToolCard[] = [
     category: "Money",
   },
   {
+    title: "M-KOPA Phone Loan",
+    description: "Score phone loan repayments against the cash price.",
+    href: "/mkopa-phone-loan",
+    icon: Smartphone,
+    accent: "teal",
+    category: "Money",
+  },
+  {
     title: "Net Salary",
     description: "Calculate take-home pay after PAYE, NSSF and SHIF.",
     href: "/net-salary",

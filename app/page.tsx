@@ -68,6 +68,13 @@ const popularTools: ToolCard[] = [
     accent: "green",
   },
   {
+    title: "M-KOPA Phone Loan",
+    description: "Check if a phone loan deal is worth it.",
+    href: "/mkopa-phone-loan",
+    icon: Smartphone,
+    accent: "teal",
+  },
+  {
     title: "Net Salary",
     description: "Calculate PAYE, NSSF, SHIF and take-home pay.",
     href: "/net-salary",
@@ -87,13 +94,6 @@ const popularTools: ToolCard[] = [
     href: "/fuliza-calculator",
     icon: Wallet,
     accent: "teal",
-  },
-  {
-    title: "Electricity Calculator",
-    description: "Estimate KPLC token units and costs.",
-    href: "/electricity-calculator",
-    icon: Zap,
-    accent: "yellow",
   },
 ];
 
@@ -540,6 +540,7 @@ function Footer() {
   const links = {
     Calculators: [
       ["M-Pesa Charges", "/mpesa-charges"],
+      ["M-KOPA Phone Loan", "/mkopa-phone-loan"],
       ["Net Salary", "/net-salary"],
       ["Loan Calculator", "/loan-calculator"],
       ["Fuliza Calculator", "/fuliza-calculator"],
