@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useState } from "react"
 import { AlertTriangle, BarChart3, CheckCircle2, Smartphone, XCircle } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -15,7 +15,7 @@ type Result = {
   cashPrice: number
   deposit: number
   paymentAmount: number
-  term: number
+  termMonths: number
   frequency: PaymentFrequency
   totalRepayment: number
   markup: number
@@ -46,6 +46,12 @@ const daysPerPayment: Record<PaymentFrequency, number> = {
   monthly: 30,
 }
 
+const paymentsPerMonth: Record<PaymentFrequency, number> = {
+  daily: 30,
+  weekly: 365 / 12 / 7,
+  monthly: 1,
+}
+
 function money(value: number) {
   return `KSH ${value.toLocaleString(undefined, { maximumFractionDigits: 0 })}`
 }
@@ -53,6 +59,12 @@ function money(value: number) {
 function percent(value: number | null) {
   if (value === null || !Number.isFinite(value)) return "-"
   return `${value.toLocaleString(undefined, { maximumFractionDigits: 1 })}%`
+}
+
+function clampTermMonths(value: string) {
+  const months = Number.parseInt(value)
+  if (!months) return ""
+  return String(Math.min(12, Math.max(1, months)))
 }
 
 function getScore(markupPercent: number, burdenPercent: number | null) {
@@ -127,37 +139,28 @@ export function MkopaPhoneLoanCalculator() {
   const [deposit, setDeposit] = useState("3500")
   const [paymentAmount, setPaymentAmount] = useState("100")
   const [frequency, setFrequency] = useState<PaymentFrequency>("daily")
-  const [term, setTerm] = useState("365")
+  const [termMonths, setTermMonths] = useState("12")
   const [dailyIncome, setDailyIncome] = useState("")
   const [result, setResult] = useState<Result | null>(null)
-
-  const helper = useMemo(() => {
-    const termValue = Number.parseFloat(term) || 0
-    const days = termValue * daysPerPayment[frequency]
-    return {
-      estimatedDays: days,
-      termUnit: frequency === "daily" ? "days" : frequency === "weekly" ? "weeks" : "months",
-    }
-  }, [frequency, term])
 
   const calculate = () => {
     const cash = Number.parseFloat(cashPrice)
     const upfront = Number.parseFloat(deposit) || 0
     const payment = Number.parseFloat(paymentAmount)
-    const termValue = Number.parseFloat(term)
+    const months = Math.min(12, Math.max(1, Number.parseInt(termMonths) || 0))
     const income = Number.parseFloat(dailyIncome) || 0
 
-    if (!cash || !payment || !termValue || cash <= 0 || payment <= 0 || termValue <= 0 || upfront < 0) {
+    if (!cash || !payment || !months || cash <= 0 || payment <= 0 || months <= 0 || upfront < 0) {
       setResult(null)
       return
     }
 
-    const paymentCount = termValue
+    const paymentCount = Math.round(months * paymentsPerMonth[frequency])
     const totalRepayment = upfront + payment * paymentCount
     const markup = totalRepayment - cash
     const markupPercent = (markup / cash) * 100
     const financedAmount = Math.max(cash - upfront, 0)
-    const totalDays = paymentCount * daysPerPayment[frequency]
+    const totalDays = months * 30
     const dailyEquivalent = payment / daysPerPayment[frequency]
     const burdenPercent = income > 0 ? (dailyEquivalent / income) * 100 : null
     const annualizedCostPercent =
@@ -168,7 +171,7 @@ export function MkopaPhoneLoanCalculator() {
       cashPrice: cash,
       deposit: upfront,
       paymentAmount: payment,
-      term: termValue,
+      termMonths: months,
       frequency,
       totalRepayment,
       markup,
@@ -252,18 +255,21 @@ export function MkopaPhoneLoanCalculator() {
               </Select>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="term" className="font-semibold text-[#0B1020]">
-                Number of {helper.termUnit}
+              <Label htmlFor="term-months" className="font-semibold text-[#0B1020]">
+                Term Length (months)
               </Label>
               <Input
-                id="term"
+                id="term-months"
                 type="number"
-                inputMode="decimal"
-                value={term}
-                onChange={(event) => setTerm(event.target.value)}
+                inputMode="numeric"
+                min={1}
+                max={12}
+                value={termMonths}
+                onChange={(event) => setTermMonths(event.target.value)}
+                onBlur={(event) => setTermMonths(clampTermMonths(event.target.value) || "1")}
                 className="h-12 rounded-xl border-[#E4E7EC] text-base"
               />
-              <p className="text-xs text-[#667085]">Estimated duration: {helper.estimatedDays.toLocaleString()} days</p>
+              <p className="text-xs text-[#667085]">Use 1 to 12 months. Payment count is estimated from the selected frequency.</p>
             </div>
             <div className="space-y-2">
               <Label htmlFor="daily-income" className="font-semibold text-[#0B1020]">Daily Income (optional)</Label>
@@ -333,6 +339,14 @@ export function MkopaPhoneLoanCalculator() {
                 <div className="flex justify-between border-b border-[#E4E7EC] pb-3">
                   <span className="text-[#667085]">Markup over cash</span>
                   <span className="font-semibold text-[#0B1020]">{percent(result.markupPercent)}</span>
+                </div>
+                <div className="flex justify-between border-b border-[#E4E7EC] pb-3">
+                  <span className="text-[#667085]">Term</span>
+                  <span className="font-semibold text-[#0B1020]">{result.termMonths} months</span>
+                </div>
+                <div className="flex justify-between border-b border-[#E4E7EC] pb-3">
+                  <span className="text-[#667085]">Estimated payments</span>
+                  <span className="font-semibold text-[#0B1020]">{result.paymentCount.toLocaleString()} {frequencyLabels[result.frequency].toLowerCase()} payments</span>
                 </div>
                 <div className="flex justify-between border-b border-[#E4E7EC] pb-3">
                   <span className="text-[#667085]">Daily equivalent</span>
