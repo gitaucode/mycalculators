@@ -1,6 +1,7 @@
 import type React from "react"
 import type { Metadata, Viewport } from "next"
 import { Inter, Poppins } from "next/font/google"
+import { PwaRegister } from "@/components/pwa-register"
 import "./globals.css"
 
 const siteUrl = new URL("https://mycalculators.co.ke")
@@ -24,6 +25,7 @@ export const metadata: Metadata = {
   description:
     "Essential financial and health calculators for Kenyan consumers. Calculate M-Pesa charges, loans, salaries, BMI, calories and more with accurate, up-to-date rates.",
   applicationName: "MyCalculators",
+  manifest: "/manifest.webmanifest",
   keywords: [
     "Kenya calculator",
     "M-Pesa charges calculator",
@@ -37,6 +39,21 @@ export const metadata: Metadata = {
   creator: "MyCalculators",
   publisher: "MyCalculators",
   category: "finance",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "MyCalculators",
+  },
+  icons: {
+    icon: [
+      { url: "/icons/icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icons/icon-512.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: [{ url: "/icons/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+  },
+  other: {
+    "apple-mobile-web-app-capable": "yes",
+  },
   robots: {
     index: true,
     follow: true,
@@ -77,6 +94,8 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
+  themeColor: "#0B5A2A",
+  colorScheme: "light",
 }
 
 export default function RootLayout({
@@ -86,7 +105,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
-      <body className="min-h-screen bg-[#F7FAF8] font-inter antialiased">{children}</body>
+      <body className="min-h-screen bg-[#F7FAF8] font-inter antialiased">
+        {children}
+        <PwaRegister />
+      </body>
     </html>
   )
 }
