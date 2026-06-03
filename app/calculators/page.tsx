@@ -5,17 +5,23 @@ import { useEffect, useMemo, useState } from "react"
 import Link from "next/link"
 import {
   ArrowRight,
+  Activity,
   BriefcaseBusiness,
+  Calendar,
   Calculator,
   Car,
   ClipboardList,
+  Droplets,
+  Fuel,
   Heart,
   Home,
   Landmark,
   Percent,
   Receipt,
+  ReceiptText,
   Search,
   Smartphone,
+  Users,
   Wallet,
   Zap,
 } from "lucide-react"
@@ -76,6 +82,14 @@ const tools: ToolCard[] = [
     category: "Loans",
   },
   {
+    title: "Mortgage Calculator",
+    description: "Estimate home loan repayments and upfront cash needs.",
+    href: "/mortgage-calculator",
+    icon: Home,
+    accent: "blue",
+    category: "Loans",
+  },
+  {
     title: "Fuliza Calculator",
     description: "Check overdraft fees and total repayment amounts.",
     href: "/fuliza-calculator",
@@ -92,11 +106,27 @@ const tools: ToolCard[] = [
     category: "Transport",
   },
   {
+    title: "Fuel Cost Calculator",
+    description: "Estimate petrol or diesel costs for trips and commutes.",
+    href: "/fuel-cost-calculator",
+    icon: Fuel,
+    accent: "red",
+    category: "Transport",
+  },
+  {
     title: "Electricity Calculator",
     description: "Estimate KPLC token units and electricity costs.",
     href: "/electricity-calculator",
     icon: Zap,
     accent: "yellow",
+    category: "Utilities",
+  },
+  {
+    title: "Water Bill Calculator",
+    description: "Estimate water, sewerage and service charges.",
+    href: "/water-bill-calculator",
+    icon: Droplets,
+    accent: "teal",
     category: "Utilities",
   },
   {
@@ -114,6 +144,22 @@ const tools: ToolCard[] = [
     icon: Percent,
     accent: "orange",
     category: "Tax",
+  },
+  {
+    title: "Withholding Tax",
+    description: "Estimate WHT deductions, net payable and gross-up values.",
+    href: "/withholding-tax-calculator",
+    icon: Percent,
+    accent: "orange",
+    category: "Tax",
+  },
+  {
+    title: "Invoice and Profit",
+    description: "Calculate invoice totals, VAT, costs and profit margin.",
+    href: "/invoice-profit-calculator",
+    icon: ReceiptText,
+    accent: "blue",
+    category: "Business",
   },
   {
     title: "Cost of Living",
@@ -146,6 +192,14 @@ const tools: ToolCard[] = [
     icon: Percent,
     accent: "blue",
     category: "Investment",
+  },
+  {
+    title: "Chama/SACCO Calculator",
+    description: "Project group savings, member shares and loan limits.",
+    href: "/chama-sacco-calculator",
+    icon: Users,
+    accent: "green",
+    category: "Money",
   },
   {
     title: "Savings Goal",
@@ -188,6 +242,22 @@ const tools: ToolCard[] = [
     category: "Health",
   },
   {
+    title: "Ovulation Tracker",
+    description: "Estimate fertile window and peak fertility days.",
+    href: "/ovulation-tracker",
+    icon: Calendar,
+    accent: "pink",
+    category: "Health",
+  },
+  {
+    title: "Heart Rate Zones",
+    description: "Calculate workout zones from age and resting heart rate.",
+    href: "/heart-rate-zones",
+    icon: Activity,
+    accent: "pink",
+    category: "Health",
+  },
+  {
     title: "Water Intake",
     description: "Estimate daily water intake based on your needs.",
     href: "/water-intake",
@@ -197,7 +267,7 @@ const tools: ToolCard[] = [
   },
 ]
 
-const filters = ["All", "Money", "Tax", "Loans", "Utilities", "Health", "Education", "Lifestyle"]
+const filters = ["All", "Money", "Tax", "Loans", "Utilities", "Transport", "Business", "Health", "Education", "Lifestyle"]
 
 const filterAliases: Record<string, string[]> = {
   All: [],
@@ -205,6 +275,8 @@ const filterAliases: Record<string, string[]> = {
   Tax: ["Tax"],
   Loans: ["Loans", "Education", "Investment"],
   Utilities: ["Utilities", "Home"],
+  Transport: ["Transport"],
+  Business: ["Business", "Investment"],
   Health: ["Health", "Lifestyle"],
   Education: ["Education"],
   Lifestyle: ["Lifestyle"],
