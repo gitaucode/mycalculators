@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { ChevronDown, FileText, Receipt, ReceiptText } from "lucide-react"
+import { ChevronDown, FileText, Receipt } from "lucide-react"
 
 type SiteToolsMenuProps = {
   className?: string
@@ -17,12 +17,6 @@ const tools = [
     description: "Create printable receipts for completed payments.",
     href: "/receipt-generator",
     icon: Receipt,
-  },
-  {
-    title: "Invoice and Profit",
-    description: "Estimate profit margin before sending a quote.",
-    href: "/invoice-profit-calculator",
-    icon: ReceiptText,
   },
 ]
 

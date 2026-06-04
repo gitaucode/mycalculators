@@ -19,7 +19,6 @@ import {
   Landmark,
   Percent,
   Receipt,
-  ReceiptText,
   Search,
   Smartphone,
   Users,
@@ -154,14 +153,6 @@ const tools: ToolCard[] = [
     icon: Percent,
     accent: "orange",
     category: "Tax",
-  },
-  {
-    title: "Invoice and Profit",
-    description: "Calculate invoice totals, VAT, costs and profit margin.",
-    href: "/invoice-profit-calculator",
-    icon: ReceiptText,
-    accent: "blue",
-    category: "Business",
   },
   {
     title: "Invoice Generator",
