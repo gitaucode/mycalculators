@@ -83,12 +83,18 @@ export function InvoiceGenerator() {
   }
 
   return (
-    <div className="invoice-tool w-full max-w-none space-y-6">
+    <div className="invoice-tool calculator-split-native w-full max-w-none space-y-6">
       <style>{`
         .invoice-form-grid {
           display: grid;
           gap: 1.25rem;
           width: 100%;
+        }
+
+        .invoice-print-area {
+          max-width: 900px;
+          margin-left: auto;
+          margin-right: auto;
         }
 
         @media (min-width: 1024px) {
