@@ -385,7 +385,7 @@ function HeroVisual() {
       />
 
       {/* "Live" badge anchored to main card area */}
-      <div className="absolute bottom-[52px] left-10 z-20 flex items-center gap-2 rounded-full border border-[#CFEBDD] bg-white px-3 py-1.5 shadow-[0_8px_24px_rgba(11,90,42,0.14)]">
+      <div className="absolute bottom-3 left-8 z-20 flex items-center gap-2 rounded-full border border-[#CFEBDD] bg-white px-3 py-1.5 shadow-[0_8px_24px_rgba(11,90,42,0.14)]">
         <span className="h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_0_3px_rgba(34,197,94,0.2)]" />
         <span className="text-xs font-bold text-[#0B5A2A]">
           Rates updated today
