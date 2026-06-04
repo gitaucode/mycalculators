@@ -83,7 +83,7 @@ export function InvoiceGenerator() {
   }
 
   return (
-    <div className="invoice-tool grid gap-6 xl:grid-cols-[minmax(0,0.95fr)_minmax(620px,1.05fr)] xl:items-start">
+    <div className="invoice-tool w-full max-w-none space-y-6">
       <style>{`
         @media print {
           body * {
@@ -114,7 +114,7 @@ export function InvoiceGenerator() {
         }
       `}</style>
 
-      <div className="invoice-no-print space-y-5">
+      <div className="invoice-no-print grid w-full gap-5 lg:grid-cols-2">
         <Card className="rounded-[20px] border-[#E4E7EC] bg-white shadow-[0_14px_36px_rgba(16,24,40,0.05)]">
           <CardHeader>
             <CardTitle className="font-poppins text-2xl font-bold tracking-tight text-[#0B1020]">
@@ -154,7 +154,7 @@ export function InvoiceGenerator() {
           </CardContent>
         </Card>
 
-        <Card className="rounded-[20px] border-[#E4E7EC] bg-white shadow-[0_14px_36px_rgba(16,24,40,0.05)]">
+        <Card className="rounded-[20px] border-[#E4E7EC] bg-white shadow-[0_14px_36px_rgba(16,24,40,0.05)] lg:col-span-2">
           <CardHeader className="flex-row items-center justify-between gap-4 space-y-0">
             <div>
               <CardTitle className="font-poppins text-xl font-bold text-[#0B1020]">Line Items</CardTitle>
@@ -179,7 +179,7 @@ export function InvoiceGenerator() {
           </CardContent>
         </Card>
 
-        <Card className="rounded-[20px] border-[#E4E7EC] bg-white shadow-[0_14px_36px_rgba(16,24,40,0.05)]">
+        <Card className="rounded-[20px] border-[#E4E7EC] bg-white shadow-[0_14px_36px_rgba(16,24,40,0.05)] lg:col-span-2">
           <CardHeader>
             <CardTitle className="font-poppins text-xl font-bold text-[#0B1020]">Totals and Payment</CardTitle>
           </CardHeader>
