@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { FileText, Menu, X, Zap } from "lucide-react";
+import { FileText, Menu, Receipt, X, Zap } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 
@@ -95,6 +95,14 @@ export function SiteMobileMenu({
                 >
                   <FileText className="h-4 w-4" />
                   Invoice Generator
+                </Link>
+                <Link
+                  href="/receipt-generator"
+                  onClick={() => setOpen(false)}
+                  className="flex min-h-11 items-center gap-2 rounded-xl px-3 text-base font-bold text-[#0B1020] transition hover:bg-[#F0FAF4] hover:text-[#0B5A2A]"
+                >
+                  <Receipt className="h-4 w-4" />
+                  Receipt Generator
                 </Link>
               </div>
             </nav>

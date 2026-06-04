@@ -172,6 +172,14 @@ const tools: ToolCard[] = [
     category: "Business",
   },
   {
+    title: "Receipt Generator",
+    description: "Create printable receipts for completed payments.",
+    href: "/receipt-generator",
+    icon: Receipt,
+    accent: "blue",
+    category: "Business",
+  },
+  {
     title: "Cost of Living",
     description: "Compare living expenses across Kenyan cities.",
     href: "/cost-of-living",

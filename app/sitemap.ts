@@ -29,6 +29,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/net-salary',
     '/ovulation-tracker',
     '/pregnancy-due-date',
+    '/receipt-generator',
     '/roi-estimator',
     '/savings-goal',
     '/school-fee-planner',
