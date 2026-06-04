@@ -64,6 +64,7 @@ function getAccent(title: string, category: string) {
   if (value.match(/car|import|transport/)) return accentClasses.red
   if (value.match(/salary|tax|vat|paye|nssf|shif/)) return accentClasses.orange
   if (value.match(/phone|m-kopa|mkopa/)) return accentClasses.teal
+  if (value.match(/business|invoice|quote|receipt|profit/)) return accentClasses.blue
   if (value.match(/loan|education|school|roi|investment/)) return accentClasses.blue
   if (value.match(/electricity|kplc|utility|utilities/)) return accentClasses.yellow
   if (value.match(/health|lifestyle|bmi|calorie|pregnancy|ovulation|heart|water/)) return accentClasses.pink

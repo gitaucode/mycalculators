@@ -20,6 +20,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/fuel-cost-calculator',
     '/fuliza-calculator',
     '/heart-rate-zones',
+    '/invoice-generator',
     '/invoice-profit-calculator',
     '/loan-calculator',
     '/mkopa-phone-loan',
