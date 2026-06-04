@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { ArrowRight, BookOpen, Calculator, Smartphone } from "lucide-react";
+import { SiteMobileMenu } from "@/components/site-mobile-menu";
+import { SiteToolsMenu } from "@/components/site-tools-menu";
 import { Button } from "@/components/ui/button";
 
 export default function GuidesPage() {
@@ -61,16 +63,20 @@ export default function GuidesPage() {
           <nav className="hidden items-center gap-9 text-sm font-bold text-[#0B1020] md:flex">
             <Link href="/calculators" className="hover:text-[#0B5A2A] transition-colors">Calculators</Link>
             <Link href="/rates" className="hover:text-[#0B5A2A] transition-colors">Rates</Link>
+            <SiteToolsMenu />
             <Link href="/about" className="hover:text-[#0B5A2A] transition-colors">About</Link>
             <Link href="/contact" className="hover:text-[#0B5A2A] transition-colors">Contact</Link>
           </nav>
 
-          <Button asChild className="hidden h-10 rounded-lg bg-[#0B5A2A] px-5 text-sm font-bold text-white shadow-sm hover:bg-[#063F20] sm:inline-flex">
-            <Link href="/mpesa-charges" className="inline-flex items-center gap-2">
-              <Smartphone className="h-4 w-4" />
-              Try M-Pesa Calculator
-            </Link>
-          </Button>
+          <div className="flex items-center gap-3">
+            <Button asChild className="hidden h-10 rounded-lg bg-[#0B5A2A] px-5 text-sm font-bold text-white shadow-sm hover:bg-[#063F20] sm:inline-flex">
+              <Link href="/mpesa-charges" className="inline-flex items-center gap-2">
+                <Smartphone className="h-4 w-4" />
+                Try M-Pesa Calculator
+              </Link>
+            </Button>
+            <SiteMobileMenu />
+          </div>
         </div>
       </header>
 

@@ -19,6 +19,7 @@ import {
 } from "lucide-react"
 
 import { SiteMobileMenu } from "@/components/site-mobile-menu"
+import { SiteToolsMenu } from "@/components/site-tools-menu"
 import { Button } from "@/components/ui/button"
 
 // ─── Data ────────────────────────────────────────────────────────────────────
@@ -282,6 +283,7 @@ function RatesHeader() {
         <nav className="hidden items-center gap-9 text-sm font-bold text-[#0B1020] md:flex">
           <Link href="/calculators" className="hover:text-[#0B5A2A] transition-colors">Calculators</Link>
           <Link href="/rates" className="text-[#0B5A2A]">Rates</Link>
+          <SiteToolsMenu />
           <Link href="/about" className="hover:text-[#0B5A2A] transition-colors">About</Link>
           <a href="mailto:hellogitau@gmail.com" className="hover:text-[#0B5A2A] transition-colors">Contact</a>
         </nav>

@@ -22,6 +22,7 @@ import {
 } from "lucide-react"
 
 import { SiteMobileMenu } from "@/components/site-mobile-menu"
+import { SiteToolsMenu } from "@/components/site-tools-menu"
 import { Button } from "@/components/ui/button"
 
 // Custom SVG for X (formerly Twitter)
@@ -124,6 +125,7 @@ function AboutHeader() {
           <Link href="/rates" className="hover:text-[#0B5A2A] transition-colors">
             Rates
           </Link>
+          <SiteToolsMenu />
           <Link href="/about" className="text-[#0B5A2A]">
             About
           </Link>

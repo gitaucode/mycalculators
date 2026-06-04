@@ -13,6 +13,7 @@ import {
   Smartphone,
 } from "lucide-react"
 import { SiteMobileMenu } from "@/components/site-mobile-menu"
+import { SiteToolsMenu } from "@/components/site-tools-menu"
 import { Button } from "@/components/ui/button"
 
 // Custom X icon
@@ -40,6 +41,7 @@ function ContactHeader() {
         <nav className="hidden items-center gap-9 text-sm font-bold text-[#0B1020] md:flex">
           <Link href="/calculators" className="hover:text-[#0B5A2A] transition-colors">Calculators</Link>
           <Link href="/rates" className="hover:text-[#0B5A2A] transition-colors">Rates</Link>
+          <SiteToolsMenu />
           <Link href="/about" className="hover:text-[#0B5A2A] transition-colors">About</Link>
           <Link href="/contact" className="text-[#0B5A2A]">Contact</Link>
         </nav>

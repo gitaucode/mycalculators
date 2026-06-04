@@ -28,6 +28,7 @@ import {
 } from "lucide-react"
 
 import { SiteMobileMenu } from "@/components/site-mobile-menu"
+import { SiteToolsMenu } from "@/components/site-tools-menu"
 import { Button } from "@/components/ui/button"
 
 type ToolCard = {
@@ -351,6 +352,7 @@ function CalculatorsHeader() {
         <nav className="hidden items-center gap-8 text-sm font-semibold text-[#0B1020] md:flex">
           <Link href="/calculators" className="text-[#0B5A2A]">Calculators</Link>
           <Link href="/rates" className="transition-colors hover:text-[#0B5A2A]">Rates</Link>
+          <SiteToolsMenu />
           <Link href="/about" className="transition-colors hover:text-[#0B5A2A]">About</Link>
           <Link href="/contact" className="transition-colors hover:text-[#0B5A2A]">Contact</Link>
         </nav>

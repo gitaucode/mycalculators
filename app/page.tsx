@@ -28,6 +28,7 @@ import {
 } from "lucide-react";
 
 import { SiteMobileMenu } from "@/components/site-mobile-menu";
+import { SiteToolsMenu } from "@/components/site-tools-menu";
 import { Button } from "@/components/ui/button";
 
 type Accent = "green" | "orange" | "blue" | "yellow" | "red" | "pink" | "teal";
@@ -191,6 +192,7 @@ function HomeHeader() {
               {label}
             </Link>
           ))}
+          <SiteToolsMenu />
         </nav>
 
         <div className="flex items-center gap-3">
