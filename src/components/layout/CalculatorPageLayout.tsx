@@ -19,6 +19,16 @@ type CalculatorPageLayoutProps = {
   description: string
   icon: ComponentType<{ className?: string }>
   children: ReactNode
+  lastUpdated?: string
+  sourceNote?: string
+  sourceLinks?: readonly {
+    label: string
+    href: string
+  }[]
+  faqs?: readonly {
+    question: string
+    answer: string
+  }[]
 }
 
 const relatedCalculators = [
@@ -170,7 +180,17 @@ function CalculatorFooter() {
   )
 }
 
-export function CalculatorPageLayout({ title, category, description, icon: Icon, children }: CalculatorPageLayoutProps) {
+export function CalculatorPageLayout({
+  title,
+  category,
+  description,
+  icon: Icon,
+  children,
+  lastUpdated = "Updated rates",
+  sourceNote = "Tools are designed for local money, tax, utility, planning and health needs.",
+  sourceLinks = [],
+  faqs = [],
+}: CalculatorPageLayoutProps) {
   const accent = getAccent(title, category)
 
   return (
@@ -195,7 +215,7 @@ export function CalculatorPageLayout({ title, category, description, icon: Icon,
                 </span>
                 <p className="mt-5 max-w-3xl text-base leading-7 text-[#667085]">{description}</p>
                 <div className="mt-6 flex flex-wrap gap-5 text-sm font-semibold text-[#344054]">
-                  <span className="inline-flex items-center gap-2"><Check className="h-5 w-5 rounded-full border border-[#0B5A2A] p-0.5 text-[#0B5A2A]" />Updated rates</span>
+                  <span className="inline-flex items-center gap-2"><Check className="h-5 w-5 rounded-full border border-[#0B5A2A] p-0.5 text-[#0B5A2A]" />{lastUpdated}</span>
                   <span className="inline-flex items-center gap-2"><Sparkles className="h-5 w-5 text-[#0B5A2A]" />Kenya-focused</span>
                   <span className="inline-flex items-center gap-2"><Check className="h-5 w-5 rounded-full border border-[#0B5A2A] p-0.5 text-[#0B5A2A]" />Free to use</span>
                 </div>
@@ -235,7 +255,22 @@ export function CalculatorPageLayout({ title, category, description, icon: Icon,
               </div>
               <div>
                 <h3 className="font-poppins text-lg font-bold text-[#0B5A2A]">Built around Kenyan decisions</h3>
-                <p className="mt-1.5 text-sm leading-6 text-[#667085]">Tools are designed for local money, tax, utility, planning and health needs.</p>
+                <p className="mt-1.5 text-sm leading-6 text-[#667085]">{sourceNote}</p>
+                {sourceLinks.length > 0 ? (
+                  <div className="mt-3 flex flex-wrap gap-3 text-sm font-bold text-[#0B5A2A]">
+                    {sourceLinks.map((source) => (
+                      <Link
+                        key={source.href}
+                        href={source.href}
+                        className="underline decoration-[#A6DDBB] underline-offset-4 transition hover:text-[#063F20]"
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        {source.label}
+                      </Link>
+                    ))}
+                  </div>
+                ) : null}
               </div>
             </div>
             <div className="border-[#E4E7EC] md:border-l md:pl-6">
@@ -247,6 +282,28 @@ export function CalculatorPageLayout({ title, category, description, icon: Icon,
               <p className="font-poppins text-xl font-bold text-[#0B5A2A]">Free</p>
             </div>
           </section>
+
+          {faqs.length > 0 ? (
+            <section className="mt-12">
+              <div className="mb-6 max-w-3xl">
+                <h2 className="font-poppins text-2xl font-bold text-[#0B1020]">Common questions</h2>
+                <p className="mt-2 text-sm leading-6 text-[#667085]">
+                  Quick answers for people comparing rates, deductions and calculator results in Kenya.
+                </p>
+              </div>
+              <div className="grid gap-4 md:grid-cols-2">
+                {faqs.map((faq) => (
+                  <article
+                    key={faq.question}
+                    className="rounded-2xl border border-[#E4E7EC] bg-white p-6 shadow-[0_10px_30px_rgba(16,24,40,0.04)]"
+                  >
+                    <h3 className="font-poppins text-lg font-bold leading-6 text-[#0B1020]">{faq.question}</h3>
+                    <p className="mt-3 text-sm leading-6 text-[#667085]">{faq.answer}</p>
+                  </article>
+                ))}
+              </div>
+            </section>
+          ) : null}
 
           <section className="mt-12">
             <div className="mb-6 flex items-center justify-between gap-4">

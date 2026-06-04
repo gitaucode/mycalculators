@@ -10,6 +10,10 @@ export type CalculatorSeo = {
   path: string;
   category: string;
   keywords: readonly string[];
+  faqs?: readonly {
+    question: string;
+    answer: string;
+  }[];
 };
 
 function absoluteUrl(path: string) {
@@ -70,7 +74,7 @@ export function createCalculatorMetadata(seo: CalculatorSeo): Metadata {
 }
 
 export function CalculatorStructuredData({ seo }: { seo: CalculatorSeo }) {
-  const data = {
+  const webApplication = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
     name: seo.name,
@@ -95,6 +99,56 @@ export function CalculatorStructuredData({ seo }: { seo: CalculatorSeo }) {
       url: SITE_URL,
     },
   };
+
+  const breadcrumbList = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: SITE_URL,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Calculators",
+        item: absoluteUrl("/calculators"),
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: seo.name,
+        item: absoluteUrl(seo.path),
+      },
+    ],
+  };
+
+  const faqPage = seo.faqs?.length
+    ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: seo.faqs.map((faq) => ({
+          "@type": "Question",
+          name: faq.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: faq.answer,
+          },
+        })),
+      }
+    : null;
+
+  const data = faqPage
+    ? {
+        "@context": "https://schema.org",
+        "@graph": [webApplication, breadcrumbList, faqPage],
+      }
+    : {
+        "@context": "https://schema.org",
+        "@graph": [webApplication, breadcrumbList],
+      };
 
   return (
     <script
