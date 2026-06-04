@@ -1,4 +1,4 @@
-const CACHE_NAME = "mycalculators-pwa-v1"
+const CACHE_NAME = "mycalculators-pwa-v2-20260604"
 
 const PRECACHE_URLS = [
   "/",

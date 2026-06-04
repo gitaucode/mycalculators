@@ -18,7 +18,7 @@ export function PwaRegister() {
     }
 
     const register = () => {
-      navigator.serviceWorker.register("/sw.js").catch(() => {
+      navigator.serviceWorker.register("/sw.js?v=20260604-1").catch(() => {
         // Registration can fail in older/private browsers; the site still works normally.
       })
     }
