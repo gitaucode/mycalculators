@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, BookOpen, Calculator, Clock, Smartphone } from "lucide-react";
+import { Smartphone } from "lucide-react";
 import { SiteMobileMenu } from "@/components/site-mobile-menu";
 import { SiteToolsMenu } from "@/components/site-tools-menu";
 import { Button } from "@/components/ui/button";
 import { seoGuides } from "@/lib/seo-guides";
 import { BrandLogo } from "@/components/brand-logo";
+import { ArrowRight, BookOpen } from "lucide-react";
+import GuidesClient from "./GuidesClient";
 
 export const metadata: Metadata = {
   title: "Kenya Calculator Guides - PAYE, M-Pesa, VAT, KPLC & Import Duty",
@@ -16,37 +18,7 @@ export const metadata: Metadata = {
   },
 };
 
-function estimateReadingTime(guide: (typeof seoGuides)[0]): number {
-  const totalWords = guide.sections
-    .flatMap((s) => s.body)
-    .join(" ")
-    .split(/\s+/).length;
-  return Math.max(1, Math.ceil(totalWords / 200));
-}
-
-// Map category → accent colour pair
-const categoryColours: Record<string, { bg: string; text: string; border: string }> = {
-  "Tax & Salary":    { bg: "#ECFDF3", text: "#0B5A2A", border: "#CFE9D8" },
-  "Money & Banking": { bg: "#EFF6FF", text: "#1D4ED8", border: "#BFDBFE" },
-  "Tax & Transport": { bg: "#FFF7ED", text: "#C2410C", border: "#FED7AA" },
-  "Business & Tax":  { bg: "#F5F3FF", text: "#6D28D9", border: "#DDD6FE" },
-  "Utilities":       { bg: "#FFFBEB", text: "#B45309", border: "#FDE68A" },
-};
-
-function getCategoryStyle(category: string) {
-  return (
-    categoryColours[category] ?? {
-      bg: "#F3F4F6",
-      text: "#374151",
-      border: "#E5E7EB",
-    }
-  );
-}
-
 export default function GuidesPage() {
-  const [featured, ...rest] = seoGuides;
-  const featuredTime = estimateReadingTime(featured);
-
   return (
     <>
       {/* ── Navigation ── */}
@@ -108,142 +80,12 @@ export default function GuidesPage() {
           </div>
         </div>
 
-        <div className="mx-auto max-w-[1100px] px-4 py-12 sm:px-6">
+        {/* ── Interactive content (client) ── */}
+        <GuidesClient />
 
-          {/* ── Featured guide ── */}
-          <div className="mb-5">
-            <p className="text-[11px] font-extrabold uppercase tracking-widest text-[#98A2B3]">
-              Featured guide
-            </p>
-          </div>
-
-          <Link
-            href={`/guides/${featured.slug}`}
-            className="group mb-14 flex flex-col overflow-hidden rounded-2xl border border-[#E4E7EC] bg-white transition-all hover:border-[#CFE9D8] hover:shadow-lg hover:shadow-[#0B5A2A]/8 sm:flex-row"
-          >
-            {/* Thumbnail / visual side */}
-            <div className="relative flex shrink-0 flex-col items-center justify-center gap-5 bg-[#ECFDF3] p-10 sm:w-72 sm:items-start sm:justify-between sm:p-10">
-              {/* Decorative article lines */}
-              <div className="hidden sm:flex flex-col gap-2 w-full opacity-30">
-                <div className="h-2 w-3/4 rounded-full bg-[#0B5A2A]" />
-                <div className="h-2 w-full rounded-full bg-[#0B5A2A]" />
-                <div className="h-2 w-5/6 rounded-full bg-[#0B5A2A]" />
-                <div className="h-2 w-2/3 rounded-full bg-[#0B5A2A]" />
-                <div className="h-2 w-full rounded-full bg-[#0B5A2A]" />
-                <div className="h-2 w-4/5 rounded-full bg-[#0B5A2A]" />
-              </div>
-              <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-[#0B5A2A] text-white shadow-md sm:self-end">
-                <Calculator className="h-10 w-10" />
-              </div>
-            </div>
-
-            {/* Article content side */}
-            <div className="flex flex-1 flex-col justify-between p-7 sm:p-9">
-              <div>
-                {/* Meta row — category + reading time */}
-                <div className="mb-4 flex flex-wrap items-center gap-3">
-                  <span
-                    className="rounded-full border px-2.5 py-1 text-[11px] font-bold"
-                    style={{ backgroundColor: "#ECFDF3", color: "#0B5A2A", borderColor: "#CFE9D8" }}
-                  >
-                    {featured.category}
-                  </span>
-                  <span className="flex items-center gap-1.5 text-xs text-[#98A2B3]">
-                    <Clock className="h-3.5 w-3.5" />
-                    {featuredTime} min read
-                  </span>
-                </div>
-
-                {/* Headline */}
-                <h2 className="font-inter text-2xl font-extrabold leading-snug text-[#0B1020] transition-colors group-hover:text-[#0B5A2A] sm:text-[28px]">
-                  {featured.title}
-                </h2>
-
-                {/* Excerpt */}
-                <p className="mt-3 text-sm leading-7 text-[#667085] sm:text-base">
-                  {featured.description}
-                </p>
-
-                {/* Tags */}
-                <div className="mt-5 flex flex-wrap gap-2">
-                  {featured.keywords.slice(0, 3).map((kw) => (
-                    <span
-                      key={kw}
-                      className="rounded-full border border-[#E4E7EC] bg-[#F7FAF8] px-2.5 py-1 text-[11px] font-medium text-[#667085]"
-                    >
-                      {kw}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              {/* Footer row */}
-              <div className="mt-7 flex items-center gap-2 border-t border-[#F2F4F7] pt-5">
-                <span className="text-sm font-extrabold text-[#0B5A2A]">Read guide</span>
-                <ArrowRight className="h-4 w-4 text-[#0B5A2A] transition-transform group-hover:translate-x-1" />
-              </div>
-            </div>
-          </Link>
-
-          {/* ── Rest of guides ── */}
-          <div className="mb-6">
-            <p className="text-[11px] font-extrabold uppercase tracking-widest text-[#98A2B3]">
-              All guides
-            </p>
-          </div>
-
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-2">
-            {rest.map((guide) => {
-              const readingTime = estimateReadingTime(guide);
-              const catStyle = getCategoryStyle(guide.category);
-
-              return (
-                <Link
-                  key={guide.slug}
-                  href={`/guides/${guide.slug}`}
-                  className="group flex flex-col justify-between rounded-2xl border border-[#E4E7EC] bg-white p-7 transition-all hover:-translate-y-0.5 hover:border-[#CFE9D8] hover:shadow-md"
-                >
-                  <div>
-                    {/* Category + reading time */}
-                    <div className="mb-4 flex items-center justify-between gap-3">
-                      <span
-                        className="rounded-full border px-2.5 py-1 text-[11px] font-bold"
-                        style={{
-                          backgroundColor: catStyle.bg,
-                          color: catStyle.text,
-                          borderColor: catStyle.border,
-                        }}
-                      >
-                        {guide.category}
-                      </span>
-                      <span className="flex items-center gap-1 text-[11px] text-[#98A2B3]">
-                        <Clock className="h-3 w-3" />
-                        {readingTime} min
-                      </span>
-                    </div>
-
-                    <h2 className="font-inter text-[17px] font-extrabold leading-snug text-[#0B1020] transition-colors group-hover:text-[#0B5A2A]">
-                      {guide.title}
-                    </h2>
-                    <p className="mt-2.5 text-sm leading-6 text-[#667085]">
-                      {guide.description}
-                    </p>
-                  </div>
-
-                  {/* Footer row */}
-                  <div className="mt-6 flex items-center justify-between border-t border-[#F2F4F7] pt-4">
-                    <span className="text-sm font-bold text-[#0B5A2A]">Read guide</span>
-                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#ECFDF3] text-[#0B5A2A] transition-transform group-hover:translate-x-0.5">
-                      <ArrowRight className="h-4 w-4" />
-                    </span>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
-
-          {/* ── Bottom CTA strip ── */}
-          <div className="mt-16 flex flex-col items-center justify-between gap-5 rounded-2xl border border-[#CFE9D8] bg-white px-8 py-7 sm:flex-row">
+        {/* ── Bottom CTA strip ── */}
+        <div className="mx-auto max-w-[1100px] px-4 pb-16 sm:px-6">
+          <div className="flex flex-col items-center justify-between gap-5 rounded-2xl border border-[#CFE9D8] bg-white px-8 py-7 sm:flex-row">
             <div>
               <p className="font-inter text-lg font-extrabold text-[#0B1020]">
                 Looking for a specific calculator?
