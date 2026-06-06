@@ -22,6 +22,11 @@ const seo = {
     "send money charges",
     "M-Pesa withdrawal fees",
     "M-Pesa Paybill charges",
+    "M-Pesa Till number charges",
+    "M-Pesa Buy Goods charges",
+    "M-Pesa send money charges 2026",
+    "M-Pesa withdrawal charges calculator",
+    "Safaricom transaction charges Kenya",
   ],
   faqs: [
     {
@@ -44,6 +49,11 @@ const seo = {
       answer:
         "Yes. It is designed to estimate common M-Pesa costs including send money charges and agent withdrawal fees where tariff data is available.",
     },
+    {
+      question: "Can I compare Paybill, Till and send money charges?",
+      answer:
+        "Yes. Use the transaction type options to compare common M-Pesa cases such as sending money, withdrawing from an agent, Paybill payments and Till or Buy Goods scenarios.",
+    },
   ],
 } as const;
 
@@ -60,6 +70,20 @@ export default function MpesaChargesPage() {
         icon={CreditCard}
         lastUpdated="Updated for 2026"
         sourceNote="M-Pesa estimates are built around Kenyan mobile money decisions and should be checked against Safaricom's latest tariff for high-value transactions."
+        seoIntro="Use this M-Pesa charges calculator to estimate Safaricom transaction costs before sending money, withdrawing from an agent, paying a Paybill or checking Till and Buy Goods scenarios. It is written for Kenyan users who want quick answers to M-Pesa send money charges, withdrawal fees and payment costs in 2026."
+        searchTerms={[
+          "M-Pesa withdrawal charges calculator",
+          "M-Pesa send money charges 2026",
+          "M-Pesa Paybill charges calculator",
+          "M-Pesa Till number charges",
+          "Safaricom M-Pesa charges",
+        ]}
+        guideLinks={[
+          {
+            label: "Understanding M-Pesa charges in 2026",
+            href: "/guides/mpesa-charges-kenya",
+          },
+        ]}
         sourceLinks={[
           {
             label: "Safaricom M-Pesa rates",

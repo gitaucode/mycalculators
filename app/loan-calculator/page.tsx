@@ -22,6 +22,11 @@ const seo = {
     "amortization calculator",
     "mortgage calculator Kenya",
     "personal loan calculator Kenya",
+    "reducing balance loan calculator Kenya",
+    "SACCO loan calculator Kenya",
+    "bank loan calculator Kenya",
+    "car loan calculator Kenya",
+    "business loan calculator Kenya",
   ],
   faqs: [
     {
@@ -44,6 +49,11 @@ const seo = {
       answer:
         "No. Compare the total repayment, fees, interest rate, repayment term and flexibility before choosing a loan.",
     },
+    {
+      question: "What is a reducing balance loan calculator?",
+      answer:
+        "A reducing balance loan calculator estimates interest on the remaining principal as the loan is repaid, which can make it easier to compare bank, SACCO, car and business loan offers.",
+    },
   ],
 } as const;
 
@@ -60,6 +70,14 @@ export default function LoanCalculatorPage() {
         icon={CalculatorIcon}
         lastUpdated="Updated for 2026"
         sourceNote="Loan estimates help compare Kenyan repayment scenarios before speaking to a bank, SACCO or lender."
+        seoIntro="This loan calculator Kenya page estimates monthly repayment, total interest and total loan cost for personal, bank, SACCO, car and business loans. It supports common searches such as loan repayment calculator Kenya, reducing balance loan calculator Kenya and monthly loan payment calculator."
+        searchTerms={[
+          "loan repayment calculator Kenya",
+          "reducing balance loan calculator Kenya",
+          "SACCO loan calculator Kenya",
+          "bank loan calculator Kenya",
+          "monthly loan payment calculator",
+        ]}
         sourceLinks={[
           {
             label: "Central Bank of Kenya",

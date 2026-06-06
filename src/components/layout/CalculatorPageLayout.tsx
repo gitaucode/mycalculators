@@ -12,6 +12,7 @@ import {
 import { SiteMobileMenu } from "@/components/site-mobile-menu"
 import { SiteToolsMenu } from "@/components/site-tools-menu"
 import { Button } from "@/components/ui/button"
+import { BrandLogo } from "@/components/brand-logo"
 
 type CalculatorPageLayoutProps = {
   title: string
@@ -22,6 +23,12 @@ type CalculatorPageLayoutProps = {
   lastUpdated?: string
   sourceNote?: string
   sourceLinks?: readonly {
+    label: string
+    href: string
+  }[]
+  seoIntro?: string
+  searchTerms?: readonly string[]
+  guideLinks?: readonly {
     label: string
     href: string
   }[]
@@ -91,7 +98,7 @@ function CalculatorHeader() {
       <div className="mx-auto flex h-16 max-w-[1280px] items-center justify-between px-4 lg:px-6">
         <Link href="/" className="flex items-center gap-2.5">
           <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#0B5A2A] text-white shadow-sm">
-            <span className="font-poppins text-lg font-bold">MC</span>
+            <BrandLogo size={24} />
           </div>
           <div>
             <p className="font-poppins text-lg font-bold leading-tight text-[#0B1020]">MyCalculators</p>
@@ -128,7 +135,7 @@ function CalculatorFooter() {
         <div>
           <div className="mb-5 flex items-center gap-3">
             <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-white text-[#0B5A2A]">
-              <span className="font-bold font-inter">MC</span>
+              <BrandLogo size={24} />
             </div>
             <div>
               <p className="font-bold font-inter">MyCalculators</p>
@@ -189,6 +196,9 @@ export function CalculatorPageLayout({
   lastUpdated = "Updated rates",
   sourceNote = "Tools are designed for local money, tax, utility, planning and health needs.",
   sourceLinks = [],
+  seoIntro,
+  searchTerms = [],
+  guideLinks = [],
   faqs = [],
 }: CalculatorPageLayoutProps) {
   const accent = getAccent(title, category)
@@ -228,6 +238,63 @@ export function CalculatorPageLayout({
               {children}
             </div>
           </section>
+
+          {(seoIntro || searchTerms.length > 0 || guideLinks.length > 0) ? (
+            <section className="mt-10 rounded-[20px] border border-[#E4E7EC] bg-white p-6 shadow-[0_10px_30px_rgba(16,24,40,0.04)] md:p-7">
+              <div className="grid gap-6 lg:grid-cols-[1.25fr_0.75fr]">
+                <div>
+                  <h2 className="font-poppins text-2xl font-bold text-[#0B1020]">
+                    {title} for Kenya
+                  </h2>
+                  {seoIntro ? (
+                    <p className="mt-3 text-sm leading-7 text-[#667085]">
+                      {seoIntro}
+                    </p>
+                  ) : null}
+                </div>
+                {(searchTerms.length > 0 || guideLinks.length > 0) ? (
+                  <aside className="rounded-2xl bg-[#F7FAF8] p-5">
+                    {searchTerms.length > 0 ? (
+                      <>
+                        <h3 className="font-poppins text-sm font-bold text-[#0B1020]">
+                          Common searches
+                        </h3>
+                        <div className="mt-3 flex flex-wrap gap-2">
+                          {searchTerms.map((term) => (
+                            <span
+                              key={term}
+                              className="rounded-full border border-[#CFE9D8] bg-white px-3 py-1.5 text-xs font-semibold text-[#0B5A2A]"
+                            >
+                              {term}
+                            </span>
+                          ))}
+                        </div>
+                      </>
+                    ) : null}
+                    {guideLinks.length > 0 ? (
+                      <div className={searchTerms.length > 0 ? "mt-5 border-t border-[#E4E7EC] pt-4" : ""}>
+                        <h3 className="font-poppins text-sm font-bold text-[#0B1020]">
+                          Helpful guides
+                        </h3>
+                        <div className="mt-3 space-y-2">
+                          {guideLinks.map((guide) => (
+                            <Link
+                              key={guide.href}
+                              href={guide.href}
+                              className="flex items-center justify-between gap-3 rounded-xl bg-white px-3 py-2 text-sm font-bold text-[#0B5A2A] transition hover:text-[#063F20]"
+                            >
+                              {guide.label}
+                              <ArrowRight className="h-4 w-4 shrink-0" />
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    ) : null}
+                  </aside>
+                ) : null}
+              </div>
+            </section>
+          ) : null}
 
           <section className="mt-12">
             <h2 className="mb-5 font-poppins text-2xl font-bold text-[#0B1020]">How this calculator works</h2>

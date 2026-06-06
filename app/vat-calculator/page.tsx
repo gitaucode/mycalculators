@@ -22,6 +22,11 @@ const seo = {
     "VAT exclusive calculator",
     "KRA VAT",
     "VAT formula Kenya",
+    "VAT inclusive calculator Kenya",
+    "VAT exclusive calculator Kenya",
+    "remove 16% VAT Kenya",
+    "add VAT calculator Kenya",
+    "invoice VAT calculator Kenya",
   ],
   faqs: [
     {
@@ -44,6 +49,11 @@ const seo = {
       answer:
         "Use it for quick estimates and invoice checks. Confirm filing, exemptions, zero-rated items and compliance details with KRA or a tax professional.",
     },
+    {
+      question: "What formula removes 16% VAT in Kenya?",
+      answer:
+        "For a VAT-inclusive price, divide the amount by 1.16 to get the VAT-exclusive base. The VAT amount is the inclusive price minus that base amount.",
+    },
   ],
 } as const;
 
@@ -60,6 +70,20 @@ export default function VatCalculatorPage() {
         icon={ReceiptText}
         lastUpdated="Updated for 2026"
         sourceNote="VAT estimates use Kenya business context for invoices, receipts and price checks."
+        seoIntro="Use this Kenya VAT calculator to add 16% VAT, remove VAT from an inclusive price, and check invoice or receipt amounts before billing. It targets common KRA VAT searches such as VAT inclusive calculator Kenya, VAT exclusive calculator Kenya and remove 16% VAT Kenya."
+        searchTerms={[
+          "VAT inclusive calculator Kenya",
+          "VAT exclusive calculator Kenya",
+          "remove 16% VAT Kenya",
+          "KRA VAT calculator",
+          "invoice VAT calculator Kenya",
+        ]}
+        guideLinks={[
+          {
+            label: "How to add or remove 16% VAT in Kenya",
+            href: "/guides/vat-calculator-kenya",
+          },
+        ]}
         sourceLinks={[
           {
             label: "KRA VAT calculator",

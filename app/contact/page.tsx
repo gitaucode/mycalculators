@@ -15,6 +15,7 @@ import {
 import { SiteMobileMenu } from "@/components/site-mobile-menu"
 import { SiteToolsMenu } from "@/components/site-tools-menu"
 import { Button } from "@/components/ui/button"
+import { BrandLogo } from "@/components/brand-logo"
 
 // Custom X icon
 const XIcon = (props: React.SVGProps<SVGSVGElement>) => (
@@ -30,7 +31,7 @@ function ContactHeader() {
       <div className="mx-auto flex h-16 max-w-[1280px] items-center justify-between px-4 sm:px-6">
         <Link href="/" className="flex items-center gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#0B5A2A] text-white shadow-sm">
-            <span className="text-lg font-extrabold font-inter">MC</span>
+            <BrandLogo size={24} />
           </div>
           <div>
             <p className="text-lg font-extrabold leading-tight text-[#0B1020] font-inter">MyCalculators</p>
@@ -276,7 +277,7 @@ export default function ContactPage() {
           <div>
             <div className="mb-5 flex items-center gap-3">
               <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-white text-[#0B5A2A]">
-                <span className="font-bold font-inter">MC</span>
+                <BrandLogo size={24} />
               </div>
               <div>
                 <p className="font-bold font-inter">MyCalculators</p>

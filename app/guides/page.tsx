@@ -1,50 +1,28 @@
-"use client";
-
+import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, BookOpen, Calculator, Smartphone } from "lucide-react";
 import { SiteMobileMenu } from "@/components/site-mobile-menu";
 import { SiteToolsMenu } from "@/components/site-tools-menu";
 import { Button } from "@/components/ui/button";
+import { seoGuides } from "@/lib/seo-guides";
+import { BrandLogo } from "@/components/brand-logo"
+
+export const metadata: Metadata = {
+  title: "Kenya Calculator Guides - PAYE, M-Pesa, VAT, KPLC & Import Duty",
+  description:
+    "Practical Kenya calculator guides for PAYE, net salary, M-Pesa charges, VAT, KPLC tokens and car import duty.",
+  alternates: {
+    canonical: "https://mycalculators.co.ke/guides",
+  },
+};
 
 export default function GuidesPage() {
-  const guideStarters = [
-    {
-      title: "How to Calculate Your Net Salary in Kenya",
-      desc: "A complete breakdown of PAYE, NSSF, and the new SHIF deductions.",
-      category: "Tax & Salary",
-      href: "/net-salary",
-    },
-    {
-      title: "Understanding M-Pesa Charges in 2026",
-      desc: "How to save money on transaction fees by optimizing your sends and withdrawals.",
-      category: "Money & Banking",
-      href: "/mpesa-charges",
-    },
-    {
-      title: "The Ultimate Guide to Car Import Taxes",
-      desc: "What you need to know about KRA's depreciation schedule, excise duty, and VAT.",
-      category: "Tax & Wealth",
-      href: "/car-import-tax",
-    },
-    {
-      title: "Budgeting 101: Tracking Your Expenses",
-      desc: "How to use the 50/30/20 rule effectively given the rising cost of living in Nairobi.",
-      category: "Budgeting",
-      href: "/budget-planner",
-    },
-    {
-      title: "Health Metrics Explained: BMI & Heart Rate",
-      desc: "Why these numbers matter and how our health calculators can help you track them.",
-      category: "Health & Lifestyle",
-      href: "/bmi-calculator",
-    },
-    {
-      title: "Navigating Loan Amortization",
-      desc: "Reducing balance vs flat rate: which loan structure actually saves you money?",
-      category: "Loans & Planning",
-      href: "/loan-calculator",
-    }
-  ];
+  const guideStarters = seoGuides.map((guide) => ({
+    title: guide.title,
+    desc: guide.description,
+    category: guide.category,
+    href: `/guides/${guide.slug}`,
+  }));
 
   return (
     <>
@@ -52,7 +30,7 @@ export default function GuidesPage() {
         <div className="mx-auto flex h-16 max-w-[1280px] items-center justify-between px-4 sm:px-6">
           <Link href="/" className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#0B5A2A] text-white shadow-sm">
-              <span className="text-lg font-extrabold font-inter">MC</span>
+              <BrandLogo size={24} />
             </div>
             <div>
               <p className="text-lg font-extrabold leading-tight text-[#0B1020] font-inter">MyCalculators</p>
@@ -119,7 +97,7 @@ export default function GuidesPage() {
                 </div>
                 <div className="mt-6 flex items-center gap-2 text-sm font-semibold text-[#0B5A2A]">
                   <Calculator className="h-4 w-4" />
-                  Open related tool
+                  Read guide
                   <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
                 </div>
               </Link>
@@ -135,7 +113,7 @@ export default function GuidesPage() {
           <div>
             <div className="mb-5 flex items-center gap-3">
               <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-white text-[#0B5A2A]">
-                <span className="font-bold font-inter">MC</span>
+                <BrandLogo size={24} />
               </div>
               <div>
                 <p className="font-bold font-inter">MyCalculators</p>

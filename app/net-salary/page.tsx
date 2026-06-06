@@ -22,6 +22,12 @@ const seo = {
     "NSSF calculator Kenya",
     "take home pay Kenya",
     "housing levy calculator Kenya",
+    "gross salary to net salary Kenya",
+    "PAYE calculator Kenya 2026",
+    "SHIF deduction calculator Kenya",
+    "NSSF contribution calculator Kenya 2026",
+    "KRA PAYE calculator",
+    "Kenya payroll calculator",
   ],
   faqs: [
     {
@@ -44,6 +50,11 @@ const seo = {
       answer:
         "Use it as an estimate for planning. Employers, accountants and HR teams should confirm statutory payroll figures against official KRA, SHIF and NSSF guidance.",
     },
+    {
+      question: "How do I convert gross salary to net salary in Kenya?",
+      answer:
+        "Start with gross monthly salary, subtract statutory payroll deductions such as NSSF, SHIF, PAYE and Affordable Housing Levy, then apply any relevant reliefs to estimate take-home pay.",
+    },
   ],
 } as const;
 
@@ -60,6 +71,21 @@ export default function NetSalaryPage() {
         icon={Wallet}
         lastUpdated="Updated for 2026"
         sourceNote="Salary estimates focus on Kenya payroll deductions, including PAYE, SHIF, NSSF and Affordable Housing Levy."
+        seoIntro="This Kenya net salary calculator helps convert gross salary to take-home pay by estimating PAYE, SHIF, NSSF and Affordable Housing Levy deductions. It is useful for employees comparing job offers, HR teams checking payroll estimates, and anyone searching for a PAYE calculator Kenya 2026 or gross-to-net salary calculator."
+        searchTerms={[
+          "gross salary to net salary Kenya",
+          "PAYE calculator Kenya 2026",
+          "SHIF deduction calculator Kenya",
+          "NSSF contribution calculator Kenya 2026",
+          "housing levy calculator Kenya",
+          "KRA PAYE calculator",
+        ]}
+        guideLinks={[
+          {
+            label: "How to calculate net salary in Kenya",
+            href: "/guides/net-salary-paye-kenya",
+          },
+        ]}
         sourceLinks={[
           {
             label: "KRA PAYE information",

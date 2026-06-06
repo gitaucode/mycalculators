@@ -49,7 +49,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/terms',
     '/cookies',
     '/disclaimer',
-    '/guides'
+    '/guides',
+    '/guides/net-salary-paye-kenya',
+    '/guides/mpesa-charges-kenya',
+    '/guides/car-import-duty-kenya',
+    '/guides/vat-calculator-kenya',
+    '/guides/kplc-token-calculator-kenya'
   ]
 
   const routes = [...staticPages, ...calculators].map((route) => ({

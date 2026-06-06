@@ -22,6 +22,11 @@ const seo = {
     "car customs duty Kenya",
     "IDF RDL calculator",
     "CRSP calculator Kenya",
+    "KRA car import tax calculator",
+    "used car import calculator Kenya",
+    "motor vehicle import duty Kenya",
+    "Kenya vehicle duty calculator",
+    "import declaration fee calculator Kenya",
   ],
   faqs: [
     {
@@ -60,6 +65,20 @@ export default function CarImportTaxPage() {
         icon={Car}
         lastUpdated="Updated for 2026"
         sourceNote="Vehicle import estimates are designed around Kenya duty components such as CRSP, import duty, excise, VAT, IDF and RDL."
+        seoIntro="Use this Kenya car import duty calculator to estimate the major KRA tax components before importing a vehicle. It covers common long-tail searches such as KRA car import tax calculator, used car import calculator Kenya, IDF and RDL calculator, CRSP estimate and motor vehicle import duty Kenya."
+        searchTerms={[
+          "KRA car import tax calculator",
+          "car import duty calculator Kenya",
+          "IDF RDL calculator Kenya",
+          "used car import calculator Kenya",
+          "CRSP calculator Kenya",
+        ]}
+        guideLinks={[
+          {
+            label: "Guide to car import duty in Kenya",
+            href: "/guides/car-import-duty-kenya",
+          },
+        ]}
         sourceLinks={[
           {
             label: "KRA customs information",
