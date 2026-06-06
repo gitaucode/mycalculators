@@ -119,50 +119,68 @@ export default function GuidesPage() {
 
           <Link
             href={`/guides/${featured.slug}`}
-            className="group mb-14 flex flex-col overflow-hidden rounded-3xl border border-[#CFE9D8] bg-[#0B5A2A] transition-all hover:shadow-xl hover:shadow-[#0B5A2A]/20 sm:flex-row"
+            className="group mb-14 flex flex-col overflow-hidden rounded-2xl border border-[#E4E7EC] bg-white transition-all hover:border-[#CFE9D8] hover:shadow-lg hover:shadow-[#0B5A2A]/8 sm:flex-row"
           >
-            {/* Text side */}
-            <div className="flex flex-1 flex-col justify-between p-8 sm:p-10">
-              {/* Category + meta */}
+            {/* Thumbnail / visual side */}
+            <div className="relative flex shrink-0 flex-col items-center justify-center gap-5 bg-[#ECFDF3] p-10 sm:w-72 sm:items-start sm:justify-between sm:p-10">
+              {/* Decorative article lines */}
+              <div className="hidden sm:flex flex-col gap-2 w-full opacity-30">
+                <div className="h-2 w-3/4 rounded-full bg-[#0B5A2A]" />
+                <div className="h-2 w-full rounded-full bg-[#0B5A2A]" />
+                <div className="h-2 w-5/6 rounded-full bg-[#0B5A2A]" />
+                <div className="h-2 w-2/3 rounded-full bg-[#0B5A2A]" />
+                <div className="h-2 w-full rounded-full bg-[#0B5A2A]" />
+                <div className="h-2 w-4/5 rounded-full bg-[#0B5A2A]" />
+              </div>
+              <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-[#0B5A2A] text-white shadow-md sm:self-end">
+                <Calculator className="h-10 w-10" />
+              </div>
+            </div>
+
+            {/* Article content side */}
+            <div className="flex flex-1 flex-col justify-between p-7 sm:p-9">
               <div>
-                <div className="mb-5 flex flex-wrap items-center gap-3">
-                  <span className="rounded-full bg-white/15 px-3 py-1 text-xs font-bold text-white">
+                {/* Meta row — category + reading time */}
+                <div className="mb-4 flex flex-wrap items-center gap-3">
+                  <span
+                    className="rounded-full border px-2.5 py-1 text-[11px] font-bold"
+                    style={{ backgroundColor: "#ECFDF3", color: "#0B5A2A", borderColor: "#CFE9D8" }}
+                  >
                     {featured.category}
                   </span>
-                  <span className="flex items-center gap-1.5 text-xs text-[#A7F3C4]">
+                  <span className="flex items-center gap-1.5 text-xs text-[#98A2B3]">
                     <Clock className="h-3.5 w-3.5" />
                     {featuredTime} min read
                   </span>
                 </div>
-                <h2 className="font-inter text-2xl font-extrabold leading-snug text-white sm:text-3xl">
+
+                {/* Headline */}
+                <h2 className="font-inter text-2xl font-extrabold leading-snug text-[#0B1020] transition-colors group-hover:text-[#0B5A2A] sm:text-[28px]">
                   {featured.title}
                 </h2>
-                <p className="mt-4 text-sm leading-7 text-[#A7F3C4] sm:text-base">
+
+                {/* Excerpt */}
+                <p className="mt-3 text-sm leading-7 text-[#667085] sm:text-base">
                   {featured.description}
                 </p>
-                {/* Keywords */}
+
+                {/* Tags */}
                 <div className="mt-5 flex flex-wrap gap-2">
                   {featured.keywords.slice(0, 3).map((kw) => (
                     <span
                       key={kw}
-                      className="rounded-full border border-white/20 px-2.5 py-1 text-[11px] font-semibold text-white/80"
+                      className="rounded-full border border-[#E4E7EC] bg-[#F7FAF8] px-2.5 py-1 text-[11px] font-medium text-[#667085]"
                     >
                       {kw}
                     </span>
                   ))}
                 </div>
               </div>
-              {/* CTA */}
-              <div className="mt-8 inline-flex items-center gap-2 text-sm font-extrabold text-white">
-                Read guide
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </div>
-            </div>
 
-            {/* Visual side */}
-            <div className="flex items-center justify-center bg-[#063F20] p-10 sm:w-64 sm:rounded-r-3xl">
-              <div className="flex h-24 w-24 items-center justify-center rounded-3xl bg-white/10 text-white">
-                <Calculator className="h-12 w-12" />
+              {/* Footer row */}
+              <div className="mt-7 flex items-center gap-2 border-t border-[#F2F4F7] pt-5">
+                <span className="text-sm font-extrabold text-[#0B5A2A]">Read guide</span>
+                <ArrowRight className="h-4 w-4 text-[#0B5A2A] transition-transform group-hover:translate-x-1" />
               </div>
             </div>
           </Link>
