@@ -15,7 +15,7 @@ type SiteMobileMenuProps = {
 const baseLinks = [
   ["Calculators", "/calculators"],
   ["Rates", "/rates"],
-  ["Resources", "/guides"],
+  ["Guides", "/guides"],
   ["About", "/about"],
   ["Contact", "/contact"],
 ] as const;

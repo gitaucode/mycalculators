@@ -126,6 +126,9 @@ function AboutHeader() {
           <Link href="/rates" className="hover:text-[#0B5A2A] transition-colors">
             Rates
           </Link>
+          <Link href="/guides" className="hover:text-[#0B5A2A] transition-colors">
+            Guides
+          </Link>
           <SiteToolsMenu />
           <Link href="/about" className="text-[#0B5A2A]">
             About
@@ -206,7 +209,7 @@ function AboutFooter() {
         </div>
 
         <div>
-          <h4 className="mb-4 text-sm font-bold font-inter">Resources</h4>
+          <h4 className="mb-4 text-sm font-bold font-inter">Guides</h4>
           <ul className="space-y-2.5 text-sm text-emerald-50/80">
             <li><Link href="/guides" className="hover:text-white transition-colors">Financial Guides</Link></li>
             <li><Link href="/rates" className="hover:text-white transition-colors">Current Rates</Link></li>

@@ -138,6 +138,9 @@ export default async function GuideArticlePage({ params }: GuidePageProps) {
             <Link href="/rates" className="transition-colors hover:text-[#0B5A2A]">
               Rates
             </Link>
+            <Link href="/guides" className="text-[#0B5A2A]">
+              Guides
+            </Link>
             <SiteToolsMenu />
             <Link href="/about" className="transition-colors hover:text-[#0B5A2A]">
               About

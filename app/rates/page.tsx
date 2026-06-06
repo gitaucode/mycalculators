@@ -284,6 +284,7 @@ function RatesHeader() {
         <nav className="hidden items-center gap-9 text-sm font-bold text-[#0B1020] md:flex">
           <Link href="/calculators" className="hover:text-[#0B5A2A] transition-colors">Calculators</Link>
           <Link href="/rates" className="text-[#0B5A2A]">Rates</Link>
+          <Link href="/guides" className="hover:text-[#0B5A2A] transition-colors">Guides</Link>
           <SiteToolsMenu />
           <Link href="/about" className="hover:text-[#0B5A2A] transition-colors">About</Link>
           <a href="mailto:hellogitau@gmail.com" className="hover:text-[#0B5A2A] transition-colors">Contact</a>
@@ -586,6 +587,7 @@ export default function RatesPage() {
             <h4 className="mb-4 text-sm font-bold font-inter">Navigation</h4>
             <ul className="space-y-2.5 text-sm text-emerald-50/80">
               <li><Link href="/rates" className="hover:text-white transition-colors">Current Rates</Link></li>
+              <li><Link href="/guides" className="hover:text-white transition-colors">Guides</Link></li>
               <li><Link href="/about" className="hover:text-white transition-colors">About</Link></li>
               <li><Link href="/contact" className="hover:text-white transition-colors">Contact</Link></li>
             </ul>

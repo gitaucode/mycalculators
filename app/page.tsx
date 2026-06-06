@@ -155,7 +155,7 @@ const headerLinks = [
   ["Calculators", "/calculators"],
   ["Categories", "#categories"],
   ["Rates", "/rates"],
-  ["Resources", "/guides"],
+  ["Guides", "/guides"],
   ["About", "/about"],
 ] as const;
 
@@ -555,7 +555,7 @@ function Footer() {
       ["Home & Utilities", "/calculators?category=Utilities"],
       ["Lifestyle & Health", "/calculators?category=Health"],
     ],
-    Resources: [
+    Guides: [
       ["Kenyan Rates", "/rates"],
       ["Guides & Articles", "/guides"],
       ["Tools Directory", "/calculators"],

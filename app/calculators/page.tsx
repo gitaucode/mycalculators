@@ -352,6 +352,7 @@ function CalculatorsHeader() {
         <nav className="hidden items-center gap-8 text-sm font-semibold text-[#0B1020] md:flex">
           <Link href="/calculators" className="text-[#0B5A2A]">Calculators</Link>
           <Link href="/rates" className="transition-colors hover:text-[#0B5A2A]">Rates</Link>
+          <Link href="/guides" className="transition-colors hover:text-[#0B5A2A]">Guides</Link>
           <SiteToolsMenu />
           <Link href="/about" className="transition-colors hover:text-[#0B5A2A]">About</Link>
           <Link href="/contact" className="transition-colors hover:text-[#0B5A2A]">Contact</Link>
@@ -429,6 +430,7 @@ function CalculatorsFooter() {
           <ul className="space-y-2.5 text-sm text-emerald-50/80">
             <li><Link href="/calculators" className="transition-colors hover:text-white">Calculators</Link></li>
             <li><Link href="/rates" className="transition-colors hover:text-white">Current Rates</Link></li>
+            <li><Link href="/guides" className="transition-colors hover:text-white">Guides</Link></li>
             <li><Link href="/about" className="transition-colors hover:text-white">About</Link></li>
             <li><Link href="/contact" className="transition-colors hover:text-white">Contact</Link></li>
           </ul>
