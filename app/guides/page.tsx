@@ -9,12 +9,40 @@ import { BrandLogo } from "@/components/brand-logo";
 import { ArrowRight, BookOpen } from "lucide-react";
 import GuidesClient from "./GuidesClient";
 
+const siteUrl = "https://mycalculators.co.ke";
+const guidesUrl = `${siteUrl}/guides`;
+const socialImageUrl = `${siteUrl}/opengraph-image.png`;
+
 export const metadata: Metadata = {
   title: "Kenya Calculator Guides - PAYE, M-Pesa, VAT, KPLC & Import Duty",
   description:
     "Practical Kenya calculator guides for PAYE, net salary, M-Pesa charges, VAT, KPLC tokens and car import duty.",
   alternates: {
-    canonical: "https://mycalculators.co.ke/guides",
+    canonical: guidesUrl,
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_KE",
+    url: guidesUrl,
+    siteName: "MyCalculators",
+    title: "Kenya Calculator Guides - PAYE, M-Pesa, VAT, KPLC & Import Duty",
+    description:
+      "Practical Kenya calculator guides for PAYE, net salary, M-Pesa charges, VAT, KPLC tokens and car import duty.",
+    images: [
+      {
+        url: socialImageUrl,
+        width: 1200,
+        height: 630,
+        alt: "MyCalculators Kenya calculator guides",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Kenya Calculator Guides - PAYE, M-Pesa, VAT, KPLC & Import Duty",
+    description:
+      "Practical Kenya calculator guides for PAYE, net salary, M-Pesa charges, VAT, KPLC tokens and car import duty.",
+    images: [socialImageUrl],
   },
 };
 

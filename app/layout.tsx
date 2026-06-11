@@ -5,6 +5,7 @@ import { PwaRegister } from "@/components/pwa-register"
 import "./globals.css"
 
 const siteUrl = new URL("https://mycalculators.co.ke")
+const socialImageUrl = new URL("/opengraph-image.png", siteUrl).toString()
 
 const inter = Inter({
   subsets: ["latin"],
@@ -77,7 +78,7 @@ export const metadata: Metadata = {
       "Fast, practical calculators for Kenyan money, taxes, utilities, planning and health estimates.",
     images: [
       {
-        url: "/opengraph-image.png",
+        url: socialImageUrl,
         width: 1200,
         height: 630,
         alt: "MyCalculators Kenyan calculator toolkit",
@@ -89,7 +90,7 @@ export const metadata: Metadata = {
     title: "MyCalculators - Smart Money Decisions for Kenya",
     description:
       "Fast, practical calculators for Kenyan money, taxes, utilities, planning and health estimates.",
-    images: ["/opengraph-image.png"],
+    images: [socialImageUrl],
   },
 }
 

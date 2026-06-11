@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 const SITE_URL = "https://mycalculators.co.ke";
-const OG_IMAGE = "/opengraph-image.png";
+const OG_IMAGE = new URL("/opengraph-image.png", SITE_URL).toString();
 
 export type CalculatorSeo = {
   name: string;

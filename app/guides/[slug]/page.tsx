@@ -17,6 +17,7 @@ import { getSeoGuide, seoGuides } from "@/lib/seo-guides"
 import { BrandLogo } from "@/components/brand-logo"
 
 const siteUrl = "https://mycalculators.co.ke"
+const socialImageUrl = `${siteUrl}/opengraph-image.png`
 
 type GuidePageProps = {
   params: Promise<{
@@ -58,7 +59,7 @@ export async function generateMetadata({
       description: guide.description,
       images: [
         {
-          url: "/opengraph-image.png",
+          url: socialImageUrl,
           width: 1200,
           height: 630,
           alt: `${guide.title} on MyCalculators`,
@@ -69,7 +70,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title: guide.title,
       description: guide.description,
-      images: ["/opengraph-image.png"],
+      images: [socialImageUrl],
     },
   }
 }
