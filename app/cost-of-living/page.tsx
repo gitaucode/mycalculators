@@ -9,7 +9,7 @@ import {
 
 const seo = {
   name: "Cost of Living Calculator",
-  title: "Cost of Living Calculator Kenya - MyCalculators",
+  title: "Cost of Living Calculator Kenya - My Calculators",
   description:
     "Compare estimated monthly living expenses across Kenyan cities including housing, food, transport and utilities.",
   path: "/cost-of-living",

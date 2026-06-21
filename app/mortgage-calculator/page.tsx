@@ -9,7 +9,7 @@ import {
 
 const seo = {
   name: "Mortgage Calculator",
-  title: "Mortgage Calculator Kenya - MyCalculators",
+  title: "Mortgage Calculator Kenya - My Calculators",
   description:
     "Estimate monthly home loan repayments, total interest, loan amount and upfront cash for a mortgage in Kenya.",
   path: "/mortgage-calculator",

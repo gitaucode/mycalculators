@@ -9,7 +9,7 @@ import {
 
 const seo = {
   name: "Construction Cost Calculator",
-  title: "Construction Cost Calculator Kenya - MyCalculators",
+  title: "Construction Cost Calculator Kenya - My Calculators",
   description:
     "Estimate building and construction costs in Kenya based on project area, quality level and common cost assumptions.",
   path: "/construction-cost",

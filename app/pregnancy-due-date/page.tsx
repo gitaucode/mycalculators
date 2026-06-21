@@ -9,7 +9,7 @@ import {
 
 const seo = {
   name: "Pregnancy Due Date Calculator",
-  title: "Pregnancy Due Date Calculator - MyCalculators",
+  title: "Pregnancy Due Date Calculator - My Calculators",
   description:
     "Estimate pregnancy due date, trimester, weeks remaining and key milestones from the last menstrual period.",
   path: "/pregnancy-due-date",

@@ -9,7 +9,7 @@ import {
 
 const seo = {
   name: "M-KOPA Phone Loan Calculator",
-  title: "M-KOPA Phone Loan Calculator Kenya - MyCalculators",
+  title: "M-KOPA Phone Loan Calculator Kenya - My Calculators",
   description:
     "Estimate total repayment, markup over cash price and whether an M-KOPA-style phone loan deal is worth it for Kenyan buyers.",
   path: "/mkopa-phone-loan",

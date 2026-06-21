@@ -114,7 +114,7 @@ function AboutHeader() {
             <BrandLogo size={24} />
           </div>
           <div>
-            <p className="text-lg font-extrabold leading-tight text-[#0B1020] font-inter">MyCalculators</p>
+            <p className="text-lg font-extrabold leading-tight text-[#0B1020] font-inter">My Calculators</p>
             <p className="text-xs font-semibold leading-tight text-[#0B5A2A]">Kenya</p>
           </div>
         </Link>
@@ -171,7 +171,7 @@ function AboutFooter() {
               <BrandLogo size={24} />
             </div>
             <div>
-              <p className="font-bold font-inter">MyCalculators</p>
+              <p className="font-bold font-inter">My Calculators</p>
               <p className="text-xs text-emerald-100">Kenya</p>
             </div>
           </div>
@@ -229,7 +229,7 @@ function AboutFooter() {
         </div>
       </div>
       <div className="mx-auto max-w-[1280px] border-t border-white/10 px-4 py-5 text-center text-sm text-emerald-50/75 sm:px-6">
-        © 2026 MyCalculators.
+        Â© 2026 My Calculators.
         {" - "}
         <Link href="/privacy" className="underline hover:text-white">Privacy Policy</Link>
         {" - "}
@@ -316,10 +316,10 @@ export default function AboutPage() {
             <Calculator className="h-7 w-7" />
           </div>
           <h1 className="text-[34px] font-extrabold leading-[1.1] text-[#0B1020] md:text-[44px] font-inter">
-            About MyCalculators
+            About My Calculators
           </h1>
           <p className="mx-auto mt-4 max-w-3xl text-[16px] leading-7 text-[#667085]">
-            MyCalculators is a collection of simple calculators built for Kenyan consumers, covering money, taxes, bills, loans, health and everyday planning.
+            My Calculators is a collection of simple calculators built for Kenyan consumers, covering money, taxes, bills, loans, health and everyday planning.
             The goal is simple: help people understand the numbers before they make decisions.
           </p>
 
@@ -456,13 +456,13 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Explore MyCalculators CTA Block */}
+        {/* Explore My Calculators CTA Block */}
         <section className="mx-auto max-w-[1100px] px-4 pb-16 sm:px-6">
           <div className="rounded-2xl bg-[#E4F5EB] p-8 text-center flex flex-col items-center border border-[#CFEBDD] shadow-sm">
             <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-full bg-[#0B5A2A] text-white">
               <Rocket className="h-5 w-5" />
             </div>
-            <h2 className="font-inter text-2xl font-extrabold text-[#0B1020]">Explore MyCalculators</h2>
+            <h2 className="font-inter text-2xl font-extrabold text-[#0B1020]">Explore My Calculators</h2>
             <p className="text-[15px] text-[#667085] mt-2 mb-6 max-w-xl leading-6">
               Try the calculators or suggest a tool that would help Kenyan consumers.
             </p>

@@ -8,23 +8,23 @@ import { BrandLogo } from "@/components/brand-logo"
 const sections = [
   {
     title: "1. Acceptance of Terms",
-    content: `By accessing and using MyCalculators (mycalculators.co.ke), you accept and agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our services. We reserve the right to update these terms at any time, and continued use of the site constitutes acceptance of any changes.`,
+    content: `By accessing and using My Calculators (mycalculators.co.ke), you accept and agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our services. We reserve the right to update these terms at any time, and continued use of the site constitutes acceptance of any changes.`,
   },
   {
     title: "2. Description of Service",
-    content: `MyCalculators provides free online calculators and rate reference tools designed for Kenyan consumers. These include, but are not limited to, calculators for M-Pesa charges, net salary (PAYE, NSSF, SHIF), loan repayments, VAT, car import tax, electricity costs, BMI, and other financial or health estimates. All tools are provided free of charge and require no account or registration.`,
+    content: `My Calculators provides free online calculators and rate reference tools designed for Kenyan consumers. These include, but are not limited to, calculators for M-Pesa charges, net salary (PAYE, NSSF, SHIF), loan repayments, VAT, car import tax, electricity costs, BMI, and other financial or health estimates. All tools are provided free of charge and require no account or registration.`,
   },
   {
     title: "3. Disclaimer of Accuracy",
-    content: `All calculations and rates provided by MyCalculators are for estimation and planning purposes only. While we strive to keep rates current and accurate by referencing official sources (KRA, CBK, Safaricom, SHA, KPLC), we do not guarantee that the information is complete, accurate, or up to date at the time of use.\n\nRates and tax rules change frequently. Always verify figures with the relevant institution - your employer, bank, Kenya Revenue Authority, Safaricom, or other official body - before making any financial decisions. MyCalculators accepts no liability for decisions made based on estimates from this site.`,
+    content: `All calculations and rates provided by My Calculators are for estimation and planning purposes only. While we strive to keep rates current and accurate by referencing official sources (KRA, CBK, Safaricom, SHA, KPLC), we do not guarantee that the information is complete, accurate, or up to date at the time of use.\n\nRates and tax rules change frequently. Always verify figures with the relevant institution - your employer, bank, Kenya Revenue Authority, Safaricom, or other official body - before making any financial decisions. My Calculators accepts no liability for decisions made based on estimates from this site.`,
   },
   {
     title: "4. No Financial or Legal Advice",
-    content: `MyCalculators is not a licensed financial advisor, tax consultant, or legal practitioner. Nothing on this site constitutes financial, tax, investment, or legal advice. The tools are informational aids to help you understand numbers, not professional recommendations. For advice specific to your situation, consult a qualified professional.`,
+    content: `My Calculators is not a licensed financial advisor, tax consultant, or legal practitioner. Nothing on this site constitutes financial, tax, investment, or legal advice. The tools are informational aids to help you understand numbers, not professional recommendations. For advice specific to your situation, consult a qualified professional.`,
   },
   {
     title: "5. Intellectual Property",
-    content: `All content on MyCalculators - including calculator logic, design, copy, and code - is the property of MyCalculators and its creator. You may not reproduce, redistribute, or sell any part of the site without explicit written permission. Rate data sourced from official third parties (KRA, CBK, Safaricom, etc.) remains the property of those respective institutions.`,
+    content: `All content on My Calculators - including calculator logic, design, copy, and code - is the property of My Calculators and its creator. You may not reproduce, redistribute, or sell any part of the site without explicit written permission. Rate data sourced from official third parties (KRA, CBK, Safaricom, etc.) remains the property of those respective institutions.`,
   },
   {
     title: "6. User Conduct",
@@ -32,19 +32,19 @@ const sections = [
   },
   {
     title: "7. Third-Party Links",
-    content: `MyCalculators may contain links to external websites such as KRA, CBK, Safaricom, KPLC, or SHA. These links are provided for reference. We are not responsible for the content, accuracy, or privacy practices of any external site. Visiting third-party links is at your own risk.`,
+    content: `My Calculators may contain links to external websites such as KRA, CBK, Safaricom, KPLC, or SHA. These links are provided for reference. We are not responsible for the content, accuracy, or privacy practices of any external site. Visiting third-party links is at your own risk.`,
   },
   {
     title: "8. Limitation of Liability",
-    content: `To the fullest extent permitted by Kenyan law, MyCalculators and its creator shall not be liable for any direct, indirect, incidental, or consequential damages arising from:\n- Use of or reliance on calculator estimates\n- Inaccurate or outdated rate information\n- Interruption or unavailability of the service\n- Any errors or omissions in content\n\nYour use of this service is entirely at your own risk.`,
+    content: `To the fullest extent permitted by Kenyan law, My Calculators and its creator shall not be liable for any direct, indirect, incidental, or consequential damages arising from:\n- Use of or reliance on calculator estimates\n- Inaccurate or outdated rate information\n- Interruption or unavailability of the service\n- Any errors or omissions in content\n\nYour use of this service is entirely at your own risk.`,
   },
   {
     title: "9. Availability",
-    content: `We aim to keep MyCalculators available at all times but do not guarantee uninterrupted access. The service may be temporarily unavailable due to maintenance, updates, or technical issues beyond our control. We are not liable for any inconvenience caused by downtime.`,
+    content: `We aim to keep My Calculators available at all times but do not guarantee uninterrupted access. The service may be temporarily unavailable due to maintenance, updates, or technical issues beyond our control. We are not liable for any inconvenience caused by downtime.`,
   },
   {
     title: "10. Governing Law",
-    content: `These Terms of Service are governed by the laws of the Republic of Kenya. Any disputes arising from use of MyCalculators shall be subject to the exclusive jurisdiction of the courts of Kenya.`,
+    content: `These Terms of Service are governed by the laws of the Republic of Kenya. Any disputes arising from use of My Calculators shall be subject to the exclusive jurisdiction of the courts of Kenya.`,
   },
   {
     title: "11. Changes to These Terms",
@@ -67,7 +67,7 @@ export default function TermsPage() {
               <BrandLogo size={24} />
             </div>
             <div>
-              <p className="text-lg font-extrabold leading-tight text-[#0B1020] font-inter">MyCalculators</p>
+              <p className="text-lg font-extrabold leading-tight text-[#0B1020] font-inter">My Calculators</p>
               <p className="text-xs font-semibold leading-tight text-[#0B5A2A]">Kenya</p>
             </div>
           </Link>
@@ -99,7 +99,7 @@ export default function TermsPage() {
             Terms of Service
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-[16px] leading-7 text-[#667085]">
-            Please read these terms carefully before using MyCalculators. By using our calculators and tools, you agree to the terms below.
+            Please read these terms carefully before using My Calculators. By using our calculators and tools, you agree to the terms below.
           </p>
           <span className="mt-5 inline-flex items-center gap-2 rounded-full border border-[#E4E7EC] bg-white px-4 py-1.5 text-sm font-semibold text-[#667085]">
             Last updated: May 2025
@@ -127,7 +127,7 @@ export default function TermsPage() {
 
           {/* Bottom CTA */}
           <div className="mt-8 rounded-2xl bg-[#E4F5EB] border border-[#CFEBDD] p-8 text-center shadow-sm">
-            <h2 className="font-inter text-xl font-extrabold text-[#0B1020] mb-2">Ready to use MyCalculators?</h2>
+            <h2 className="font-inter text-xl font-extrabold text-[#0B1020] mb-2">Ready to use My Calculators?</h2>
             <p className="text-[15px] text-[#667085] mb-5">
               All calculators are free, private, and built for Kenya.
             </p>
@@ -154,7 +154,7 @@ export default function TermsPage() {
                 <BrandLogo size={24} />
               </div>
               <div>
-                <p className="font-bold font-inter">MyCalculators</p>
+                <p className="font-bold font-inter">My Calculators</p>
                 <p className="text-xs text-emerald-100">Kenya</p>
               </div>
             </div>
@@ -190,7 +190,7 @@ export default function TermsPage() {
           </div>
         </div>
         <div className="mx-auto max-w-[1280px] border-t border-white/10 px-4 py-5 text-center text-sm text-emerald-50/75 sm:px-6">
-          © 2026 MyCalculators.
+          Â© 2026 My Calculators.
           {" - "}
           <Link href="/privacy" className="underline hover:text-white">Privacy Policy</Link>
           {" - "}

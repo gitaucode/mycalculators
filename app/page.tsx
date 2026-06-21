@@ -10,6 +10,7 @@ import {
   Calculator,
   Check,
   ClipboardList,
+  Download,
   Facebook,
   Grid3X3,
   Heart,
@@ -173,7 +174,7 @@ function HomeHeader() {
           </div>
           <div>
             <p className="font-inter text-lg font-extrabold leading-tight text-[#0B1020]">
-              MyCalculators
+              My Calculators
             </p>
             <p className="text-xs font-semibold leading-tight text-[#0B5A2A]">
               Kenya
@@ -353,7 +354,7 @@ function HeroVisual() {
       <div className="absolute right-0 top-0 h-[420px] w-[420px] rounded-full bg-gradient-to-br from-[#0B5A2A]/90 to-[#063F20] opacity-95" />
       {/* Ring accent */}
       <div className="absolute right-8 top-12 h-[340px] w-[340px] rounded-full border-[36px] border-white/8" />
-      {/* Subtle dot grid — contained within the blob */}
+      {/* Subtle dot grid â€” contained within the blob */}
       <div
         className="absolute right-4 top-8 h-[380px] w-[380px] rounded-full opacity-20"
         style={{
@@ -362,12 +363,12 @@ function HeroVisual() {
         }}
       />
 
-      {/* Main card — centred, slightly left to leave room for the mini cards */}
+      {/* Main card â€” centred, slightly left to leave room for the mini cards */}
       <div className="relative z-10 -translate-x-8">
         <SalaryPreviewCard />
       </div>
 
-      {/* Mini cards — stacked on the right, deliberately angled */}
+      {/* Mini cards â€” stacked on the right, deliberately angled */}
       <MiniMetricCard
         className="absolute right-0 top-[80px] w-[178px] rotate-3"
         icon={Smartphone}
@@ -618,7 +619,7 @@ function Footer() {
               </div>
               <div>
                 <p className="font-inter text-lg font-extrabold">
-                  MyCalculators
+                  My Calculators
                 </p>
                 <p className="text-xs font-semibold text-emerald-100">Kenya</p>
               </div>
@@ -665,8 +666,8 @@ function Footer() {
         </div>
 
         <div className="mt-10 flex flex-col gap-3 border-t border-white/10 pt-6 text-sm text-emerald-50/70 sm:flex-row sm:items-center sm:justify-between">
-          <p>© 2026 MyCalculators Kenya. All rights reserved.</p>
-          <p>Made with ❤️ for Kenya.</p>
+          <p>Â© 2026 My Calculators Kenya. All rights reserved.</p>
+          <p>Made with â¤ï¸ for Kenya.</p>
         </div>
       </div>
     </footer>
@@ -847,6 +848,68 @@ export default function HomePage() {
                 </div>
               );
             })}
+          </div>
+        </section>
+
+        <section className="border-t border-[#E4E7EC] bg-white px-4 py-14 sm:px-6 lg:py-20">
+          <div className="mx-auto grid max-w-[1180px] overflow-hidden rounded-[28px] bg-[linear-gradient(135deg,#063F20,#0B5A2A)] text-white shadow-[0_24px_70px_rgba(6,63,32,0.2)] lg:grid-cols-[1.15fr_0.85fr]">
+            <div className="p-7 sm:p-10 lg:p-14">
+              <span className="inline-flex rounded-full bg-white/12 px-3 py-1.5 text-xs font-extrabold uppercase tracking-[0.14em] text-emerald-50">
+                Android beta
+              </span>
+              <h2 className="mt-5 max-w-xl font-inter text-[32px] font-extrabold leading-tight sm:text-[42px]">
+                Take My Calculators with you
+              </h2>
+              <p className="mt-4 max-w-xl text-base leading-7 text-emerald-50/80">
+                Install the Android app for quick access, offline calculators, saved drafts and PDF-ready invoices and receipts.
+              </p>
+
+              <div className="mt-7 flex flex-wrap gap-x-6 gap-y-3 text-sm font-semibold text-emerald-50/90">
+                {["Works offline", "No account required", "Your data stays on-device"].map((benefit) => (
+                  <span key={benefit} className="inline-flex items-center gap-2">
+                    <Check className="h-5 w-5 rounded-full bg-white/12 p-1" />
+                    {benefit}
+                  </span>
+                ))}
+              </div>
+
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <a
+                  href="/downloads/my-calculators-android.apk"
+                  download
+                  className="inline-flex h-13 items-center justify-center gap-2 rounded-xl bg-white px-6 py-3.5 text-sm font-extrabold text-[#063F20] transition hover:bg-emerald-50"
+                >
+                  <Download className="h-5 w-5" />
+                  Download for Android
+                </a>
+                <span className="inline-flex h-13 items-center justify-center rounded-xl border border-white/20 px-6 py-3.5 text-sm font-bold text-emerald-50/75">
+                  iPhone app coming later
+                </span>
+              </div>
+              <p className="mt-4 text-xs leading-5 text-emerald-100/70">
+                Android may ask you to allow installation from your browser. This beta is distributed directly while Play Store publishing is prepared.
+              </p>
+            </div>
+
+            <div className="relative hidden min-h-[430px] items-end justify-center overflow-hidden bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.18),transparent_58%)] p-10 lg:flex">
+              <div className="absolute h-72 w-72 rounded-full border border-white/10" />
+              <div className="relative w-[245px] rounded-[36px] border-[8px] border-[#0B1020] bg-[#F4F7F5] p-4 pb-7 shadow-[0_28px_60px_rgba(0,0,0,0.35)]">
+                <div className="mx-auto mb-5 h-5 w-24 rounded-full bg-[#0B1020]" />
+                <div className="rounded-2xl bg-[#0B5A2A] p-4">
+                  <p className="text-xs font-semibold text-emerald-100">My Calculators</p>
+                  <p className="mt-2 font-inter text-lg font-extrabold">What do you want to calculate?</p>
+                </div>
+                <div className="mt-4 grid grid-cols-2 gap-3">
+                  {[Smartphone, Wallet, Landmark, Calculator].map((Icon, index) => (
+                    <div key={index} className="rounded-2xl border border-[#E4E7EC] bg-white p-3">
+                      <Icon className="h-5 w-5 text-[#0B5A2A]" />
+                      <div className="mt-5 h-2 w-16 rounded bg-[#D0D5DD]" />
+                      <div className="mt-2 h-2 w-10 rounded bg-[#EAECF0]" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
         </section>
       </main>

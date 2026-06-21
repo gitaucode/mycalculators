@@ -9,7 +9,7 @@ import {
 
 const seo = {
   name: "BMI Calculator",
-  title: "BMI Calculator - MyCalculators",
+  title: "BMI Calculator - My Calculators",
   description:
     "Calculate your body mass index from height and weight and understand your BMI category with a simple health estimate.",
   path: "/bmi-calculator",

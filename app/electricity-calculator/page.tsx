@@ -9,7 +9,7 @@ import {
 
 const seo = {
   name: "Electricity Calculator",
-  title: "KPLC Token Calculator Kenya - MyCalculators",
+  title: "KPLC Token Calculator Kenya - My Calculators",
   description:
     "Estimate Kenya Power prepaid token units and electricity costs using practical KPLC tariff assumptions.",
   path: "/electricity-calculator",

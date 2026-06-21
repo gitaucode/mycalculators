@@ -9,7 +9,7 @@ import {
 
 const seo = {
   name: "Water Intake Calculator",
-  title: "Water Intake Calculator - MyCalculators",
+  title: "Water Intake Calculator - My Calculators",
   description:
     "Estimate daily water intake needs from weight, activity and climate to support healthy hydration habits.",
   path: "/water-intake",

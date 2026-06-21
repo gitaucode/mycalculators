@@ -23,7 +23,7 @@ import { SiteToolsMenu } from "@/components/site-tools-menu"
 import { Button } from "@/components/ui/button"
 import { BrandLogo } from "@/components/brand-logo"
 
-// ─── Data ────────────────────────────────────────────────────────────────────
+// â”€â”€â”€ Data â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const mobileMoneySections = [
   {
@@ -265,7 +265,7 @@ const sources = [
   { name: "KPLC / Kenya Power", url: "https://www.kplc.co.ke" },
 ]
 
-// ─── Components ──────────────────────────────────────────────────────────────
+// â”€â”€â”€ Components â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function RatesHeader() {
   return (
@@ -276,7 +276,7 @@ function RatesHeader() {
             <BrandLogo size={24} />
           </div>
           <div>
-            <p className="text-lg font-extrabold leading-tight text-[#0B1020]">MyCalculators</p>
+            <p className="text-lg font-extrabold leading-tight text-[#0B1020]">My Calculators</p>
             <p className="text-xs font-semibold leading-tight text-[#0B5A2A]">Kenya</p>
           </div>
         </Link>
@@ -365,7 +365,7 @@ function RateTableCard({
   )
 }
 
-// ─── Page ─────────────────────────────────────────────────────────────────────
+// â”€â”€â”€ Page â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const TABS = [
   { label: "Mobile Money", icon: Smartphone },
@@ -394,7 +394,7 @@ export default function RatesPage() {
               Current Kenyan Financial Rates
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-[#667085] md:text-[17px]">
-              Track the latest rates for mobile money, taxes, banking charges and statutory deductions used across MyCalculators calculators.
+              Track the latest rates for mobile money, taxes, banking charges and statutory deductions used across My Calculators calculators.
             </p>
           </section>
 
@@ -567,7 +567,7 @@ export default function RatesPage() {
                 <BrandLogo size={24} />
               </div>
               <div>
-                <p className="font-bold font-inter">MyCalculators</p>
+                <p className="font-bold font-inter">My Calculators</p>
                 <p className="text-xs text-emerald-100">Kenya</p>
               </div>
             </div>
@@ -603,7 +603,7 @@ export default function RatesPage() {
           </div>
         </div>
         <div className="mx-auto max-w-[1280px] border-t border-white/10 px-4 py-5 text-center text-sm text-emerald-50/75 sm:px-6">
-          © 2026 MyCalculators.
+          Â© 2026 My Calculators.
           {" - "}
           <Link href="/privacy" className="underline hover:text-white">Privacy Policy</Link>
           {" - "}

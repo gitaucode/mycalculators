@@ -344,7 +344,7 @@ function CalculatorsHeader() {
             <BrandLogo size={24} />
           </div>
           <div>
-            <p className="font-inter text-lg font-extrabold leading-tight text-[#0B1020]">MyCalculators</p>
+            <p className="font-inter text-lg font-extrabold leading-tight text-[#0B1020]">My Calculators</p>
             <p className="text-xs font-semibold leading-tight text-[#0B5A2A]">Kenya</p>
           </div>
         </Link>
@@ -409,7 +409,7 @@ function CalculatorsFooter() {
               <BrandLogo size={24} />
             </div>
             <div>
-              <p className="font-inter font-bold">MyCalculators</p>
+              <p className="font-inter font-bold">My Calculators</p>
               <p className="text-xs text-emerald-100">Kenya</p>
             </div>
           </div>
@@ -446,7 +446,7 @@ function CalculatorsFooter() {
         </div>
       </div>
       <div className="mx-auto max-w-[1280px] border-t border-white/10 px-4 py-5 text-center text-sm text-emerald-50/75 sm:px-6">
-        © 2026 MyCalculators.
+        Â© 2026 My Calculators.
       </div>
     </footer>
   )
@@ -506,7 +506,7 @@ export default function CalculatorsPage() {
               Calculators
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-[#667085] md:text-[17px]">
-              Browse all MyCalculators calculators for Kenyan money, taxes, utilities, planning and health estimates.
+              Browse all My Calculators calculators for Kenyan money, taxes, utilities, planning and health estimates.
             </p>
           </section>
 

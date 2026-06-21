@@ -98,6 +98,45 @@
   }
 }
 
+/* Capacitor uses a dedicated app shell while the browser keeps the full website chrome. */
+.native-app body {
+  padding-top: calc(3.5rem + env(safe-area-inset-top));
+  padding-bottom: calc(3.75rem + env(safe-area-inset-bottom));
+  overscroll-behavior-y: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.native-app header:not([data-native-shell]),
+.native-app footer:not([data-native-shell]) {
+  display: none !important;
+}
+
+.native-app .native-app-topbar {
+  height: calc(3.5rem + env(safe-area-inset-top));
+  padding-top: env(safe-area-inset-top);
+}
+
+.native-app .native-bottom-nav {
+  min-height: calc(3.75rem + env(safe-area-inset-bottom));
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.native-app .native-home-screen {
+  top: calc(3.5rem + env(safe-area-inset-top));
+  bottom: calc(3.75rem + env(safe-area-inset-bottom));
+  padding-top: 1rem;
+}
+
+.native-app main > div {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.native-app .calculator-content + section,
+.native-app main a[href="/calculators"]:has(svg.lucide-arrow-left) {
+  display: none !important;
+}
+
 @layer base {
   * {
     @apply border-border;

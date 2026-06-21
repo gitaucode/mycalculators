@@ -9,7 +9,7 @@ import {
 
 const seo = {
   name: "Withholding Tax Calculator",
-  title: "Withholding Tax Calculator Kenya - MyCalculators",
+  title: "Withholding Tax Calculator Kenya - My Calculators",
   description:
     "Estimate withholding tax, net payable amount and gross-up value for common payment types in Kenya.",
   path: "/withholding-tax-calculator",

@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_KE",
     url: guidesUrl,
-    siteName: "MyCalculators",
+    siteName: "My Calculators",
     title: "Kenya Calculator Guides - PAYE, M-Pesa, VAT, KPLC & Import Duty",
     description:
       "Practical Kenya calculator guides for PAYE, net salary, M-Pesa charges, VAT, KPLC tokens and car import duty.",
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
         url: socialImageUrl,
         width: 1200,
         height: 630,
-        alt: "MyCalculators Kenya calculator guides",
+        alt: "My Calculators Kenya calculator guides",
       },
     ],
   },
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
 export default function GuidesPage() {
   return (
     <>
-      {/* ── Navigation ── */}
+      {/* â”€â”€ Navigation â”€â”€ */}
       <header className="sticky top-0 z-50 w-full border-b border-[#E4E7EC] bg-white/95 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-[1280px] items-center justify-between px-4 sm:px-6">
           <Link href="/" className="flex items-center gap-3">
@@ -57,7 +57,7 @@ export default function GuidesPage() {
               <BrandLogo size={24} />
             </div>
             <div>
-              <p className="font-inter text-lg font-extrabold leading-tight text-[#0B1020]">MyCalculators</p>
+              <p className="font-inter text-lg font-extrabold leading-tight text-[#0B1020]">My Calculators</p>
               <p className="text-xs font-semibold leading-tight text-[#0B5A2A]">Kenya</p>
             </div>
           </Link>
@@ -88,7 +88,7 @@ export default function GuidesPage() {
 
       <main className="min-h-[70vh] bg-[#F7FAF8] text-[#0B1020]">
 
-        {/* ── Hero band ── */}
+        {/* â”€â”€ Hero band â”€â”€ */}
         <div className="border-b border-[#E4E7EC] bg-white">
           <div className="mx-auto max-w-[1100px] px-4 py-12 sm:px-6 lg:py-16">
             <div className="flex items-center gap-3 mb-5">
@@ -103,15 +103,15 @@ export default function GuidesPage() {
               Financial Guides for Kenya
             </h1>
             <p className="mt-4 max-w-xl text-base leading-7 text-[#475467] sm:text-lg">
-              Practical explainers for understanding taxes, deductions, fees and everyday money calculations — each paired with a free calculator.
+              Practical explainers for understanding taxes, deductions, fees and everyday money calculations â€” each paired with a free calculator.
             </p>
           </div>
         </div>
 
-        {/* ── Interactive content (client) ── */}
+        {/* â”€â”€ Interactive content (client) â”€â”€ */}
         <GuidesClient />
 
-        {/* ── Bottom CTA strip ── */}
+        {/* â”€â”€ Bottom CTA strip â”€â”€ */}
         <div className="mx-auto max-w-[1100px] px-4 pb-16 sm:px-6">
           <div className="flex flex-col items-center justify-between gap-5 rounded-2xl border border-[#CFE9D8] bg-white px-8 py-7 sm:flex-row">
             <div>
@@ -119,7 +119,7 @@ export default function GuidesPage() {
                 Looking for a specific calculator?
               </p>
               <p className="mt-1 text-sm text-[#667085]">
-                Browse all free tools for Kenya — no sign-up required.
+                Browse all free tools for Kenya â€” no sign-up required.
               </p>
             </div>
             <Button
@@ -135,7 +135,7 @@ export default function GuidesPage() {
         </div>
       </main>
 
-      {/* ── Footer ── */}
+      {/* â”€â”€ Footer â”€â”€ */}
       <footer className="w-full bg-[#063F20] text-white">
         <div className="mx-auto grid max-w-[1280px] gap-10 px-4 pb-8 pt-12 sm:grid-cols-2 sm:px-6 lg:grid-cols-[1.3fr_1fr_1fr_1fr]">
           <div>
@@ -144,7 +144,7 @@ export default function GuidesPage() {
                 <BrandLogo size={24} />
               </div>
               <div>
-                <p className="font-inter font-bold">MyCalculators</p>
+                <p className="font-inter font-bold">My Calculators</p>
                 <p className="text-xs text-emerald-100">Kenya</p>
               </div>
             </div>
@@ -189,7 +189,7 @@ export default function GuidesPage() {
           </div>
         </div>
         <div className="mx-auto max-w-[1280px] border-t border-white/10 px-4 py-5 text-center text-sm text-emerald-50/75 sm:px-6">
-          © 2026 MyCalculators.{" "}
+          Â© 2026 My Calculators.{" "}
           <Link href="/privacy" className="underline hover:text-white">Privacy Policy</Link>
           {" - "}
           <Link href="/terms" className="underline hover:text-white">Terms of Service</Link>

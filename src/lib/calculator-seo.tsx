@@ -52,7 +52,7 @@ export function createCalculatorMetadata(seo: CalculatorSeo): Metadata {
       type: "website",
       locale: "en_KE",
       url,
-      siteName: "MyCalculators",
+      siteName: "My Calculators",
       title: seo.title,
       description: seo.description,
       images: [
@@ -60,7 +60,7 @@ export function createCalculatorMetadata(seo: CalculatorSeo): Metadata {
           url: OG_IMAGE,
           width: 1200,
           height: 630,
-          alt: `${seo.name} on MyCalculators`,
+          alt: `${seo.name} on My Calculators`,
         },
       ],
     },
@@ -95,7 +95,7 @@ export function CalculatorStructuredData({ seo }: { seo: CalculatorSeo }) {
     },
     publisher: {
       "@type": "Organization",
-      name: "MyCalculators",
+      name: "My Calculators",
       url: SITE_URL,
     },
   };

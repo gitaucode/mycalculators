@@ -9,7 +9,7 @@ import {
 
 const seo = {
   name: "Fuel Cost Calculator",
-  title: "Fuel Cost Calculator Kenya - MyCalculators",
+  title: "Fuel Cost Calculator Kenya - My Calculators",
   description:
     "Estimate petrol or diesel cost for trips, commutes and shared rides using distance, fuel economy and pump price.",
   path: "/fuel-cost-calculator",

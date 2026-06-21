@@ -9,7 +9,7 @@ import {
 
 const seo = {
   name: "Budget Planner",
-  title: "Budget Planner Kenya - MyCalculators",
+  title: "Budget Planner Kenya - My Calculators",
   description:
     "Plan monthly income, expenses and savings with a practical Kenya-focused budget planner for everyday money decisions.",
   path: "/budget-planner",

@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useMemo } from "react"
 import { Download, Plus, Printer, Receipt, Trash2 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -8,6 +8,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
+import { usePersistentState } from "@/hooks/use-persistent-state"
+import { printOrSharePdf } from "@/lib/document-export"
 
 type ReceiptItem = {
   id: number
@@ -26,19 +28,19 @@ const formatMoney = (value: number) =>
   `KSH ${value.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
 
 export function ReceiptGenerator() {
-  const [businessName, setBusinessName] = useState("Your Business Name")
-  const [businessPin, setBusinessPin] = useState("")
-  const [businessDetails, setBusinessDetails] = useState("Nairobi, Kenya\nhello@example.com\n+254 700 000 000")
-  const [customerName, setCustomerName] = useState("")
-  const [customerDetails, setCustomerDetails] = useState("")
-  const [receiptNumber, setReceiptNumber] = useState(`RCT-${new Date().getFullYear()}-001`)
-  const [receiptDate, setReceiptDate] = useState(today)
-  const [paymentMethod, setPaymentMethod] = useState("M-Pesa")
-  const [paymentReference, setPaymentReference] = useState("")
-  const [servedBy, setServedBy] = useState("")
-  const [items, setItems] = useState<ReceiptItem[]>(initialItems)
-  const [vatRate, setVatRate] = useState("0")
-  const [notes, setNotes] = useState("Payment received with thanks.")
+  const [businessName, setBusinessName] = usePersistentState("receipt.businessName", "Your Business Name")
+  const [businessPin, setBusinessPin] = usePersistentState("receipt.businessPin", "")
+  const [businessDetails, setBusinessDetails] = usePersistentState("receipt.businessDetails", "Nairobi, Kenya\nhello@example.com\n+254 700 000 000")
+  const [customerName, setCustomerName] = usePersistentState("receipt.customerName", "")
+  const [customerDetails, setCustomerDetails] = usePersistentState("receipt.customerDetails", "")
+  const [receiptNumber, setReceiptNumber] = usePersistentState("receipt.number", `RCT-${new Date().getFullYear()}-001`)
+  const [receiptDate, setReceiptDate] = usePersistentState("receipt.date", today)
+  const [paymentMethod, setPaymentMethod] = usePersistentState("receipt.paymentMethod", "M-Pesa")
+  const [paymentReference, setPaymentReference] = usePersistentState("receipt.paymentReference", "")
+  const [servedBy, setServedBy] = usePersistentState("receipt.servedBy", "")
+  const [items, setItems] = usePersistentState<ReceiptItem[]>("receipt.items", initialItems)
+  const [vatRate, setVatRate] = usePersistentState("receipt.vatRate", "0")
+  const [notes, setNotes] = usePersistentState("receipt.notes", "Payment received with thanks.")
 
   const totals = useMemo(() => {
     const subtotal = items.reduce((sum, item) => {
@@ -67,8 +69,13 @@ export function ReceiptGenerator() {
     setItems((current) => (current.length === 1 ? current : current.filter((item) => item.id !== id)))
   }
 
-  const handlePrint = () => {
-    window.print()
+  const handlePrint = async () => {
+    const filename = `${receiptNumber || "receipt"}.pdf`.replace(/[^a-z0-9._-]/gi, "-")
+    try {
+      await printOrSharePdf(".receipt-print-sheet", filename)
+    } catch {
+      window.alert("The PDF could not be created. Please try again.")
+    }
   }
 
   return (
@@ -214,11 +221,11 @@ export function ReceiptGenerator() {
 
       <div className="space-y-4">
         <div className="receipt-no-print flex flex-col gap-3 sm:flex-row sm:justify-end">
-          <Button type="button" onClick={handlePrint} className="h-11 rounded-xl bg-[#0B5A2A] px-5 font-bold text-white hover:bg-[#063F20]">
+          <Button type="button" onClick={() => void handlePrint()} className="h-11 rounded-xl bg-[#0B5A2A] px-5 font-bold text-white hover:bg-[#063F20]">
             <Printer className="h-4 w-4" />
             Print
           </Button>
-          <Button type="button" onClick={handlePrint} variant="outline" className="h-11 rounded-xl border-[#CFEBDD] px-5 font-bold text-[#0B5A2A]">
+          <Button type="button" onClick={() => void handlePrint()} variant="outline" className="h-11 rounded-xl border-[#CFEBDD] px-5 font-bold text-[#0B5A2A]">
             <Download className="h-4 w-4" />
             Save as PDF
           </Button>

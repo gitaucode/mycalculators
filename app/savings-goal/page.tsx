@@ -9,7 +9,7 @@ import {
 
 const seo = {
   name: "Savings Goal Calculator",
-  title: "Savings Goal Calculator Kenya - MyCalculators",
+  title: "Savings Goal Calculator Kenya - My Calculators",
   description:
     "Plan monthly savings needed to reach a target amount and estimate the timeline for your financial goals.",
   path: "/savings-goal",

@@ -9,7 +9,7 @@ import {
 
 const seo = {
   name: "Water Bill Calculator",
-  title: "Water Bill Calculator Kenya - MyCalculators",
+  title: "Water Bill Calculator Kenya - My Calculators",
   description:
     "Estimate monthly water bills using consumption, tier rates, sewerage percentage and service charge.",
   path: "/water-bill-calculator",

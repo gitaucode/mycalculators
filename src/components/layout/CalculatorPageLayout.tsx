@@ -101,7 +101,7 @@ function CalculatorHeader() {
             <BrandLogo size={24} />
           </div>
           <div>
-            <p className="font-poppins text-lg font-bold leading-tight text-[#0B1020]">MyCalculators</p>
+            <p className="font-poppins text-lg font-bold leading-tight text-[#0B1020]">My Calculators</p>
             <p className="text-xs font-medium leading-tight text-[#0B5A2A]">Kenya</p>
           </div>
         </Link>
@@ -139,7 +139,7 @@ function CalculatorFooter() {
               <BrandLogo size={24} />
             </div>
             <div>
-              <p className="font-bold font-inter">MyCalculators</p>
+              <p className="font-bold font-inter">My Calculators</p>
               <p className="text-xs text-emerald-100">Kenya</p>
             </div>
           </div>
@@ -175,14 +175,14 @@ function CalculatorFooter() {
         </div>
       </div>
       <div className="mx-auto max-w-[1280px] border-t border-white/10 px-4 py-5 text-center text-sm text-emerald-50/75 sm:px-6">
-        © 2026 MyCalculators.
-        {" · "}
+        Â© 2026 My Calculators.
+        {" Â· "}
         <Link href="/privacy" className="underline hover:text-white">Privacy Policy</Link>
-        {" · "}
+        {" Â· "}
         <Link href="/terms" className="underline hover:text-white">Terms of Service</Link>
-        {" · "}
+        {" Â· "}
         <Link href="/cookies" className="underline hover:text-white">Cookies</Link>
-        {" · "}
+        {" Â· "}
         <Link href="/disclaimer" className="underline hover:text-white">Disclaimer</Link>
       </div>
     </footer>

@@ -9,7 +9,7 @@ import {
 
 const seo = {
   name: "Heart Rate Zones Calculator",
-  title: "Heart Rate Zones Calculator - MyCalculators",
+  title: "Heart Rate Zones Calculator - My Calculators",
   description:
     "Calculate training heart rate zones from age and fitness level to guide cardio, endurance and workout intensity.",
   path: "/heart-rate-zones",

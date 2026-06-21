@@ -9,7 +9,7 @@ import {
 
 const seo = {
   name: "Calorie Calculator",
-  title: "Calorie Calculator - MyCalculators",
+  title: "Calorie Calculator - My Calculators",
   description:
     "Estimate daily calorie needs from your body profile, activity level and goal for weight loss, maintenance or gain.",
   path: "/calorie-calculator",

@@ -9,7 +9,7 @@ import {
 
 const seo = {
   name: "ROI Estimator",
-  title: "ROI Calculator Kenya - MyCalculators",
+  title: "ROI Calculator Kenya - My Calculators",
   description:
     "Estimate investment returns, compound growth and return on investment over time for planning and comparison.",
   path: "/roi-estimator",

@@ -16,7 +16,7 @@ export default function DisclaimerPage() {
               <BrandLogo size={24} />
             </div>
             <div>
-              <p className="text-lg font-extrabold leading-tight text-[#0B1020] font-inter">MyCalculators</p>
+              <p className="text-lg font-extrabold leading-tight text-[#0B1020] font-inter">My Calculators</p>
               <p className="text-xs font-semibold leading-tight text-[#0B5A2A]">Kenya</p>
             </div>
           </Link>
@@ -38,7 +38,7 @@ export default function DisclaimerPage() {
         </div>
       </header>
 
-      {/* ── Main Content ── */}
+      {/* â”€â”€ Main Content â”€â”€ */}
       <main className="bg-[#F7FAF8] text-[#0B1020]">
         <div className="mx-auto max-w-[1100px] py-12 px-4 sm:px-6">
 
@@ -51,7 +51,7 @@ export default function DisclaimerPage() {
               Medical & Financial Disclaimer
             </h1>
             <p className="text-gray-500 text-base sm:text-lg max-w-xl mb-4">
-              Please read this disclaimer carefully before using MyCalculators.
+              Please read this disclaimer carefully before using My Calculators.
             </p>
             <span className="inline-flex items-center gap-1.5 bg-[#0B5A2A]/10 text-[#0B5A2A] text-xs font-semibold px-3 py-1.5 rounded-full">
               <AlertTriangle className="w-3.5 h-3.5" />
@@ -68,7 +68,7 @@ export default function DisclaimerPage() {
               </h2>
               <div className="text-sm text-gray-600 leading-relaxed space-y-4">
                 <p>
-                  All content, calculators, and tools provided on MyCalculators are for general informational and educational purposes only. While we strive to keep our rates and algorithms as accurate and up-to-date as possible, we make no guarantees regarding the accuracy, completeness, or reliability of any results generated.
+                  All content, calculators, and tools provided on My Calculators are for general informational and educational purposes only. While we strive to keep our rates and algorithms as accurate and up-to-date as possible, we make no guarantees regarding the accuracy, completeness, or reliability of any results generated.
                 </p>
               </div>
             </section>
@@ -107,7 +107,7 @@ export default function DisclaimerPage() {
               </h2>
               <div className="text-sm text-gray-600 leading-relaxed space-y-4">
                 <p>
-                  By using MyCalculators, you agree that we shall not be held liable for any direct, indirect, incidental, consequential, or special damages arising out of or in any way connected with your use of our calculators or reliance on the information provided.
+                  By using My Calculators, you agree that we shall not be held liable for any direct, indirect, incidental, consequential, or special damages arising out of or in any way connected with your use of our calculators or reliance on the information provided.
                 </p>
               </div>
             </section>
@@ -125,7 +125,7 @@ export default function DisclaimerPage() {
                 <BrandLogo size={24} />
               </div>
               <div>
-                <p className="font-bold font-inter">MyCalculators</p>
+                <p className="font-bold font-inter">My Calculators</p>
                 <p className="text-xs text-emerald-100">Kenya</p>
               </div>
             </div>
@@ -161,7 +161,7 @@ export default function DisclaimerPage() {
           </div>
         </div>
         <div className="mx-auto max-w-[1280px] border-t border-white/10 px-4 py-5 text-center text-sm text-emerald-50/75 sm:px-6">
-          © 2026 MyCalculators.
+          Â© 2026 My Calculators.
           {" - "}
           <Link href="/privacy" className="underline hover:text-white">Privacy Policy</Link>
           {" - "}

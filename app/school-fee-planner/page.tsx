@@ -9,7 +9,7 @@ import {
 
 const seo = {
   name: "School Fee Planner",
-  title: "School Fee Planner Kenya - MyCalculators",
+  title: "School Fee Planner Kenya - My Calculators",
   description:
     "Project future school fee costs with annual increases and plan education savings for Kenyan families.",
   path: "/school-fee-planner",

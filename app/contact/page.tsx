@@ -34,7 +34,7 @@ function ContactHeader() {
             <BrandLogo size={24} />
           </div>
           <div>
-            <p className="text-lg font-extrabold leading-tight text-[#0B1020] font-inter">MyCalculators</p>
+            <p className="text-lg font-extrabold leading-tight text-[#0B1020] font-inter">My Calculators</p>
             <p className="text-xs font-semibold leading-tight text-[#0B5A2A]">Kenya</p>
           </div>
         </Link>
@@ -65,7 +65,7 @@ function ContactHeader() {
 const faqs = [
   {
     q: "Are all calculators free to use?",
-    a: "Yes. Every tool on MyCalculators is completely free. No sign-up, no subscription, no hidden charges.",
+    a: "Yes. Every tool on My Calculators is completely free. No sign-up, no subscription, no hidden charges.",
   },
   {
     q: "How accurate are the rates?",
@@ -91,7 +91,7 @@ export default function ContactPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    const subject = encodeURIComponent(`[MyCalculators] ${form.subject}`)
+    const subject = encodeURIComponent(`[My Calculators] ${form.subject}`)
     const body = encodeURIComponent(`Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`)
     window.location.href = `mailto:hellogitau@gmail.com?subject=${subject}&body=${body}`
     setSubmitted(true)
@@ -281,7 +281,7 @@ export default function ContactPage() {
                 <BrandLogo size={24} />
               </div>
               <div>
-                <p className="font-bold font-inter">MyCalculators</p>
+                <p className="font-bold font-inter">My Calculators</p>
                 <p className="text-xs text-emerald-100">Kenya</p>
               </div>
             </div>
@@ -317,7 +317,7 @@ export default function ContactPage() {
           </div>
         </div>
         <div className="mx-auto max-w-[1280px] border-t border-white/10 px-4 py-5 text-center text-sm text-emerald-50/75 sm:px-6">
-          © 2026 MyCalculators.
+          Â© 2026 My Calculators.
           {" - "}
           <Link href="/privacy" className="underline hover:text-white">Privacy Policy</Link>
           {" - "}

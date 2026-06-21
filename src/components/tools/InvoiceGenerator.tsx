@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useMemo } from "react"
 import { Download, FileText, Plus, Printer, Trash2 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -8,6 +8,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
+import { usePersistentState } from "@/hooks/use-persistent-state"
+import { printOrSharePdf } from "@/lib/document-export"
 
 type InvoiceItem = {
   id: number
@@ -32,20 +34,20 @@ function addDays(days: number) {
 }
 
 export function InvoiceGenerator() {
-  const [businessName, setBusinessName] = useState("Your Business Name")
-  const [businessPin, setBusinessPin] = useState("")
-  const [businessDetails, setBusinessDetails] = useState("Nairobi, Kenya\nhello@example.com\n+254 700 000 000")
-  const [clientName, setClientName] = useState("")
-  const [clientDetails, setClientDetails] = useState("")
-  const [invoiceNumber, setInvoiceNumber] = useState(`INV-${new Date().getFullYear()}-001`)
-  const [invoiceDate, setInvoiceDate] = useState(today)
-  const [dueDate, setDueDate] = useState(addDays(14))
-  const [items, setItems] = useState<InvoiceItem[]>(initialItems)
-  const [vatRate, setVatRate] = useState("16")
-  const [discount, setDiscount] = useState("")
-  const [amountPaid, setAmountPaid] = useState("")
-  const [paymentDetails, setPaymentDetails] = useState("M-Pesa Paybill: 000000\nAccount: Invoice number")
-  const [notes, setNotes] = useState("Thank you for your business.")
+  const [businessName, setBusinessName] = usePersistentState("invoice.businessName", "Your Business Name")
+  const [businessPin, setBusinessPin] = usePersistentState("invoice.businessPin", "")
+  const [businessDetails, setBusinessDetails] = usePersistentState("invoice.businessDetails", "Nairobi, Kenya\nhello@example.com\n+254 700 000 000")
+  const [clientName, setClientName] = usePersistentState("invoice.clientName", "")
+  const [clientDetails, setClientDetails] = usePersistentState("invoice.clientDetails", "")
+  const [invoiceNumber, setInvoiceNumber] = usePersistentState("invoice.number", `INV-${new Date().getFullYear()}-001`)
+  const [invoiceDate, setInvoiceDate] = usePersistentState("invoice.date", today)
+  const [dueDate, setDueDate] = usePersistentState("invoice.dueDate", addDays(14))
+  const [items, setItems] = usePersistentState<InvoiceItem[]>("invoice.items", initialItems)
+  const [vatRate, setVatRate] = usePersistentState("invoice.vatRate", "16")
+  const [discount, setDiscount] = usePersistentState("invoice.discount", "")
+  const [amountPaid, setAmountPaid] = usePersistentState("invoice.amountPaid", "")
+  const [paymentDetails, setPaymentDetails] = usePersistentState("invoice.paymentDetails", "M-Pesa Paybill: 000000\nAccount: Invoice number")
+  const [notes, setNotes] = usePersistentState("invoice.notes", "Thank you for your business.")
 
   const totals = useMemo(() => {
     const subtotal = items.reduce((sum, item) => {
@@ -78,8 +80,13 @@ export function InvoiceGenerator() {
     setItems((current) => current.length === 1 ? current : current.filter((item) => item.id !== id))
   }
 
-  const handlePrint = () => {
-    window.print()
+  const handlePrint = async () => {
+    const filename = `${invoiceNumber || "invoice"}.pdf`.replace(/[^a-z0-9._-]/gi, "-")
+    try {
+      await printOrSharePdf(".invoice-print-sheet", filename)
+    } catch {
+      window.alert("The PDF could not be created. Please try again.")
+    }
   }
 
   return (
@@ -231,11 +238,11 @@ export function InvoiceGenerator() {
 
       <div className="space-y-4">
         <div className="invoice-no-print flex flex-col gap-3 sm:flex-row sm:justify-end">
-          <Button type="button" onClick={handlePrint} className="h-11 rounded-xl bg-[#0B5A2A] px-5 font-bold text-white hover:bg-[#063F20]">
+          <Button type="button" onClick={() => void handlePrint()} className="h-11 rounded-xl bg-[#0B5A2A] px-5 font-bold text-white hover:bg-[#063F20]">
             <Printer className="h-4 w-4" />
             Print
           </Button>
-          <Button type="button" onClick={handlePrint} variant="outline" className="h-11 rounded-xl border-[#CFEBDD] px-5 font-bold text-[#0B5A2A]">
+          <Button type="button" onClick={() => void handlePrint()} variant="outline" className="h-11 rounded-xl border-[#CFEBDD] px-5 font-bold text-[#0B5A2A]">
             <Download className="h-4 w-4" />
             Save as PDF
           </Button>

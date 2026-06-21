@@ -9,7 +9,7 @@ import {
 
 const seo = {
   name: "Bill Splitting Calculator",
-  title: "Bill Splitting Calculator Kenya - MyCalculators",
+  title: "Bill Splitting Calculator Kenya - My Calculators",
   description:
     "Split shared bills fairly among friends, roommates or groups in Kenya and calculate each person's contribution quickly.",
   path: "/bill-splitting",

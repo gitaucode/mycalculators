@@ -9,7 +9,7 @@ import {
 
 const seo = {
   name: "Chama/SACCO Calculator",
-  title: "Chama and SACCO Calculator Kenya - MyCalculators",
+  title: "Chama and SACCO Calculator Kenya - My Calculators",
   description:
     "Project Chama or SACCO contributions, member share, dividend estimate and loan limit from deposits.",
   path: "/chama-sacco-calculator",

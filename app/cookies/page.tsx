@@ -16,7 +16,7 @@ export default function CookiesPage() {
               <BrandLogo size={24} />
             </div>
             <div>
-              <p className="text-lg font-extrabold leading-tight text-[#0B1020] font-inter">MyCalculators</p>
+              <p className="text-lg font-extrabold leading-tight text-[#0B1020] font-inter">My Calculators</p>
               <p className="text-xs font-semibold leading-tight text-[#0B5A2A]">Kenya</p>
             </div>
           </Link>
@@ -38,7 +38,7 @@ export default function CookiesPage() {
         </div>
       </header>
 
-      {/* ── Main Content ── */}
+      {/* â”€â”€ Main Content â”€â”€ */}
       <main className="bg-[#F7FAF8] text-[#0B1020]">
         <div className="mx-auto max-w-[1100px] py-12 px-4 sm:px-6">
 
@@ -79,7 +79,7 @@ export default function CookiesPage() {
               </h2>
               <div className="text-sm text-gray-600 leading-relaxed space-y-4">
                 <p>
-                  At MyCalculators, we keep things simple. We only use cookies for the following purposes:
+                  At My Calculators, we keep things simple. We only use cookies for the following purposes:
                 </p>
                 <ul className="list-disc pl-5 space-y-2">
                   <li>
@@ -136,7 +136,7 @@ export default function CookiesPage() {
                 <BrandLogo size={24} />
               </div>
               <div>
-                <p className="font-bold font-inter">MyCalculators</p>
+                <p className="font-bold font-inter">My Calculators</p>
                 <p className="text-xs text-emerald-100">Kenya</p>
               </div>
             </div>
@@ -172,7 +172,7 @@ export default function CookiesPage() {
           </div>
         </div>
         <div className="mx-auto max-w-[1280px] border-t border-white/10 px-4 py-5 text-center text-sm text-emerald-50/75 sm:px-6">
-          © 2026 MyCalculators.
+          Â© 2026 My Calculators.
           {" - "}
           <Link href="/privacy" className="underline hover:text-white">Privacy Policy</Link>
           {" - "}

@@ -9,7 +9,7 @@ import {
 
 const seo = {
   name: "Fuliza Calculator",
-  title: "Fuliza Calculator Kenya - MyCalculators",
+  title: "Fuliza Calculator Kenya - My Calculators",
   description:
     "Estimate Fuliza M-Pesa overdraft access, maintenance fees and total repayment amount for Kenyan mobile money users.",
   path: "/fuliza-calculator",

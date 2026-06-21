@@ -9,7 +9,7 @@ import {
 
 const seo = {
   name: "Ovulation Tracker",
-  title: "Ovulation Tracker - MyCalculators",
+  title: "Ovulation Tracker - My Calculators",
   description:
     "Estimate ovulation dates, fertile window and peak fertility days from menstrual cycle details for family planning.",
   path: "/ovulation-tracker",

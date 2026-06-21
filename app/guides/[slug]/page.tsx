@@ -44,7 +44,7 @@ export async function generateMetadata({
   const url = `${siteUrl}/guides/${guide.slug}`
 
   return {
-    title: `${guide.title} - MyCalculators Kenya`,
+    title: `${guide.title} - My Calculators Kenya`,
     description: guide.description,
     keywords: guide.keywords,
     alternates: {
@@ -54,7 +54,7 @@ export async function generateMetadata({
       type: "article",
       locale: "en_KE",
       url,
-      siteName: "MyCalculators",
+      siteName: "My Calculators",
       title: guide.title,
       description: guide.description,
       images: [
@@ -62,7 +62,7 @@ export async function generateMetadata({
           url: socialImageUrl,
           width: 1200,
           height: 630,
-          alt: `${guide.title} on MyCalculators`,
+          alt: `${guide.title} on My Calculators`,
         },
       ],
     },
@@ -103,11 +103,11 @@ export default async function GuideArticlePage({ params }: GuidePageProps) {
         mainEntityOfPage: `${siteUrl}/guides/${guide.slug}`,
         author: {
           "@type": "Organization",
-          name: "MyCalculators",
+          name: "My Calculators",
         },
         publisher: {
           "@type": "Organization",
-          name: "MyCalculators",
+          name: "My Calculators",
           url: siteUrl,
         },
         inLanguage: "en-KE",
@@ -134,7 +134,7 @@ export default async function GuideArticlePage({ params }: GuidePageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
 
-      {/* ── Navigation ── */}
+      {/* â”€â”€ Navigation â”€â”€ */}
       <header className="sticky top-0 z-50 w-full border-b border-[#E4E7EC] bg-white/95 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-[1280px] items-center justify-between px-4 sm:px-6">
           <Link href="/" className="flex items-center gap-3">
@@ -143,7 +143,7 @@ export default async function GuideArticlePage({ params }: GuidePageProps) {
             </div>
             <div>
               <p className="font-inter text-lg font-extrabold leading-tight text-[#0B1020]">
-                MyCalculators
+                My Calculators
               </p>
               <p className="text-xs font-semibold leading-tight text-[#0B5A2A]">
                 Kenya
@@ -187,7 +187,7 @@ export default async function GuideArticlePage({ params }: GuidePageProps) {
 
       <div className="min-h-screen bg-[#F7FAF8]">
 
-        {/* ── Article Hero ── */}
+        {/* â”€â”€ Article Hero â”€â”€ */}
         <div className="border-b border-[#E4E7EC] bg-white">
           <div className="mx-auto max-w-[1100px] px-4 py-10 sm:px-6 lg:py-14">
 
@@ -236,11 +236,11 @@ export default async function GuideArticlePage({ params }: GuidePageProps) {
           </div>
         </div>
 
-        {/* ── Article Body + Sidebar ── */}
+        {/* â”€â”€ Article Body + Sidebar â”€â”€ */}
         <div className="mx-auto max-w-[1100px] px-4 py-10 sm:px-6 lg:py-14">
           <div className="lg:grid lg:grid-cols-[1fr_300px] lg:gap-14">
 
-            {/* ── Main article content ── */}
+            {/* â”€â”€ Main article content â”€â”€ */}
             <main>
 
               {/* Inline CTA */}
@@ -288,7 +288,7 @@ export default async function GuideArticlePage({ params }: GuidePageProps) {
                 ))}
               </article>
 
-              {/* ── FAQ section ── */}
+              {/* â”€â”€ FAQ section â”€â”€ */}
               <div className="mt-12">
                 <div className="mb-6 flex items-center gap-3">
                   <div className="h-px flex-1 bg-[#E4E7EC]" />
@@ -322,7 +322,7 @@ export default async function GuideArticlePage({ params }: GuidePageProps) {
                 </div>
               </div>
 
-              {/* ── Bottom CTA ── */}
+              {/* â”€â”€ Bottom CTA â”€â”€ */}
               <div className="mt-12 overflow-hidden rounded-2xl bg-[#0B5A2A]">
                 <div className="px-7 py-8 sm:px-9">
                   <p className="text-xs font-bold uppercase tracking-widest text-[#6EE7A4]">
@@ -332,7 +332,7 @@ export default async function GuideArticlePage({ params }: GuidePageProps) {
                     {guide.calculatorLabel}
                   </h3>
                   <p className="mt-3 text-sm leading-6 text-[#A7F3C4]">
-                    Get an instant, accurate estimate in seconds — no sign-up required.
+                    Get an instant, accurate estimate in seconds â€” no sign-up required.
                   </p>
                   <Button
                     asChild
@@ -346,7 +346,7 @@ export default async function GuideArticlePage({ params }: GuidePageProps) {
                 </div>
               </div>
 
-              {/* ── Back link ── */}
+              {/* â”€â”€ Back link â”€â”€ */}
               <div className="mt-10 pt-6 border-t border-[#E4E7EC]">
                 <Link
                   href="/guides"
@@ -358,7 +358,7 @@ export default async function GuideArticlePage({ params }: GuidePageProps) {
               </div>
             </main>
 
-            {/* ── Sidebar ── */}
+            {/* â”€â”€ Sidebar â”€â”€ */}
             <aside className="hidden lg:block">
               <div className="sticky top-24 space-y-6">
 
