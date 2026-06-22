@@ -99,6 +99,14 @@
 }
 
 /* Capacitor uses a dedicated app shell while the browser keeps the full website chrome. */
+.native-app.native-loading body {
+  visibility: hidden;
+}
+
+.native-app .native-web-only {
+  display: none !important;
+}
+
 .native-app body {
   padding-top: calc(3.5rem + env(safe-area-inset-top));
   padding-bottom: calc(3.75rem + env(safe-area-inset-bottom));
@@ -135,6 +143,99 @@
 .native-app .calculator-content + section,
 .native-app main a[href="/calculators"]:has(svg.lucide-arrow-left) {
   display: none !important;
+}
+
+/* The native shell owns page titles and navigation; route content starts at the task. */
+.native-app body[data-native-path]:not([data-native-path="/"]) main {
+  min-height: auto !important;
+  background: #F4F7F5 !important;
+}
+
+.native-app body[data-native-path]:not([data-native-path="/"]) main > div[class*="max-w"] {
+  padding-top: 0.75rem !important;
+  padding-bottom: 1.25rem !important;
+}
+
+.native-app body[data-native-path="/calculators"] .native-web-only + section,
+.native-app body[data-native-path="/rates"] .native-web-only + section {
+  margin-top: 0 !important;
+}
+
+.native-app body[data-native-path="/rates"] .native-rates-tabs button {
+  min-height: 3.25rem !important;
+  height: auto !important;
+  padding: 0.5rem !important;
+  line-height: 1.2 !important;
+}
+
+.native-app body:is([data-native-path="/saved"], [data-native-path="/more"]) .native-web-only + div {
+  margin-top: 0 !important;
+}
+
+.native-app body[data-native-path="/guides"] .native-guides-container {
+  padding-top: 0.75rem !important;
+  padding-bottom: 1.25rem !important;
+}
+
+.native-app body[data-native-path="/guides"] .native-featured-guide {
+  margin-bottom: 1rem !important;
+}
+
+.native-app body[data-native-path="/guides"] .native-featured-guide > div:first-child,
+.native-app body[data-native-path="/guides"] .native-featured-guide a > div[aria-hidden],
+.native-app body[data-native-path="/guides"] .native-featured-guide a span + span,
+.native-app body[data-native-path="/guides"] .native-featured-guide a h2 + p,
+.native-app body[data-native-path="/guides"] .native-featured-guide a h2 + p + div {
+  display: none !important;
+}
+
+.native-app body[data-native-path="/guides"] .native-featured-guide > a {
+  min-height: 0 !important;
+  border-radius: 1rem !important;
+}
+
+.native-app body[data-native-path="/guides"] .native-featured-guide > a > div:not([aria-hidden]) {
+  max-width: none !important;
+  padding: 1.25rem !important;
+}
+
+.native-app body[data-native-path="/guides"] .native-featured-guide h2 {
+  font-size: 1.2rem !important;
+}
+
+.native-app body[data-native-path="/contact"] main > section,
+.native-app body[data-native-path="/terms"] main > section {
+  padding-top: 0.75rem !important;
+  padding-bottom: 1.25rem !important;
+}
+
+.native-app body:is(
+  [data-native-path="/privacy"],
+  [data-native-path="/cookies"],
+  [data-native-path="/disclaimer"],
+  [data-native-path="/terms"]
+) main article,
+.native-app body:is(
+  [data-native-path="/privacy"],
+  [data-native-path="/cookies"],
+  [data-native-path="/disclaimer"]
+) main section {
+  border-radius: 1rem !important;
+  padding: 1rem !important;
+  box-shadow: none !important;
+}
+
+.native-app body:is(
+  [data-native-path="/privacy"],
+  [data-native-path="/cookies"],
+  [data-native-path="/disclaimer"]
+) main [class*="gap-6"],
+.native-app body:is(
+  [data-native-path="/privacy"],
+  [data-native-path="/cookies"],
+  [data-native-path="/disclaimer"]
+) main [class*="space-y-6"] {
+  gap: 0.75rem !important;
 }
 
 @layer base {

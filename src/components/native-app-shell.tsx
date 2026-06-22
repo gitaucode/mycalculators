@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useLayoutEffect, useState } from "react"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { Capacitor } from "@capacitor/core"
@@ -20,7 +20,45 @@ const routeTitles: Record<string, string> = {
   "/mpesa-charges": "M-Pesa Charges",
   "/net-salary": "Net Salary",
   "/loan-calculator": "Loan Calculator",
+  "/vat-calculator": "VAT Calculator",
+  "/fuliza-calculator": "Fuliza Cost",
+  "/mortgage-calculator": "Mortgage",
+  "/savings-goal": "Savings Goal",
+  "/budget-planner": "Budget Planner",
+  "/bill-splitting": "Split a Bill",
+  "/roi-estimator": "ROI Estimator",
+  "/chama-sacco-calculator": "Chama & SACCO",
+  "/school-fee-planner": "School Fees",
+  "/mkopa-phone-loan": "M-KOPA Phone Loan",
+  "/electricity-calculator": "Electricity Tokens",
+  "/water-bill-calculator": "Water Bill",
+  "/fuel-cost-calculator": "Fuel Cost",
+  "/construction-cost": "Construction Cost",
+  "/car-import-tax": "Car Import Tax",
+  "/withholding-tax-calculator": "Withholding Tax",
+  "/cost-of-living": "Cost of Living",
+  "/bmi-calculator": "BMI Calculator",
+  "/calorie-calculator": "Calories",
+  "/water-intake": "Water Intake",
+  "/heart-rate-zones": "Heart Rate Zones",
+  "/pregnancy-due-date": "Due Date",
+  "/ovulation-tracker": "Ovulation Tracker",
+  "/rates": "Rates",
+  "/guides": "Guides",
+  "/about": "About",
+  "/contact": "Contact & Feedback",
+  "/privacy": "Privacy",
+  "/terms": "Terms",
+  "/cookies": "Cookies",
+  "/disclaimer": "Disclaimer",
+  "/guides/net-salary-paye-kenya": "Net Salary Guide",
+  "/guides/mpesa-charges-kenya": "M-Pesa Charges Guide",
+  "/guides/car-import-duty-kenya": "Car Import Duty Guide",
+  "/guides/vat-calculator-kenya": "VAT Guide",
+  "/guides/kplc-token-calculator-kenya": "Electricity Tokens Guide",
 }
+
+const rootTabs = new Set(["/", "/calculators", "/saved", "/more"])
 
 const quickTools = [
   { label: "M-Pesa", detail: "Charges", href: "/mpesa-charges", icon: Smartphone, color: "bg-[#E8F7EE] text-[#0B5A2A]" },
@@ -32,6 +70,11 @@ const quickTools = [
 function titleFor(pathname: string) {
   if (routeTitles[pathname]) return routeTitles[pathname]
   return pathname.split("/").filter(Boolean).pop()?.split("-").map((word) => word[0]?.toUpperCase() + word.slice(1)).join(" ") || "My Calculators"
+}
+
+function isNativeRuntime() {
+  return Capacitor.isNativePlatform()
+    || (process.env.NODE_ENV === "development" && new URLSearchParams(window.location.search).has("native-preview"))
 }
 
 function NativeHome() {
@@ -85,14 +128,21 @@ export function NativeAppShell() {
   const pathname = usePathname()
   const router = useRouter()
 
-  useEffect(() => {
-    const isNative = Capacitor.isNativePlatform()
+  useLayoutEffect(() => {
+    const isNative = isNativeRuntime()
     setNative(isNative)
     document.documentElement.classList.toggle("native-app", isNative)
-    return () => document.documentElement.classList.remove("native-app")
+    if (!isNative) document.documentElement.classList.remove("native-loading")
+    return () => document.documentElement.classList.remove("native-app", "native-loading", "native-ready")
   }, [])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    if (!native) return
+    document.documentElement.classList.remove("native-loading")
+    document.documentElement.classList.add("native-ready")
+  }, [native])
+
+  useLayoutEffect(() => {
     document.body.dataset.nativePath = pathname
   }, [pathname])
 
@@ -139,7 +189,7 @@ export function NativeAppShell() {
         <>
           <header data-native-shell className="native-app-topbar fixed inset-x-0 top-0 z-[60] flex items-end border-b border-[#E4E7EC] bg-white/95 px-4 pb-2 backdrop-blur-xl">
             <div className="flex h-12 w-full items-center gap-3">
-              {pathname === "/" ? (
+              {rootTabs.has(pathname) ? (
                 <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#0B5A2A]"><BrandLogo size={23} /></span>
               ) : (
                 <button type="button" onClick={() => router.back()} className="flex h-10 w-10 items-center justify-center rounded-full bg-[#F2F4F7] text-[#0B1020]" aria-label="Go back"><ArrowLeft className="h-5 w-5" /></button>

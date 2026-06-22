@@ -12,8 +12,10 @@ const links = [
 export default function MorePage() {
   return (
     <main className="min-h-screen bg-[#F4F7F5] px-4 py-5 text-[#0B1020]">
-      <h1 className="font-poppins text-2xl font-bold">More</h1>
-      <p className="mt-1 text-sm text-[#667085]">Information, support and useful references.</p>
+      <div className="native-web-only">
+        <h1 className="font-poppins text-2xl font-bold">More</h1>
+        <p className="mt-1 text-sm text-[#667085]">Information, support and useful references.</p>
+      </div>
       <div className="mt-6 overflow-hidden rounded-[20px] border border-[#E4E7EC] bg-white shadow-sm">
         {links.map(({ label, detail, href, icon: Icon }, index) => (
           <Link key={href} href={href} className={`flex items-center gap-4 p-4 active:bg-[#F0FAF4] ${index ? "border-t border-[#E4E7EC]" : ""}`}>

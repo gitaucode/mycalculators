@@ -110,11 +110,11 @@ export default function GuidesClient() {
       : seoGuides.filter((g) => g.category === active);
 
   return (
-    <div className="mx-auto max-w-[1100px] px-4 py-10 sm:px-6 sm:py-14">
+    <div className="native-guides-container mx-auto max-w-[1100px] px-4 py-10 sm:px-6 sm:py-14">
 
       {/* ── Featured banner ───────────────────────────────────────────────── */}
       {showBanner && (
-        <section className="mb-10">
+        <section className="native-featured-guide mb-10">
           {/* Editorial eyebrow */}
           <div className="mb-4 flex items-center gap-2">
             <span className="h-px w-6 bg-[#98A2B3]" />

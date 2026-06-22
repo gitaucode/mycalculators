@@ -43,7 +43,7 @@ export default function PrivacyPage() {
         <div className="mx-auto max-w-[1100px] py-12 px-4 sm:px-6">
 
           {/* Hero */}
-          <div className="flex flex-col items-center text-center mb-12">
+          <div className="native-web-only flex flex-col items-center text-center mb-12">
             <div className="flex items-center justify-center w-16 h-16 rounded-full bg-[#0B5A2A]/10 mb-5">
               <Shield className="w-8 h-8 text-[#0B5A2A]" />
             </div>
@@ -69,7 +69,7 @@ export default function PrivacyPage() {
               </h2>
               <p className="text-gray-600 leading-relaxed mb-3">
                 <strong className="text-[#0B5A2A]">We do not collect any personal data.</strong> All calculations
-                on My Calculators happen entirely in your browser - your financial inputs, health data, or any other
+                on My Calculators happen entirely on your device - your financial inputs, health data, or any other
                 figures you enter are never sent to our servers.
               </p>
               <p className="text-gray-600 leading-relaxed mb-3">
@@ -77,7 +77,7 @@ export default function PrivacyPage() {
                 - through tools like Google Analytics. This data is aggregated and cannot be used to identify you.
               </p>
               <p className="text-gray-600 leading-relaxed">
-                My Calculators requires <strong>no account and no login</strong>. You can use every tool on this site
+                My Calculators requires <strong>no account and no login</strong>. You can use every tool
                 without providing any personal information.
               </p>
             </section>
@@ -91,7 +91,7 @@ export default function PrivacyPage() {
                 The anonymous analytics we may collect are used solely to:
               </p>
               <ul className="list-disc list-inside space-y-2 text-gray-600 mb-3">
-                <li>Improve the site and user experience</li>
+                <li>Improve the product and user experience</li>
                 <li>Understand which tools are most useful to Kenyans</li>
                 <li>Identify and fix bugs or performance issues</li>
               </ul>
@@ -112,7 +112,7 @@ export default function PrivacyPage() {
               </p>
               <p className="text-gray-600 leading-relaxed">
                 You can disable or clear cookies at any time through your browser settings. Doing so will not
-                affect your ability to use any calculator on this site.
+                affect your ability to use any calculator.
               </p>
             </section>
 
@@ -140,7 +140,7 @@ export default function PrivacyPage() {
                 and the <strong>Central Bank of Kenya (CBK)</strong>. We link to their official sites where relevant.
               </p>
               <p className="text-gray-600 leading-relaxed">
-                External links on this site take you to official government or corporate websites. We are not
+                External links take you to official government or corporate websites. We are not
                 responsible for the content or privacy practices of those sites.
               </p>
             </section>
@@ -151,7 +151,7 @@ export default function PrivacyPage() {
                 5. Data Security
               </h2>
               <p className="text-gray-600 leading-relaxed mb-3">
-                All calculations on My Calculators are performed <strong>client-side in your browser</strong>. We
+                All calculations on My Calculators are performed <strong>locally on your device</strong>. We
                 do not transmit or store your financial inputs, health data, or any other figures you enter on
                 our servers.
               </p>
@@ -169,7 +169,7 @@ export default function PrivacyPage() {
               <p className="text-gray-600 leading-relaxed">
                 My Calculators is not directed at children under the age of 13. We do not knowingly collect any
                 information from children. If you believe a child has provided personal information through
-                this site, please contact us and we will address it promptly.
+                the service, please contact us and we will address it promptly.
               </p>
             </section>
 

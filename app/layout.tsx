@@ -107,12 +107,17 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  const nativePreview = process.env.NODE_ENV === "development"
+    ? "||new URLSearchParams(location.search).has('native-preview')"
+    : ""
+
   return (
-    <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
+    <html lang="en" className={`${inter.variable} ${poppins.variable}`} suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: "window.Capacitor?.isNativePlatform?.()&&document.documentElement.classList.add('native-app')",
+            __html:
+              `(()=>{const n=window.Capacitor?.isNativePlatform?.()||(location.protocol==='https:'&&location.hostname==='localhost')${nativePreview};if(n)document.documentElement.classList.add('native-app','native-loading')})()`,
           }}
         />
       </head>

@@ -386,7 +386,7 @@ export default function RatesPage() {
         <div className="mx-auto max-w-[1120px] px-4 py-12 sm:px-6 lg:py-14">
 
           {/* Hero */}
-          <section className="mx-auto max-w-3xl text-center">
+          <section className="native-web-only mx-auto max-w-3xl text-center">
             <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-[#ECFDF3] text-[#0B5A2A]">
               <TrendingUp className="h-8 w-8" />
             </div>
@@ -428,8 +428,8 @@ export default function RatesPage() {
           </section>
 
           {/* Tabs */}
-          <section className="mt-8 rounded-2xl border border-[#E4E7EC] bg-white p-1.5 shadow-sm">
-            <div className="grid gap-1.5 md:grid-cols-4">
+          <section className="native-rates-tabs mt-8 rounded-2xl border border-[#E4E7EC] bg-white p-1.5 shadow-sm">
+            <div className="grid grid-cols-2 gap-1.5 md:grid-cols-4">
               {TABS.map((tab) => {
                 const Icon = tab.icon
                 const isActive = activeTab === tab.label

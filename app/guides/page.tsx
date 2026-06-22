@@ -89,7 +89,7 @@ export default function GuidesPage() {
       <main className="min-h-[70vh] bg-[#F7FAF8] text-[#0B1020]">
 
         {/* â”€â”€ Hero band â”€â”€ */}
-        <div className="border-b border-[#E4E7EC] bg-white">
+        <div className="native-web-only border-b border-[#E4E7EC] bg-white">
           <div className="mx-auto max-w-[1100px] px-4 py-12 sm:px-6 lg:py-16">
             <div className="flex items-center gap-3 mb-5">
               <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#ECFDF3] text-[#0B5A2A]">
@@ -112,7 +112,7 @@ export default function GuidesPage() {
         <GuidesClient />
 
         {/* â”€â”€ Bottom CTA strip â”€â”€ */}
-        <div className="mx-auto max-w-[1100px] px-4 pb-16 sm:px-6">
+        <div className="native-web-only mx-auto max-w-[1100px] px-4 pb-16 sm:px-6">
           <div className="flex flex-col items-center justify-between gap-5 rounded-2xl border border-[#CFE9D8] bg-white px-8 py-7 sm:flex-row">
             <div>
               <p className="font-inter text-lg font-extrabold text-[#0B1020]">

@@ -215,7 +215,7 @@ export function CalculatorPageLayout({
             Back to Calculators
           </Link>
 
-          <section className="mb-8 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+          <section className="native-web-only mb-8 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
             <div className="flex max-w-4xl gap-5">
               <div className={`flex h-20 w-20 shrink-0 items-center justify-center rounded-[20px] ${accent}`}>
                 <Icon className="h-9 w-9" />
@@ -242,7 +242,7 @@ export function CalculatorPageLayout({
           </section>
 
           {(seoIntro || searchTerms.length > 0 || guideLinks.length > 0) ? (
-            <section className="mt-10 rounded-[20px] border border-[#E4E7EC] bg-white p-6 shadow-[0_10px_30px_rgba(16,24,40,0.04)] md:p-7">
+            <section className="native-web-only mt-10 rounded-[20px] border border-[#E4E7EC] bg-white p-6 shadow-[0_10px_30px_rgba(16,24,40,0.04)] md:p-7">
               <div className="grid gap-6 lg:grid-cols-[1.25fr_0.75fr]">
                 <div>
                   <h2 className="font-poppins text-2xl font-bold text-[#0B1020]">
@@ -298,7 +298,7 @@ export function CalculatorPageLayout({
             </section>
           ) : null}
 
-          <section className="mt-12">
+          <section className="native-web-only mt-12">
             <h2 className="mb-5 font-poppins text-2xl font-bold text-[#0B1020]">How this calculator works</h2>
             <div className="grid items-stretch gap-5 md:grid-cols-3">
               {[
@@ -317,7 +317,7 @@ export function CalculatorPageLayout({
             </div>
           </section>
 
-          <section className="mt-8 grid gap-5 rounded-[20px] border border-[#CFE9D8] bg-[#F7FAF8] p-5 md:grid-cols-[1.2fr_0.8fr_0.8fr] md:items-center md:p-6">
+          <section className="native-web-only mt-8 grid gap-5 rounded-[20px] border border-[#CFE9D8] bg-[#F7FAF8] p-5 md:grid-cols-[1.2fr_0.8fr_0.8fr] md:items-center md:p-6">
             <div className="flex gap-4">
               <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#F0FAF4] text-[#0B5A2A]">
                 <ShieldCheck className="h-6 w-6" />
@@ -353,7 +353,7 @@ export function CalculatorPageLayout({
           </section>
 
           {faqs.length > 0 ? (
-            <section className="mt-12">
+            <section className="native-web-only mt-12">
               <div className="mb-6 max-w-3xl">
                 <h2 className="font-poppins text-2xl font-bold text-[#0B1020]">Common questions</h2>
                 <p className="mt-2 text-sm leading-6 text-[#667085]">
@@ -374,7 +374,7 @@ export function CalculatorPageLayout({
             </section>
           ) : null}
 
-          <section className="mt-12">
+          <section className="native-web-only mt-12">
             <div className="mb-6 flex items-center justify-between gap-4">
               <h2 className="font-poppins text-2xl font-bold text-[#0B1020]">Related Calculators</h2>
               <Link href="/calculators" className="hidden items-center gap-2 text-sm font-bold text-[#0B5A2A] sm:flex">

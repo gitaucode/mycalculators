@@ -29,8 +29,10 @@ export default function SavedPage() {
 
   return (
     <main className="min-h-screen bg-[#F4F7F5] px-4 py-5 text-[#0B1020]">
-      <h1 className="font-poppins text-2xl font-bold">Saved drafts</h1>
-      <p className="mt-1 text-sm text-[#667085]">Your documents are stored only on this device.</p>
+      <div className="native-web-only">
+        <h1 className="font-poppins text-2xl font-bold">Saved drafts</h1>
+        <p className="mt-1 text-sm text-[#667085]">Your documents are stored only on this device.</p>
+      </div>
       <div className="mt-6 space-y-3">
         {drafts.length ? drafts.map(({ title, subtitle, href, icon: Icon }) => (
           <Link key={href} href={href} className="flex items-center gap-4 rounded-[20px] border border-[#E4E7EC] bg-white p-4 shadow-sm">

@@ -43,7 +43,7 @@ export default function DisclaimerPage() {
         <div className="mx-auto max-w-[1100px] py-12 px-4 sm:px-6">
 
           {/* Hero */}
-          <div className="flex flex-col items-center text-center mb-12">
+          <div className="native-web-only flex flex-col items-center text-center mb-12">
             <div className="flex items-center justify-center w-16 h-16 rounded-full bg-[#0B5A2A]/10 mb-5">
               <AlertTriangle className="w-8 h-8 text-[#0B5A2A]" />
             </div>

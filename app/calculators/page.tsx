@@ -498,7 +498,7 @@ export default function CalculatorsPage() {
       <CalculatorsHeader />
       <main className="bg-[#F7FAF8] text-[#0B1020]">
         <div className="mx-auto max-w-[1180px] px-4 py-10 sm:px-6 lg:py-14">
-          <section className="mx-auto max-w-3xl text-center">
+          <section className="native-web-only mx-auto max-w-3xl text-center">
             <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-[#ECFDF3] text-[#0B5A2A]">
               <Calculator className="h-7 w-7" />
             </div>
